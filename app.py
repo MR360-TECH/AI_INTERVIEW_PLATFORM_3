@@ -584,7 +584,9 @@ def register():
     if "user_id" in session:
         user = db.session.get(User, session["user_id"])
         prefill_name = user.full_name if user else ""
-        prefill_email = user.email if user else ""
+        prefill_email = (user.email if user else "") or session.get("pending_google_email", "")
+        if user and user.auth_provider == "google":
+            is_google = True
     else:
         prefill_name = session.get("pending_google_name", "")
         prefill_email = session.get("pending_google_email") or session.get("verified_signup_email", "")
@@ -674,8 +676,10 @@ def auth_google_callback():
         session.clear()
         session["user_id"] = user.id
         session["user_name"] = user.full_name
+        session["user_email"] = user.email
         if not profile_is_complete(user):
-            return redirect("/register")
+            session["pending_google_email"] = user.email
+            return redirect("/register?google=1")
         return redirect("/dashboard")
     else:
         session["pending_google_email"] = email
@@ -1044,10 +1048,16 @@ def admin_users():
             (User.course.ilike(f"%{q}%")) |
             (User.skills.ilike(f"%{q}%"))
         ).order_by(User.registered_at.desc()).all()
-    else:
-        users = User.query.order_by(User.registered_at.desc()).all()
+    settings = get_settings()
 
-    return render_template("admin_users.html", users=users, q=q)
+    attempt_counts_raw = db.session.query(
+        InterviewResult.user_id, func.count(InterviewResult.id)
+    ).filter(
+        ~InterviewResult.status.like('%Practice%')
+    ).group_by(InterviewResult.user_id).all()
+    user_attempt_counts = {u_id: count for u_id, count in attempt_counts_raw}
+
+    return render_template("admin_users.html", users=users, q=q, settings=settings, user_attempt_counts=user_attempt_counts)
 
 
 
@@ -1143,6 +1153,23 @@ def interview():
     timer_seconds = settings.question_timer_seconds or 90
 
     if request.args.get("restart") == "1":
+        _existing_prog = InterviewProgress.query.filter_by(user_id=user_id).first()
+        _ex_history = json.loads(_existing_prog.chat_history or '[]') if _existing_prog else []
+        if not session.get("interview_mode") and request.args.get("practice") != "1" and _existing_prog and _existing_prog.q_count > 0:
+            try:
+                res_rec = InterviewResult(
+                    user_id=user_id,
+                    score=0.0,
+                    status="Abandoned (Reset)",
+                    summary="Candidate started a fresh interview session.",
+                    domain=session.get("interview_domain", "General")
+                )
+                db.session.add(res_rec)
+                db.session.commit()
+            except Exception as ex:
+                print(f"[RESTART LOG ERROR] {ex}")
+                db.session.rollback()
+
         clear_progress(user_id)
         session.pop("chat_history", None)
         session.pop("q_count", None)
@@ -1755,7 +1782,26 @@ def reset_assessment():
     """AJAX endpoint: clears all assessment progress so user can start fresh."""
     if "user_id" not in session:
         return jsonify({"status": "error", "reason": "not_logged_in"}), 401
-    user_id = session["user_id"]
+    is_practice = bool(session.get("interview_mode"))
+    q_count = session.get("q_count", 0)
+    domain_val = session.get("interview_domain", "General")
+
+    # If the user is abandoning/resetting an ACTIVE standard evaluation (q_count > 0), record an InterviewResult
+    if not is_practice and q_count > 0:
+        try:
+            res_rec = InterviewResult(
+                user_id=user_id,
+                score=0.0,
+                status="Abandoned (Reset)",
+                summary="Candidate initiated a fresh session reset mid-assessment.",
+                domain=domain_val
+            )
+            db.session.add(res_rec)
+            db.session.commit()
+        except Exception as e:
+            print(f"[RESET ASSESSMENT LOG ERROR] {e}")
+            db.session.rollback()
+
     # Clear all assessment-related session keys
     session.pop("chat_history", None)
     session.pop("q_count", None)

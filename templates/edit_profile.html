@@ -19,463 +19,511 @@
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
-        /* Ambient glow orbs — use divs (body::before/after are suppressed globally) */
-        .orb-tl {
-            pointer-events: none;
-            position: fixed;
-            top: -120px; left: -120px;
-            width: 520px; height: 520px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,212,255,0.16) 0%, transparent 70%);
-            z-index: 0;
-            animation: floatOrb1 13s ease-in-out infinite alternate;
-        }
-        .orb-br {
-            pointer-events: none;
-            position: fixed;
-            bottom: -110px; right: -110px;
-            width: 460px; height: 460px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,100,255,0.12) 0%, transparent 70%);
-            z-index: 0;
-            animation: floatOrb2 16s ease-in-out infinite alternate;
-        }
-        @keyframes floatOrb1 {
-            0%   { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(60px, 80px) scale(1.1); }
-        }
-        @keyframes floatOrb2 {
-            0%   { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-50px, -70px) scale(1.08); }
-        }
-
-        .page-wrap {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            padding: 2.5rem 1rem 4rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .inner-col {
-            width: 100%;
-            max-width: 680px;
-        }
-
-        /* Animated glow border on card — matches login page */
-        .login-card {
-            position: relative;
-        }
-        .login-card::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 25px;
-            background: linear-gradient(135deg, rgba(0,255,255,0.35), rgba(0,100,255,0.2), rgba(0,255,255,0.1));
-            z-index: -1;
-            opacity: 0;
-            animation: cardGlow 4s ease-in-out infinite alternate;
-        }
-        @keyframes cardGlow {
-            0%   { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .text-link {
-            color: var(--brand-blue);
-            font-weight: 700;
-            text-decoration: none;
-            transition: opacity 0.15s ease;
-        }
-        .text-link:hover { opacity: 0.8; text-decoration: none; }
-
-        /* Student / Professional toggle */
-        .type-toggle {
-            display: flex;
-            gap: 0.5rem;
-            background: rgba(2, 4, 10, 0.75);
-            border: 1.5px solid rgba(0, 255, 255, 0.25);
-            border-radius: 14px;
-            padding: 5px;
-            margin-bottom: 1.8rem;
-        }
-        .type-toggle button {
-            flex: 1;
-            border: none;
-            border-radius: 10px;
-            padding: 0.65rem 1rem;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700; font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.22s;
-            color: #8a9db8;
-            background: transparent;
-            letter-spacing: 0.01em;
-        }
-        .type-toggle button.active {
-            background: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(0, 255, 255, 0.35);
-        }
-        .type-toggle button i { margin-right: 6px; font-size: 0.95rem; }
-
-        /* Education pills */
-        .edu-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.45rem; }
-        .edu-pills input[type="radio"] { display: none; }
-        .edu-pills label {
-            padding: 0.45rem 1rem;
-            border-radius: 99px;
-            border: 1.5px solid rgba(0, 255, 255, 0.25);
-            color: #8a9db8;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.83rem; font-weight: 700;
-            cursor: pointer; transition: all 0.2s;
-            background: rgba(2, 4, 10, 0.75);
-            letter-spacing: 0.01em;
-        }
-        .edu-pills label:hover { border-color: #00ffff; color: #00ffff; }
-        .edu-pills input:checked + label {
-            background: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-            border-color: transparent;
-            color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.35);
-        }
-
-        /* Section separator */
-        .section-sep {
-            display: flex; align-items: center; gap: 0.9rem;
-            margin: 2rem 0 1.5rem;
-        }
-        .section-sep span {
-            color: #aabcce;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
-            white-space: nowrap;
-        }
-        .section-sep::before, .section-sep::after {
-            content: ''; flex: 1;
-            height: 1.5px; background: rgba(0, 255, 255, 0.15);
-        }
-
-        /* Submit button */
-        .btn-reg-submit {
-            background: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800; font-size: 1.05rem;
-            letter-spacing: 0.01em;
-            padding: 0.9rem 2rem;
-            width: 100%;
-            margin-top: 1.6rem;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.35);
-            display: flex; align-items: center; justify-content: center; gap: 0.55rem;
-        }
-        .btn-reg-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(0, 255, 255, 0.45);
-        }
-        .btn-reg-submit:active { transform: translateY(0); }
-
-        /* Success note */
-        .success-note {
-            display: flex; gap: 0.7rem; align-items: flex-start;
-            background: rgba(52, 211, 153, 0.08);
-            border: 1px solid rgba(52, 211, 153, 0.2);
-            border-radius: 12px; padding: 12px 16px;
-            color: #e8edf5; font-size: 0.88rem;
-            margin-bottom: 1.5rem;
-        }
-        .success-note i { color: #34d399; font-size: 1.1rem; flex-shrink: 0; }
-
-        /* Fade sections */
-        .fade-section { transition: opacity 0.3s, max-height 0.4s; overflow: hidden; }
-        .fade-section.hidden { opacity: 0; max-height: 0; pointer-events: none; }
-        .fade-section.visible { opacity: 1; max-height: 600px; }
-        /* ══ GOATED BG OVERRIDES ══ */
         html.dark-theme body {
             background: #020510 !important;
-            background-image: none !important;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
         }
-        .db-bg {
-            position: fixed; inset: 0; z-index: 0;
-            pointer-events: none; overflow: hidden; display: none;
-        }
-        html.dark-theme .db-bg { display: block; }
-        .db-bg::before {
-            content: ''; position: absolute; inset: 0;
+
+        /* ── Animated background ── */
+        .anim-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+        .anim-bg::before {
+            content:''; position:absolute; inset:0;
             background:
-                radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0,255,255,0.20) 0%, transparent 55%),
-                radial-gradient(ellipse 60% 50% at 85% 10%, rgba(2,132,199,0.18) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 55% at 50% 100%, rgba(0,255,220,0.12) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 40% at 90% 80%, rgba(0,180,255,0.15) 0%, transparent 50%),
-                linear-gradient(160deg,#02060f 0%,#010416 30%,#020820 60%,#010512 100%);
+                radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0,255,255,0.16) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 50% at 85% 10%, rgba(2,132,199,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 55% at 50% 100%, rgba(0,255,220,0.10) 0%, transparent 55%),
+                linear-gradient(160deg,#02060f 0%,#010416 35%,#020820 65%,#010512 100%);
         }
-        .db-orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:0; animation:orbDrift 18s ease-in-out infinite; }
-        .db-orb-1 { width:520px;height:520px;top:-120px;left:-100px;background:radial-gradient(circle,rgba(0,255,255,0.28) 0%,transparent 70%);animation-delay:0s;animation-duration:20s; }
-        .db-orb-2 { width:400px;height:400px;top:10%;right:-80px;background:radial-gradient(circle,rgba(2,132,199,0.24) 0%,transparent 70%);animation-delay:-7s;animation-duration:24s; }
-        .db-orb-3 { width:480px;height:480px;bottom:-80px;left:30%;background:radial-gradient(circle,rgba(0,220,255,0.20) 0%,transparent 70%);animation-delay:-13s;animation-duration:22s; }
-        .db-orb-4 { width:300px;height:300px;top:45%;right:25%;background:radial-gradient(circle,rgba(0,160,255,0.18) 0%,transparent 70%);animation-delay:-4s;animation-duration:19s; }
-        .db-orb-5 { width:350px;height:350px;bottom:10%;right:-50px;background:radial-gradient(circle,rgba(0,255,180,0.14) 0%,transparent 70%);animation-delay:-9s;animation-duration:26s; }
+        .anim-orb { position:absolute; border-radius:50%; filter:blur(80px); animation:orbDrift 18s ease-in-out infinite; }
+        .anim-orb-1 { width:520px;height:520px;top:-100px;left:-80px;background:radial-gradient(circle,rgba(0,255,255,0.20) 0%,transparent 70%);animation-delay:0s;animation-duration:20s; }
+        .anim-orb-2 { width:400px;height:400px;top:10%;right:-80px;background:radial-gradient(circle,rgba(2,132,199,0.18) 0%,transparent 70%);animation-delay:-7s;animation-duration:24s; }
+        .anim-orb-3 { width:480px;height:480px;bottom:-80px;left:30%;background:radial-gradient(circle,rgba(0,220,255,0.14) 0%,transparent 70%);animation-delay:-13s;animation-duration:22s; }
         @keyframes orbDrift {
             0%   { opacity:0.6; transform:translate(0,0) scale(1); }
-            25%  { opacity:0.8; transform:translate(30px,-20px) scale(1.05); }
-            50%  { opacity:0.55; transform:translate(-20px,30px) scale(0.97); }
-            75%  { opacity:0.75; transform:translate(15px,10px) scale(1.03); }
+            33%  { opacity:0.8; transform:translate(28px,-20px) scale(1.05); }
+            66%  { opacity:0.55; transform:translate(-18px,26px) scale(0.97); }
             100% { opacity:0.6; transform:translate(0,0) scale(1); }
         }
-        .db-grid {
+        .anim-grid {
             position:absolute; inset:0;
-            background-image: linear-gradient(rgba(0,200,255,0.035) 1px,transparent 1px), linear-gradient(90deg,rgba(0,200,255,0.035) 1px,transparent 1px);
+            background-image:linear-gradient(rgba(0,255,255,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,0.028) 1px,transparent 1px);
             background-size:60px 60px;
             mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
             -webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
         }
-        .db-particles { position:absolute; inset:0; }
-        .db-star { position:absolute; border-radius:50%; background:#ffffff; animation:starTwinkle linear infinite; }
-        @keyframes starTwinkle {
-            0%,100% { opacity:0.05; transform:scale(1); }
-            50%      { opacity:0.55; transform:scale(1.6); }
-        }
-        .db-topbar-glow {
+        .anim-particles { position:absolute; inset:0; }
+        .anim-star { position:absolute; border-radius:50%; background:#ffffff; animation:starTwinkle linear infinite; }
+        @keyframes starTwinkle { 0%,100%{opacity:0.04;transform:scale(1);} 50%{opacity:0.48;transform:scale(1.6);} }
+        .anim-topbar {
             position:absolute; top:0; left:0; right:0; height:2px;
-            background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.7) 30%,rgba(120,0,255,0.7) 70%,transparent 100%);
-            animation:topbarGlowPulse 4s ease-in-out infinite;
+            background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.75) 30%,rgba(120,0,255,0.75) 70%,transparent 100%);
+            animation:topbarPulse 4s ease-in-out infinite;
         }
-        @keyframes topbarGlowPulse { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
-        ::-webkit-scrollbar{width:6px;height:6px;}
-        ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:rgba(0,255,255,0.2);border-radius:99px;}
-        ::-webkit-scrollbar-thumb:hover{background:#00ffff;}
+        @keyframes topbarPulse { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+
+        /* ── Page layout ── */
+        .page-shell {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column;
+            align-items: center;
+            padding: 0 20px 60px;
+            min-height: 100vh;
+        }
+
+        /* ── Card ── */
+        .form-card {
+            width: 100%; max-width: 760px;
+            background: rgba(8,18,42,0.82);
+            border: 1.5px solid rgba(0,255,255,0.16);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,255,255,0.05) inset;
+            backdrop-filter: blur(28px);
+        }
+
+        /* Card header */
+        .card-hdr {
+            background: linear-gradient(135deg, rgba(0,255,255,0.10) 0%, rgba(2,132,199,0.16) 100%);
+            border-bottom: 1.5px solid rgba(0,255,255,0.15);
+            padding: 32px 44px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: relative; overflow: hidden;
+        }
+        .card-hdr::before {
+            content:'';
+            position: absolute; top: -40px; right: -40px;
+            width: 160px; height: 160px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,255,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .card-hdr-left { display: flex; align-items: center; gap: 18px; }
+        .card-hdr-icon {
+            width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(0,255,255,0.18), rgba(2,132,199,0.28));
+            border: 1.5px solid rgba(0,255,255,0.30);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #00ffff;
+            filter: drop-shadow(0 0 12px rgba(0,255,255,0.45));
+        }
+        .card-hdr-text h2 {
+            font-family: 'Outfit',sans-serif; font-weight: 900; font-size: 1.6rem;
+            color: #fff; margin: 0 0 3px; letter-spacing: -0.02em;
+        }
+        .card-hdr-text p { font-size: 0.86rem; color: #64748b; margin: 0; }
+
+        .card-hdr-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(0,255,255,0.08); border: 1px solid rgba(0,255,255,0.20);
+            border-radius: 30px; padding: 5px 14px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; color: #00ffff;
+            font-family: 'Outfit',sans-serif;
+        }
+
+        /* Avatar ring */
+        .avatar-ring {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+            padding: 28px 44px 0;
+        }
+        .avatar-wrap {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(135deg, #00ffff, #7c3aed);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Outfit',sans-serif; font-weight: 900; font-size: 2rem;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(0,255,255,0.15), 0 8px 28px rgba(0,255,255,0.3);
+        }
+        .avatar-name {
+            font-family: 'Outfit',sans-serif; font-weight: 800; font-size: 1.15rem;
+            color: #f1f5f9; text-align: center;
+        }
+        .avatar-email { font-size: 0.82rem; color: #475569; text-align: center; margin-top: -10px; }
+
+        /* Section tabs */
+        .section-tabs {
+            display: flex; gap: 0; border-bottom: 1.5px solid rgba(0,255,255,0.10);
+            padding: 0 44px; background: rgba(0,0,0,0.15);
+        }
+        .section-tab {
+            padding: 14px 20px; font-family:'Outfit',sans-serif;
+            font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+            text-transform: uppercase; color: #475569; cursor: pointer;
+            border-bottom: 2px solid transparent; margin-bottom: -1.5px;
+            transition: all 0.2s; text-decoration: none; display: flex; align-items: center; gap: 7px;
+        }
+        .section-tab.active { color: #00ffff; border-bottom-color: #00ffff; }
+        .section-tab:hover:not(.active) { color: #94a3b8; }
+
+        /* Card body */
+        .card-body-inner { padding: 32px 44px 40px; }
+        @media (max-width: 600px) {
+            .card-hdr { padding: 22px 20px; }
+            .card-body-inner { padding: 24px 20px 32px; }
+            .section-tabs { padding: 0 20px; }
+            .avatar-ring { padding: 20px 20px 0; }
+        }
+
+        /* Success alert */
+        .auth-alert {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; border-radius: 10px; font-size: 0.87rem; margin-bottom: 24px;
+        }
+        .auth-alert.success { background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25); color:#6ee7b7; }
+
+        /* ── Type toggle ── */
+        .type-toggle {
+            display: flex; gap: 6px;
+            background: rgba(2,4,12,0.8);
+            border: 1.5px solid rgba(0,255,255,0.16);
+            border-radius: 14px; padding: 5px;
+            margin-bottom: 24px;
+        }
+        .type-toggle button {
+            flex: 1; border: none; border-radius: 10px;
+            padding: 11px 16px;
+            font-family: 'Outfit',sans-serif; font-weight: 700; font-size: 0.88rem;
+            cursor: pointer; transition: all 0.22s;
+            color: #475569; background: transparent; letter-spacing: 0.01em;
+        }
+        .type-toggle button:hover:not(.active) { color: #94a3b8; }
+        .type-toggle button.active {
+            background: linear-gradient(135deg, #00ffff 0%, #0284c7 100%);
+            color: #020510; box-shadow: 0 4px 16px rgba(0,255,255,0.35);
+        }
+        .type-toggle button i { margin-right: 6px; }
+
+        /* ── Section label ── */
+        .section-sep {
+            display: flex; align-items: center; gap: 12px; margin: 28px 0 20px;
+        }
+        .section-sep::before, .section-sep::after { content:''; flex:1; height:1px; background:rgba(0,255,255,0.08); }
+        .section-sep span {
+            color: #475569; font-family:'Outfit',sans-serif;
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; white-space: nowrap;
+        }
+
+        /* ── Field group ── */
+        .field-group { margin-bottom: 20px; }
+        .field-label {
+            display: block; font-family: 'Outfit',sans-serif;
+            font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em;
+            text-transform: uppercase; color: #64748b; margin-bottom: 8px;
+        }
+        .field-label i { margin-right: 5px; }
+        .field-input {
+            width: 100%; padding: 12px 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 12px; color: #f1f5f9;
+            font-family: 'Inter',sans-serif; font-size: 0.91rem;
+            outline: none; transition: all 0.2s;
+        }
+        .field-input::placeholder { color: #334155; }
+        .field-input:focus {
+            border-color: rgba(0,255,255,0.40);
+            background: rgba(0,255,255,0.04);
+            box-shadow: 0 0 0 3px rgba(0,255,255,0.07);
+        }
+        .field-input[readonly] {
+            background: rgba(59,130,246,0.06) !important;
+            border-color: rgba(59,130,246,0.20) !important;
+            color: #64748b !important; cursor: not-allowed;
+        }
+        select.field-input option { background: #080e1e; color: #f1f5f9; }
+
+        /* ── Education pills ── */
+        .edu-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .edu-pills input[type="radio"] { display: none; }
+        .edu-pills label {
+            padding: 8px 16px; border-radius: 99px;
+            border: 1.5px solid rgba(0,255,255,0.15);
+            color: #475569; font-family:'Outfit',sans-serif;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            background: rgba(2,4,12,0.8); letter-spacing: 0.01em;
+        }
+        .edu-pills label:hover { border-color: #00ffff; color: #00ffff; }
+        .edu-pills input:checked + label {
+            background: linear-gradient(135deg, #00ffff 0%, #0284c7 100%);
+            border-color: transparent; color: #020510;
+            box-shadow: 0 4px 12px rgba(0,255,255,0.35);
+        }
+
+        /* ── Fade sections ── */
+        .fade-section { transition: opacity 0.3s, max-height 0.4s; overflow: hidden; }
+        .fade-section.hidden { opacity: 0; max-height: 0; pointer-events: none; }
+        .fade-section.visible { opacity: 1; max-height: 800px; }
+
+        /* ── Submit button ── */
+        .btn-submit {
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            width: 100%; padding: 14px 20px; margin-top: 28px;
+            background: linear-gradient(135deg, #00ffff 0%, #0284c7 100%);
+            border: none; border-radius: 12px;
+            color: #020510; font-family: 'Outfit',sans-serif;
+            font-size: 1rem; font-weight: 900; letter-spacing: 0.01em;
+            cursor: pointer; transition: all 0.25s;
+            box-shadow: 0 6px 24px rgba(0,255,255,0.28);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,255,255,0.42); }
+        .btn-submit:active { transform: translateY(0); }
+
+        .auth-footer-note { text-align: center; margin-top: 20px; font-size: 0.84rem; color: #334155; }
+        .auth-footer-note a { color: #00ffff; font-weight: 700; text-decoration: none; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:rgba(0,255,255,0.18);border-radius:99px;} ::-webkit-scrollbar-thumb:hover{background:#00ffff;}
     </style>
 </head>
 <body>
-<!-- ══ GOATED ANIMATED BACKGROUND ══ -->
-<div class="db-bg" aria-hidden="true">
-    <div class="db-orb db-orb-1"></div>
-    <div class="db-orb db-orb-2"></div>
-    <div class="db-orb db-orb-3"></div>
-    <div class="db-orb db-orb-4"></div>
-    <div class="db-orb db-orb-5"></div>
-    <div class="db-grid"></div>
-    <div class="db-particles" id="dbParticles"></div>
-    <div class="db-topbar-glow"></div>
-</div>
 
-<!-- Ambient orb decorations -->
-<div class="orb-tl" aria-hidden="true"></div>
-<div class="orb-br" aria-hidden="true"></div>
+<!-- Animated background -->
+<div class="anim-bg" aria-hidden="true">
+    <div class="anim-orb anim-orb-1"></div>
+    <div class="anim-orb anim-orb-2"></div>
+    <div class="anim-orb anim-orb-3"></div>
+    <div class="anim-grid"></div>
+    <div class="anim-particles" id="animParticles"></div>
+    <div class="anim-topbar"></div>
+</div>
 
 {% include 'navbar.html' %}
 
-<div class="page-wrap">
-    <div class="inner-col">
+<div class="page-shell">
+<div style="width:100%;max-width:760px;margin:0 auto;">
 
-        <!-- Back button -->
-        <div class="mb-3">
-            <a href="/dashboard" class="back-btn-global">
-                <i class="bi bi-arrow-left"></i> BACK
-            </a>
+    <!-- Back nav -->
+    <div style="padding:24px 0 20px;">
+        <a href="/dashboard" class="back-btn-global"><i class="bi bi-arrow-left"></i> BACK</a>
+    </div>
+
+    <!-- Main card -->
+    <div class="form-card">
+
+        <!-- Header -->
+        <div class="card-hdr">
+            <div class="card-hdr-left">
+                <div class="card-hdr-icon"><i class="bi bi-person-gear"></i></div>
+                <div class="card-hdr-text">
+                    <h2>Edit Your Profile</h2>
+                    <p>Keep your profile details up-to-date for accurate evaluations</p>
+                </div>
+            </div>
+            <div class="card-hdr-badge" style="flex-shrink:0;">
+                <i class="bi bi-pencil-fill"></i> Editing
+            </div>
         </div>
 
-        <div class="login-card">
-
-            <!-- Header -->
-            <div class="login-header">
-                <i class="bi bi-person-gear"></i>
-                <h2>Edit Your Profile</h2>
-                <p>Keep your profile details up-to-date for accurate evaluations</p>
-            </div>
-
-            <!-- Body -->
-            <div class="form-body">
-
-                {% if success %}
-                <div class="success-note">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <div>{{ success }}</div>
+        <!-- Avatar identity strip -->
+        <div class="avatar-ring">
+            <div style="display:flex;align-items:center;gap:20px;">
+                <div class="avatar-wrap">
+                    {{ (user.full_name or 'U')[0]|upper }}
                 </div>
-                {% endif %}
-
-                <form method="POST">
-
-                    <!-- Full name -->
-                    <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-person"></i> Full Name</label>
-                        <input type="text" name="full_name" class="form-control"
-                               placeholder="e.g. Pavan Kumar" value="{{ user.full_name }}" required
-                               autocomplete="name">
+                <div>
+                    <div class="avatar-name">{{ user.full_name }}</div>
+                    <div class="avatar-email">{{ user.email }}</div>
+                    <div style="margin-top:8px;">
+                        {% if user.auth_provider == 'google' %}
+                        <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(59,130,246,0.10);border:1px solid rgba(59,130,246,0.25);border-radius:6px;padding:3px 10px;font-size:0.72rem;color:#93c5fd;font-weight:700;">
+                            <img src="https://www.google.com/favicon.ico" width="11" height="11" alt="Google"> Google Account
+                        </span>
+                        {% else %}
+                        <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(0,255,255,0.07);border:1px solid rgba(0,255,255,0.18);border-radius:6px;padding:3px 10px;font-size:0.72rem;color:#22d3ee;font-weight:700;">
+                            <i class="bi bi-envelope-fill"></i> Email Account
+                        </span>
+                        {% endif %}
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Email: locked -->
-                    <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-envelope"></i> Email Address</label>
-                        <input type="email" class="form-control locked-field"
-                               value="{{ user.email }}" readonly
-                               title="Email is locked and cannot be changed">
+        <!-- Section tabs -->
+        <div class="section-tabs" style="margin-top:20px;">
+            <span class="section-tab active"><i class="bi bi-person-lines-fill"></i> Profile Details</span>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body-inner">
+
+            {% if success %}
+            <div class="auth-alert success"><i class="bi bi-check-circle-fill"></i> {{ success }}</div>
+            {% endif %}
+
+            <form method="POST">
+
+                <!-- Type toggle -->
+                <div class="field-group" style="margin-bottom:24px;">
+                    <label class="field-label"><i class="bi bi-person-badge"></i> Profile Type</label>
+                    <div class="type-toggle" id="typeToggle">
+                        <button type="button" class="{% if user.user_type != 'professional' %}active{% endif %}" id="btn-student" onclick="setType('student')">
+                            <i class="bi bi-mortarboard-fill"></i> Student
+                        </button>
+                        <button type="button" class="{% if user.user_type == 'professional' %}active{% endif %}" id="btn-professional" onclick="setType('professional')">
+                            <i class="bi bi-briefcase-fill"></i> Professional
+                        </button>
                     </div>
+                    <input type="hidden" name="user_type" id="userTypeInput" value="{{ user.user_type or 'student' }}">
+                </div>
 
-                    <!-- Gender -->
-                    <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
-                        <select name="gender" class="form-select">
-                            <option value="">— Select —</option>
-                            <option value="Male" {% if user.gender == "Male" %}selected{% endif %}>Male</option>
-                            <option value="Female" {% if user.gender == "Female" %}selected{% endif %}>Female</option>
-                            <option value="Other" {% if user.gender == "Other" %}selected{% endif %}>Other / Prefer not to say</option>
-                        </select>
-                    </div>
-
-                    <!-- User type toggle -->
-                    <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-person-badge"></i> Profile Type</label>
-                        <div class="type-toggle" id="typeToggle">
-                            <button type="button" class="{% if user.user_type != 'professional' %}active{% endif %}" id="btn-student" onclick="setType('student')">
-                                <i class="bi bi-mortarboard-fill"></i> Student
-                            </button>
-                            <button type="button" class="{% if user.user_type == 'professional' %}active{% endif %}" id="btn-professional" onclick="setType('professional')">
-                                <i class="bi bi-briefcase-fill"></i> Professional
-                            </button>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="field-group">
+                            <label class="field-label"><i class="bi bi-person"></i> Full Name</label>
+                            <input type="text" name="full_name" class="field-input"
+                                   placeholder="e.g. Pavan Kumar" value="{{ user.full_name }}" required autocomplete="name">
                         </div>
-                        <input type="hidden" name="user_type" id="userTypeInput" value="{{ user.user_type or 'student' }}">
                     </div>
-
-                    <!-- Education (Students only) -->
-                    <div class="fade-section {% if user.user_type != 'professional' %}visible{% else %}hidden{% endif %}" id="edu-section">
-                        <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-mortarboard"></i> Education Level</label>
-                            <div class="edu-pills">
-                                <input class="form-check-input" type="radio" name="education" value="School" id="edu1" {% if user.education == "School" %}checked{% endif %}>
-                                <label for="edu1">School</label>
-                                <input class="form-check-input" type="radio" name="education" value="PU/12th" id="edu2" {% if user.education == "PU/12th" %}checked{% endif %}>
-                                <label for="edu2">PU / 12th</label>
-                                <input class="form-check-input" type="radio" name="education" value="Degree" id="edu3" {% if user.education == "Degree" %}checked{% endif %}>
-                                <label for="edu3">Degree</label>
-                                <input class="form-check-input" type="radio" name="education" value="Post Graduate" id="edu4" {% if user.education == "Post Graduate" %}checked{% endif %}>
-                                <label for="edu4">Post Graduate</label>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="field-group">
+                            <label class="field-label"><i class="bi bi-envelope"></i> Email Address</label>
+                            <input type="email" class="field-input" value="{{ user.email }}" readonly
+                                   title="Email is locked and cannot be changed">
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Course and Semester -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label"><i class="bi bi-book"></i> Course / Branch</label>
-                                <input type="text" name="course" class="form-control"
+                <div class="field-group">
+                    <label class="field-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                    <select name="gender" class="field-input">
+                        <option value="">— Select —</option>
+                        <option value="Male" {% if user.gender == "Male" %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if user.gender == "Female" %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if user.gender == "Other" %}selected{% endif %}>Other / Prefer not to say</option>
+                    </select>
+                </div>
+
+                <!-- Student section -->
+                <div class="fade-section {% if user.user_type != 'professional' %}visible{% else %}hidden{% endif %}" id="edu-section">
+                    <div class="field-group">
+                        <label class="field-label"><i class="bi bi-mortarboard"></i> Education Level</label>
+                        <div class="edu-pills">
+                            <input class="form-check-input" type="radio" name="education" value="School" id="edu1" {% if user.education == "School" %}checked{% endif %}>
+                            <label for="edu1">School</label>
+                            <input class="form-check-input" type="radio" name="education" value="PU/12th" id="edu2" {% if user.education == "PU/12th" %}checked{% endif %}>
+                            <label for="edu2">PU / 12th</label>
+                            <input class="form-check-input" type="radio" name="education" value="Degree" id="edu3" {% if user.education == "Degree" %}checked{% endif %}>
+                            <label for="edu3">Degree</label>
+                            <input class="form-check-input" type="radio" name="education" value="Post Graduate" id="edu4" {% if user.education == "Post Graduate" %}checked{% endif %}>
+                            <label for="edu4">Post Graduate</label>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="field-group">
+                                <label class="field-label"><i class="bi bi-book"></i> Course / Branch</label>
+                                <input type="text" name="course" class="field-input"
                                        value="{{ user.course or '' }}" placeholder="e.g. BCA, B.Tech CSE">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label"><i class="bi bi-calendar3"></i> Semester / Year</label>
-                                <input type="text" name="semester" class="form-control"
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-group">
+                                <label class="field-label"><i class="bi bi-calendar3"></i> Semester / Year</label>
+                                <input type="text" name="semester" class="field-input"
                                        value="{{ user.semester or '' }}" placeholder="e.g. 6th Sem, 3rd Year">
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Professional fields -->
-                    <div class="fade-section {% if user.user_type == 'professional' %}visible{% else %}hidden{% endif %}" id="prof-section">
-                        <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-building"></i> Current Designation</label>
-                            <input type="text" name="current_designation" class="form-control"
-                                   id="designationInput" value="{{ user.current_designation or '' }}" placeholder="e.g. Software Engineer, Product Manager">
+                <!-- Professional section -->
+                <div class="fade-section {% if user.user_type == 'professional' %}visible{% else %}hidden{% endif %}" id="prof-section">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="field-group">
+                                <label class="field-label"><i class="bi bi-building"></i> Current Designation</label>
+                                <input type="text" name="current_designation" class="field-input"
+                                       id="designationInput" value="{{ user.current_designation or '' }}" placeholder="e.g. Software Engineer">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-clock-history"></i> Years of Experience</label>
-                            <input type="number" name="years_of_experience" class="form-control"
-                                   id="expInput" value="{{ user.years_of_experience or '' }}" placeholder="e.g. 3" min="0" max="50" step="0.5">
+                        <div class="col-md-6">
+                            <div class="field-group">
+                                <label class="field-label"><i class="bi bi-clock-history"></i> Years of Experience</label>
+                                <input type="number" name="years_of_experience" class="field-input"
+                                       id="expInput" value="{{ user.years_of_experience or '' }}" placeholder="e.g. 3" min="0" max="50" step="0.5">
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Optional profile enrichment -->
-                    <div class="section-sep"><span>Optional — Enrich Your Profile</span></div>
+                <div class="section-sep"><span><i class="bi bi-stars" style="color:#00ffff;margin-right:6px;"></i>Optional — Enrich Your Profile</span></div>
 
-                    <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-tools"></i> Primary Skills</label>
-                        <input type="text" name="skills" class="form-control"
-                               value="{{ user.skills or '' }}" placeholder="e.g. Python, React, Machine Learning (comma separated)">
-                    </div>
+                <div class="field-group">
+                    <label class="field-label"><i class="bi bi-tools"></i> Primary Skills</label>
+                    <input type="text" name="skills" class="field-input"
+                           value="{{ user.skills or '' }}" placeholder="e.g. Python, React, Machine Learning (comma separated)">
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="bi bi-github"></i> GitHub / Portfolio URL</label>
-                            <input type="url" name="github_url" class="form-control"
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="field-group">
+                            <label class="field-label"><i class="bi bi-github"></i> GitHub / Portfolio URL</label>
+                            <input type="url" name="github_url" class="field-input"
                                    value="{{ user.github_url or '' }}" placeholder="https://github.com/username">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="bi bi-linkedin"></i> LinkedIn URL</label>
-                            <input type="url" name="linkedin_url" class="form-control"
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-group">
+                            <label class="field-label"><i class="bi bi-linkedin"></i> LinkedIn URL</label>
+                            <input type="url" name="linkedin_url" class="field-input"
                                    value="{{ user.linkedin_url or '' }}" placeholder="https://linkedin.com/in/username">
                         </div>
                     </div>
+                </div>
 
-                    <!-- Submit -->
-                    <button type="submit" class="btn-reg-submit">
-                        <i class="bi bi-check-circle"></i> Save Changes
-                    </button>
-                </form>
+                <button type="submit" class="btn-submit">
+                    <i class="bi bi-check-circle-fill"></i> Save Changes
+                </button>
 
-            </div><!-- /form-body -->
-        </div><!-- /login-card -->
+            </form>
 
-        <p class="text-center mt-4 mb-0 text-muted" style="font-size:0.9rem;">
-            <a href="/dashboard" class="text-link"><i class="bi bi-arrow-left me-1"></i> BACK</a>
-        </p>
+        </div><!-- /card-body-inner -->
+    </div><!-- /form-card -->
 
-    </div>
+    <p class="auth-footer-note" style="margin-top:20px;">
+        <a href="/dashboard"><i class="bi bi-arrow-left me-1"></i>Return to Dashboard</a>
+    </p>
+
 </div>
+</div><!-- /page-shell -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function setType(type) {
         document.getElementById('userTypeInput').value = type;
-
-        const eduSection  = document.getElementById('edu-section');
-        const profSection = document.getElementById('prof-section');
-        const btnStudent  = document.getElementById('btn-student');
-        const btnProf     = document.getElementById('btn-professional');
-
+        var eduSection  = document.getElementById('edu-section');
+        var profSection = document.getElementById('prof-section');
+        var btnStudent  = document.getElementById('btn-student');
+        var btnProf     = document.getElementById('btn-professional');
         if (type === 'student') {
             eduSection.classList.replace('hidden','visible');
             profSection.classList.replace('visible','hidden');
-            btnStudent.classList.add('active');
-            btnProf.classList.remove('active');
+            btnStudent.classList.add('active'); btnProf.classList.remove('active');
             document.getElementById('designationInput').removeAttribute('required');
             document.getElementById('expInput').removeAttribute('required');
         } else {
             eduSection.classList.replace('visible','hidden');
             profSection.classList.replace('hidden','visible');
-            btnStudent.classList.remove('active');
-            btnProf.classList.add('active');
+            btnStudent.classList.remove('active'); btnProf.classList.add('active');
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener('DOMContentLoaded', function() {
         setType('{{ user.user_type or "student" }}');
     });
 </script>
 <script>
 (function(){
-    var c=document.getElementById('dbParticles');
-    if(!c)return;
-    for(var i=0;i<60;i++){
-        var s=document.createElement('div');
-        s.className='db-star';
-        var sz=Math.random()*2+1;
-        s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;animation-duration:'+(Math.random()*4+2)+'s;animation-delay:'+(Math.random()*6)+'s';
+    var c = document.getElementById('animParticles');
+    if (!c) return;
+    for (var i = 0; i < 55; i++) {
+        var s = document.createElement('div');
+        s.className = 'anim-star';
+        var sz = Math.random() * 2 + 0.8;
+        s.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;animation-duration:'+(Math.random()*4+2)+'s;animation-delay:'+(Math.random()*6)+'s';
         c.appendChild(s);
     }
 })();
