@@ -353,6 +353,7 @@
                         <input type="email" class="form-control locked-field"
                                value="{{ prefill_email }}" readonly
                                title="Email is set from your sign-in method">
+                        <input type="hidden" name="email" value="{{ prefill_email }}">
                         {% else %}
                         <input type="email" name="email" class="form-control"
                                placeholder="your@email.com" required autocomplete="email">

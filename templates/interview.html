@@ -250,7 +250,9 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: var(--overlay-bg);
+            background: rgba(4, 9, 20, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -258,32 +260,60 @@
         }
         #loadingOverlay.active { display: flex; }
 
-        .loader-spinner {
-            width: 60px; height: 60px;
-            border: 5px solid rgba(59, 130, 246, 0.15);
-            border-top-color: #3b82f6;
+        .loader-ring-wrap {
+            position: relative;
+            width: 84px;
+            height: 84px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-pulse-bg {
+            position: absolute;
+            inset: -10px;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 20px;
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.35);
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.25) 0%, transparent 70%);
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.4; }
+            100% { transform: scale(1.25); opacity: 0.8; }
+        }
+        .loader-spinner {
+            width: 72px; height: 72px;
+            border: 3px solid rgba(0, 255, 255, 0.12);
+            border-top-color: #00ffff;
+            border-right-color: #0284c7;
+            border-radius: 50%;
+            animation: spin 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+        }
+        .loader-core-icon {
+            position: absolute;
+            color: #00ffff;
+            font-size: 1.6rem;
+            animation: corePulse 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes corePulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 10px #00ffff); }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .loader-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            color: var(--studio-text);
+            color: #ffffff;
             margin-bottom: 8px;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.02em;
         }
         .loader-sub {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: #94a3b8;
             font-family: 'Inter', sans-serif;
         }
-        html.dark-theme .loader-sub { color: #94a3b8; }
-        html:not(.dark-theme) .loader-sub { color: #475569; }
 
         .studio-card {
             border: 1px solid var(--studio-card-border) !important;
@@ -686,9 +716,13 @@
 
     <!-- Instant loading overlay - appears the moment submit is clicked -->
     <div id="loadingOverlay">
-        <div class="loader-spinner"></div>
-        <div class="loader-title">AI Examiner is evaluating...</div>
-        <div class="loader-sub">Analyzing technical depth and structuring the next question</div>
+        <div class="loader-ring-wrap">
+            <div class="loader-pulse-bg"></div>
+            <div class="loader-spinner"></div>
+            <i class="bi bi-cpu-fill loader-core-icon"></i>
+        </div>
+        <div class="loader-title cyber-loader-title">AI Examiner is evaluating...</div>
+        <div class="loader-sub">Analyzing technical depth &amp; structuring the next question</div>
     </div>
 
     {% include 'navbar.html' %}

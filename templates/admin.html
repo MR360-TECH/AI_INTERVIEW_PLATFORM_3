@@ -794,9 +794,14 @@
                     </td>
                     <td class="date-cell">{{ result.interview_datetime.strftime('%d %b %Y, %I:%M %p') }}</td>
                     <td onclick="event.stopPropagation();" class="text-nowrap">
+                        {% set attempts_used = user_attempt_counts.get(user.id, 0) %}
+                        {% set extra_granted = user.extra_allowed_interviews or 0 %}
+                        {% set allowed_total = (settings.default_allowed_interviews or 2) + extra_granted %}
+                        {% if settings.enable_attempt_limits and attempts_used >= allowed_total %}
                         <button type="button" class="btn-unlock-attempt me-2" onclick="triggerUnlockCandidate({{ user.id }}, '{{ user.full_name | escape }}')">
                             <i class="bi bi-unlock-fill me-1"></i> Unlock
                         </button>
+                        {% endif %}
                         <a href="/admin/delete/{{ result.id }}" class="btn-delete" onclick="return confirm('⚠️ WARNING: DELETION RISK!\n\nThis action cannot be undone.\n- The selected scorecard, score, strengths, and candidate transcript will be permanently erased.\n\nAre you sure you want to delete this interview record?');">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -946,8 +951,8 @@ function triggerUnlockCandidate(userId, candidateName) {
     if (nameSpan) nameSpan.textContent = candidateName || 'Candidate';
     
     var modalElem = document.getElementById('customUnlockModal');
-    if (modalElem) {
-        var bsModal = new bootstrap.Modal(modalElem);
+    if (modalElem && typeof bootstrap !== 'undefined') {
+        var bsModal = bootstrap.Modal.getOrCreateInstance(modalElem);
         bsModal.show();
     }
 }
