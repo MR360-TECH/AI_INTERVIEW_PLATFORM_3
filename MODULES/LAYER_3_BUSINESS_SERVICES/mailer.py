@@ -72,7 +72,7 @@ def _otp_html_body(otp):
     """
 
 def _send_via_resend(to_email, otp, api_key):
-    """Send via Resend HTTP API (port 443 – works on Render free tier)."""
+    """Send via Resend HTTP API (port 443 - works on Render free tier)."""
     from_addr = os.environ.get("MAIL_FROM", f"AI Assessment Studio <onboarding@{os.environ.get('RESEND_DOMAIN', 'resend.dev')}>")
     payload = json.dumps({
         "from": from_addr,
@@ -105,7 +105,7 @@ def _send_via_resend(to_email, otp, api_key):
 
 
 def _send_via_sendgrid(to_email, otp, api_key):
-    """Send via SendGrid HTTP API (port 443 – works on Render free tier)."""
+    """Send via SendGrid HTTP API (port 443 - works on Render free tier)."""
     from_addr = os.environ.get("MAIL_FROM", "noreply@yourdomain.com")
     payload = json.dumps({
         "personalizations": [{"to": [{"email": to_email}]}],
@@ -139,7 +139,7 @@ def _send_via_sendgrid(to_email, otp, api_key):
 
 
 def _send_via_smtp(to_email, otp, mail_user, mail_pass):
-    """SMTP fallback — may be blocked on Render free tier."""
+    """SMTP fallback - may be blocked on Render free tier."""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Your AI Assessment Studio login code"
     msg["From"] = f"AI Assessment Studio <{mail_user}>"
@@ -175,7 +175,7 @@ def _send_via_smtp(to_email, otp, mail_user, mail_pass):
 
 def send_slot_unlocked_email(to_email, candidate_name):
     """Send an automated HTML notification email when candidate slot is unlocked."""
-    subject = "🎉 Your Assessment Slot Has Been Unlocked — AI Assessment Studio"
+    subject = "🎉 Your Assessment Slot Has Been Unlocked - AI Assessment Studio"
     candidate_display = (candidate_name or "Candidate").strip()
     
     html_content = f"""
@@ -267,9 +267,9 @@ def send_slot_unlocked_email(to_email, candidate_name):
 def send_otp_email(to_email, otp):
     """
     Send OTP email. Tries providers in priority order:
-      1. Gmail SMTP (MAIL_USERNAME + MAIL_PASSWORD — primary sender)
-      2. Resend  (fallback — set RESEND_API_KEY)
-      3. SendGrid (fallback — set SENDGRID_API_KEY)
+      1. Gmail SMTP (MAIL_USERNAME + MAIL_PASSWORD - primary sender)
+      2. Resend  (fallback - set RESEND_API_KEY)
+      3. SendGrid (fallback - set SENDGRID_API_KEY)
     If none are configured, prints OTP to logs (dev/local fallback).
     """
     print(f"[OTP] ── Sending OTP to {to_email} ──")
