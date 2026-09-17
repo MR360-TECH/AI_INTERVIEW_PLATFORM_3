@@ -38,38 +38,6 @@ def _otp_html_body(otp):
       </p>
     </div>
     """
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 520px; margin: 0 auto; padding: 0; background: #080e1e; border-radius: 16px; border: 1px solid rgba(0, 255, 255, 0.25); overflow: hidden;">
-      <div style="background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(2, 132, 199, 0.1)); padding: 28px 32px 18px; text-align: center; border-bottom: 1px solid rgba(0, 255, 255, 0.15);">
-        <div style="font-size: 28px; font-weight: 900; color: #ffffff; letter-spacing: 0.02em; margin-bottom: 4px;">AI Assessment <span style="color: #00ffff;">Studio</span></div>
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.15em;">Secure Authentication</div>
-      </div>
-      <div style="padding: 32px;">
-        <div style="text-align: center; margin-bottom: 8px;">
-          <span style="background: rgba(0, 255, 255, 0.12); color: #00ffff; border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 100px; padding: 6px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;">
-            One-Time Passcode
-          </span>
-        </div>
-        <h2 style="color: #ffffff; font-size: 20px; font-weight: 800; margin: 16px 0 8px; text-align: center;">Your Verification Code</h2>
-        <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 24px; text-align: center;">
-          Enter this code to securely access your <strong style="color: #e2e8f0;">AI Assessment Studio</strong> workspace.
-        </p>
-        <div style="background: rgba(0, 255, 255, 0.06); border: 1.5px solid rgba(0, 255, 255, 0.3); border-radius: 14px; text-align: center; padding: 28px 0; margin-bottom: 24px;">
-          <span style="font-size: 42px; font-weight: 900; letter-spacing: 12px; color: #00ffff;">{otp}</span>
-        </div>
-        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-          <div style="color: #94a3b8; font-size: 13px; line-height: 1.6;">
-            &#8987; Valid for <strong style="color: #e2e8f0;">10 minutes</strong> &nbsp;|&nbsp; &#128274; Do not share this code with anyone
-          </div>
-        </div>
-        <div style="text-align: center;">
-          <a href="https://ai-interview-platform-3-vdic.onrender.com" style="color: #00ffff; font-size: 13px; font-weight: 600; text-decoration: none;">Visit AI Assessment Studio &rarr;</a>
-        </div>
-      </div>
-      <div style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.06); text-align: center;">
-        <p style="color: #475569; font-size: 11px; margin: 0;">This is an automated message from AI Assessment Studio. Please do not reply.</p>
-      </div>
-    </div>
-    """
 
 def _send_via_resend(to_email, otp, api_key):
     """Send via Resend HTTP API (port 443 - works on Render free tier)."""
@@ -175,7 +143,7 @@ def _send_via_smtp(to_email, otp, mail_user, mail_pass):
 
 def send_slot_unlocked_email(to_email, candidate_name):
     """Send an automated HTML notification email when candidate slot is unlocked."""
-    subject = "🎉 Your Assessment Slot Has Been Unlocked - AI Assessment Studio"
+    subject = "Your Assessment Slot Has Been Unlocked - AI Assessment Studio"
     candidate_display = (candidate_name or "Candidate").strip()
     
     html_content = f"""
@@ -193,7 +161,7 @@ def send_slot_unlocked_email(to_email, candidate_name):
       </p>
       <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(0, 255, 255, 0.2); border-radius: 12px; padding: 20px; margin-bottom: 28px;">
         <div style="color: #00ffff; font-weight: 700; font-size: 14px; margin-bottom: 6px;">
-          ✓ What's Next?
+          What is Next?
         </div>
         <div style="color: #cbd5e1; font-size: 13px; line-height: 1.6;">
           Log in to your workspace dashboard to launch your new assessment session. Ensure your camera, microphone, and quiet environment are ready.
@@ -272,7 +240,7 @@ def send_otp_email(to_email, otp):
       3. SendGrid (fallback - set SENDGRID_API_KEY)
     If none are configured, prints OTP to logs (dev/local fallback).
     """
-    print(f"[OTP] ── Sending OTP to {to_email} ──")
+    print(f"[OTP] -- Sending OTP to {to_email} --")
 
     # 1. Gmail SMTP (primary)
     mail_user = (os.environ.get("MAIL_USERNAME") or "").strip()
@@ -282,12 +250,12 @@ def send_otp_email(to_email, otp):
         try:
             result = _send_via_smtp(to_email, otp, mail_user, mail_pass)
             if result:
-                print(f"[OTP] ✓ Gmail SMTP: sent to {to_email}")
+                print(f"[OTP] Gmail SMTP: sent to {to_email}")
                 return True
             else:
-                print(f"[OTP] ✗ Gmail SMTP returned False, trying next provider...")
+                print(f"[OTP] Gmail SMTP returned False, trying next provider...")
         except Exception as e:
-            print(f"[OTP] ✗ Gmail SMTP exception: {e}")
+            print(f"[OTP] Gmail SMTP exception: {e}")
 
     # 2. Resend (fallback)
     resend_key = (os.environ.get("RESEND_API_KEY") or "").strip()
@@ -296,12 +264,12 @@ def send_otp_email(to_email, otp):
         try:
             ok = _send_via_resend(to_email, otp, resend_key)
             if ok:
-                print(f"[OTP] ✓ Resend: sent to {to_email}")
+                print(f"[OTP] Resend: sent to {to_email}")
                 return True
             else:
-                print(f"[OTP] ✗ Resend returned False, trying next provider...")
+                print(f"[OTP] Resend returned False, trying next provider...")
         except Exception as e:
-            print(f"[OTP] ✗ Resend exception: {e}")
+            print(f"[OTP] Resend exception: {e}")
 
     # 3. SendGrid (fallback)
     sg_key = (os.environ.get("SENDGRID_API_KEY") or "").strip()
@@ -310,12 +278,12 @@ def send_otp_email(to_email, otp):
         try:
             ok = _send_via_sendgrid(to_email, otp, sg_key)
             if ok:
-                print(f"[OTP] ✓ SendGrid: sent to {to_email}")
+                print(f"[OTP] SendGrid: sent to {to_email}")
                 return True
             else:
-                print(f"[OTP] ✗ SendGrid returned False")
+                print(f"[OTP] SendGrid returned False")
         except Exception as e:
-            print(f"[OTP] ✗ SendGrid exception: {e}")
+            print(f"[OTP] SendGrid exception: {e}")
 
     # Dev fallback
     print(f"[OTP] No email provider configured. OTP for {to_email}: {otp}")
