@@ -83,7 +83,8 @@ def admin_settings():
                 default_difficulty='student',
                 question_timer_seconds=90,
                 enable_attempt_limits=True,
-                default_allowed_interviews=2
+                default_allowed_interviews=2,
+                enable_warning_strikes=True
             )
             db.session.add(db_settings)
 
@@ -106,8 +107,9 @@ def admin_settings():
             except (ValueError, TypeError):
                 pass
 
-        # Checkbox: present = True, absent = False
+        # Checkboxes: present = True, absent = False
         db_settings.enable_attempt_limits = bool(request.form.get("enable_attempt_limits"))
+        db_settings.enable_warning_strikes = bool(request.form.get("enable_warning_strikes"))
         if "default_allowed_interviews" in request.form:
             try:
                 db_settings.default_allowed_interviews = int(float(request.form["default_allowed_interviews"]))

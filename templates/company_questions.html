@@ -1,617 +1,522 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ company.name }} Interview Resources - AI Assessment Platform</title>
-    <meta name="description" content="Curated interview preparation resources for {{ company.name }} - coding questions, aptitude papers, system design guides, and more.">
+    <title>{{ company.name }} Interview Resources — AI Assessment Platform</title>
+    <meta name="description" content="Curated interview questions, practice problem sets, and test patterns for {{ company.name }}.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script>
     (function() {
         document.documentElement.classList.add('dark-theme');
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
     })();
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
     <style>
         * {
             font-family: 'Inter', sans-serif;
         }
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6, .outfit-font {
             font-family: 'Outfit', sans-serif;
+        }
+        code, pre, .mono-font {
+            font-family: 'JetBrains Mono', monospace;
         }
 
         body {
-            
-            color: var(--ink);
+            color: #f1f5f9;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            transition: background-color 0.25s ease, color 0.25s ease;
-        }
-
-        /* Abstract Organic Background Orbs (colored dynamically to match company) */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(140px);
-            z-index: -1;
-            opacity: 0.45;
-            pointer-events: none;
-            animation: floatOrb 22s infinite alternate ease-in-out;
-        }
-        .orb-1 {
-            top: -10%;
-            left: -5%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, {{ company.color }} 0%, rgba(255,255,255,0) 70%);
-        }
-        .orb-2 {
-            bottom: -5%;
-            right: -5%;
-            width: 550px;
-            height: 550px;
-            background: radial-gradient(circle, #7928ca 0%, rgba(255,255,255,0) 70%);
-            animation-delay: -5s;
-        }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -30px) scale(1.1); }
-            100% { transform: translate(-20px, 40px) scale(0.9); }
-        }
-
-        /* Cyber grid texture */
-        .cyber-grid {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* â”€â”€ Hero Banner â”€â”€ */
-        .company-hero {
-            background: rgba(255, 255, 255, 0.55);
-            border-radius: 28px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 15px 45px -15px rgba(0, 0, 0, 0.03), 0 0 30px var(--accent-glow);
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .company-hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 28px;
-            padding: 2.5px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.3) 60%, var(--accent) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        .hero-logo-badge {
-            width: 96px; height: 96px;
-            border-radius: 22px;
-            display: flex; align-items: center; justify-content: center;
-            background: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08);
-            flex-shrink: 0;
-            transition: all 0.4s ease;
-        }
-        .hero-logo-badge img {
-            width: 54px; height: 54px;
-            object-fit: contain;
-        }
-        .hero-logo-badge i {
-            font-size: 2.5rem;
-        }
-        .hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.4rem; font-weight: 700;
-            color: #0f172a; margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
-        .hero-desc {
-            color: #475569; font-size: 1rem;
-            line-height: 1.7; max-width: 780px;
-        }
-
-        /* â”€â”€ Section Label â”€â”€ */
-        .section-label {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.8rem; font-weight: 800;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: #94a3b8; margin-bottom: 24px;
-        }
-
-        /* â”€â”€ Resource Card â”€â”€ */
-        .resource-card {
-            background: rgba(255, 255, 255, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 24px;
-            padding: 30px;
-            display: flex; flex-direction: column;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            /* Reduced permanent aura shadow */
-            box-shadow: 0 8px 25px -10px rgba(0, 0, 0, 0.02), 0 0 12px var(--card-glow);
-            z-index: 1;
-        }
-        .resource-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 24px;
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2) 50%, var(--card-accent) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 2;
-        }
-        .card-aura {
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: radial-gradient(circle at 100% 0%, var(--card-glow) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-            transition: all 0.5s ease;
-            opacity: 0.8;
-        }
-        .resource-card:hover .card-aura {
-            opacity: 1.2;
-            background: radial-gradient(circle at 100% 0%, var(--card-accent) 15%, transparent 70%);
-        }
-        .resource-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 4px;
-            background: var(--card-accent, #4e73df);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-            border-radius: 0 0 24px 24px;
-        }
-        .resource-card:hover {
-            transform: translateY(-8px);
-            /* Reduced hover shadow glow */
-            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.04), 0 0 15px var(--card-glow);
-            border-color: rgba(255, 255, 255, 0.9);
-            color: inherit;
-        }
-        .resource-card:hover::after { transform: scaleX(1); }
-
-        .card-site-badge {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.72rem; font-weight: 800;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            padding: 5px 12px; border-radius: 20px;
-            background: var(--badge-bg, #eef2ff);
-            color: var(--badge-color, #4e73df);
-            display: inline-block; margin-bottom: 20px;
-            align-self: flex-start;
-        }
-        .card-icon-wrap {
-            width: 56px; height: 56px;
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--icon-bg, #f0f4ff);
-            margin-bottom: 20px;
-            flex-shrink: 0;
-            transition: all 0.4s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-        .card-icon-wrap img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-        }
-        .resource-card:hover .card-icon-wrap {
-            transform: scale(1.1);
-        }
-        .card-label {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.15rem; font-weight: 700;
-            color: #0f172a; margin-bottom: 8px;
-            line-height: 1.3;
-            letter-spacing: -0.01em;
-        }
-        .card-desc {
-            font-size: 0.88rem; color: #475569;
-            line-height: 1.65; flex-grow: 1;
-        }
-        .card-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--cta-color, #4e73df);
-            margin-top: 24px;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 12px var(--card-glow);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .card-cta i { transition: transform 0.2s; }
-        .resource-card:hover .card-cta {
-            background: var(--card-accent);
-            color: #ffffff !important;
-            border-color: var(--card-accent);
-            box-shadow: 0 0 15px var(--card-accent);
-        }
-        .resource-card:hover .card-cta i { transform: translate(2px, -2px); }
-
-        /* â”€â”€ Colour themes per site â”€â”€ */
-        .theme-prepinsta  { --card-accent:#FF6B35; --card-glow:rgba(255,107,53,0.15); --badge-bg:#fff3ee; --badge-color:#FF6B35; --icon-bg:#fff3ee; --icon-color:#FF6B35; --cta-color:#FF6B35; }
-        .theme-gfg        { --card-accent:#2f8d46; --card-glow:rgba(47,141,70,0.15); --badge-bg:#edfaf1; --badge-color:#2f8d46; --icon-bg:#edfaf1; --icon-color:#2f8d46; --cta-color:#2f8d46; }
-        .theme-leetcode   { --card-accent:#f89f1b; --card-glow:rgba(248,159,27,0.15); --badge-bg:#fff8ec; --badge-color:#f89f1b; --icon-bg:#fff8ec; --icon-color:#f89f1b; --cta-color:#f89f1b; }
-        .theme-interviewbit { --card-accent:#0038A6; --card-glow:rgba(0,56,166,0.15); --badge-bg:#eef2ff; --badge-color:#0038A6; --icon-bg:#eef2ff; --icon-color:#0038A6; --cta-color:#0038A6; }
-        .theme-indiabix   { --card-accent:#e91e63; --card-glow:rgba(233,30,99,0.15); --badge-bg:#fde8f1; --badge-color:#e91e63; --icon-bg:#fde8f1; --icon-color:#e91e63; --cta-color:#e91e63; }
-        .theme-infytq     { --card-accent:#007CC3; --card-glow:rgba(0,124,195,0.15); --badge-bg:#e8f4fb; --badge-color:#007CC3; --icon-bg:#e8f4fb; --icon-color:#007CC3; --cta-color:#007CC3; }
-        .theme-glassdoor  { --card-accent:#0CAA41; --card-glow:rgba(12,170,65,0.15); --badge-bg:#e8faf0; --badge-color:#0CAA41; --icon-bg:#e8faf0; --icon-color:#0CAA41; --cta-color:#0CAA41; }
-
-        /* â”€â”€ Pro Tip banner â”€â”€ */
-        .pro-tip {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border-radius: 24px;
-            padding: 28px 32px;
-            color: #fff;
-            margin-top: 40px;
-            display: flex; align-items: center; gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-        }
-        .pro-tip-icon {
-            font-size: 2rem; flex-shrink: 0;
-            width: 56px; height: 56px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .pro-tip-text strong { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
-        .pro-tip-text p { font-size: 0.88rem; color: #94a3b8; margin: 6px 0 0; line-height: 1.6; }
-
-        /* Back Button Style with Blue Hover Glow */
-        .btn-back {
-            background: rgba(255, 255, 255, 0.7) !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            color: #475569 !important;
-            font-weight: 600;
-        }
-        .btn-back:hover {
-            background: #ffffff !important;
-            border-color: #0070f3 !important;
-            color: #0070f3 !important;
-            box-shadow: 0 0 15px rgba(0, 112, 243, 0.45) !important;
-            transform: translateY(-2px);
-        }
-
-        /* Dark Theme overrides */
-        html.dark-theme body {
-            
-        }
-        html.dark-theme .cyber-grid {
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-        }
-        html.dark-theme .breadcrumb-item.active {
-            color: #ffffff !important;
-        }
-        html.dark-theme .breadcrumb-item a {
-            color: #b0c4d8 !important;
-        }
-        html.dark-theme .company-hero {
-            background: rgba(10, 15, 29, 0.75) !important;
-            border-color: rgba(0, 255, 255, 0.25) !important;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-glow) !important;
-        }
-        html.dark-theme .company-hero::before {
-            background: linear-gradient(135deg, rgba(0,255,255,0.4), rgba(0,255,255,0.1) 60%, var(--accent) 100%) !important;
-        }
-        html.dark-theme .hero-logo-badge {
-            background: #040914 !important;
-            border-color: rgba(0, 255, 255, 0.25) !important;
-        }
-        html.dark-theme .hero-title {
-            color: #ffffff !important;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8) !important;
-        }
-        html.dark-theme .hero-desc {
-            color: #cbd5e1 !important;
-        }
-        html.dark-theme .resource-card {
-            background: rgba(10, 15, 29, 0.75) !important;
-            border-color: rgba(0, 255, 255, 0.18) !important;
-            color: #ffffff !important;
-        }
-        html.dark-theme .resource-card::before {
-            background: linear-gradient(135deg, rgba(0,255,255,0.3), rgba(0,255,255,0.05) 50%, var(--card-accent) 100%) !important;
-        }
-        html.dark-theme .resource-card:hover {
-            border-color: var(--card-accent) !important;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--card-accent) !important;
-        }
-        html.dark-theme .card-label {
-            color: #ffffff !important;
-        }
-        html.dark-theme .card-desc {
-            color: #cbd5e1 !important;
-        }
-        html.dark-theme .card-cta {
-            background: rgba(4, 9, 20, 0.8) !important;
-            border-color: rgba(0, 255, 255, 0.2) !important;
-            color: var(--cta-color) !important;
-        }
-        html.dark-theme .card-cta:hover {
-            background: var(--card-accent) !important;
-            color: #ffffff !important;
-            border-color: var(--card-accent) !important;
-        }
-        html.dark-theme .pro-tip {
-            background: linear-gradient(135deg, #050a15 0%, #0c1830 100%) !important;
-            border: 1px solid rgba(0, 255, 255, 0.15) !important;
-        }
-        html.dark-theme .btn-back {
-            background: rgba(10, 15, 29, 0.85) !important;
-            border-color: rgba(0, 255, 255, 0.2) !important;
-            color: #ffffff !important;
-        }
-        html.dark-theme .btn-back:hover {
-            background: rgba(0, 255, 255, 0.12) !important;
-            border-color: #00ffff !important;
-            color: #00ffff !important;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.45) !important;
-        }
-        
-        /* Modern neon-tinted transparent badge style for dark mode */
-        html.dark-theme .theme-prepinsta  { --badge-bg: rgba(255,107,53,0.12); --badge-color: #FF6B35; --icon-bg: rgba(255,107,53,0.08); }
-        html.dark-theme .theme-gfg        { --badge-bg: rgba(47,141,70,0.12);  --badge-color: #34d399; --icon-bg: rgba(47,141,70,0.08); }
-        html.dark-theme .theme-leetcode   { --badge-bg: rgba(248,159,27,0.12);  --badge-color: #f89f1b; --icon-bg: rgba(248,159,27,0.08); }
-        html.dark-theme .theme-interviewbit { --badge-bg: rgba(96,165,250,0.12); --badge-color: #60a5fa; --icon-bg: rgba(96,165,250,0.08); }
-        html.dark-theme .theme-indiabix   { --badge-bg: rgba(233,30,99,0.12);   --badge-color: #f43f5e; --icon-bg: rgba(233,30,99,0.08); }
-        html.dark-theme .theme-infytq     { --badge-bg: rgba(0,124,195,0.12);  --badge-color: #38bdf8; --icon-bg: rgba(0,124,195,0.08); }
-        html.dark-theme .theme-glassdoor  { --badge-bg: rgba(12,170,65,0.12);   --badge-color: #10b981; --icon-bg: rgba(12,170,65,0.08); }
-        
-        html.dark-theme .card-site-badge {
-            background: var(--badge-bg) !important;
-            color: var(--badge-color) !important;
-            border: 1px solid var(--badge-bg) !important;
-        }
-
-        /* Micro-animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-item {
-            animation: fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        /* ══ GOATED BG OVERRIDES ══ */
-        html.dark-theme body {
             background: #020510 !important;
-            background-image: none !important;
         }
-        html.dark-theme .orb {
-            display: none !important;
-        }
+
+        /* ══ GOATED BG ══ */
         .db-bg {
             position: fixed; inset: 0; z-index: 0;
-            pointer-events: none; overflow: hidden; display: none;
+            pointer-events: none; overflow: hidden; display: block;
         }
-        html.dark-theme .db-bg { display: block; }
         .db-bg::before {
             content: ''; position: absolute; inset: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0,150,255,0.18) 0%, transparent 55%),
-                radial-gradient(ellipse 60% 50% at 85% 10%, rgba(100,0,255,0.14) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 55% at 50% 100%, rgba(0,255,220,0.10) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 40% at 90% 80%, rgba(0,80,255,0.12) 0%, transparent 50%),
-                linear-gradient(160deg,#02060f 0%,#010416 30%,#020820 60%,#010512 100%);
+                radial-gradient(ellipse 85% 65% at 15% 15%, rgba(0, 150, 255, 0.16) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 55% at 85% 15%, rgba(139, 92, 246, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse 75% 60% at 50% 100%, rgba(16, 185, 129, 0.10) 0%, transparent 55%),
+                linear-gradient(160deg,#02060f 0%,#010416 35%,#020820 65%,#010512 100%);
         }
-        .db-orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:0; animation:orbDrift 18s ease-in-out infinite; }
-        .db-orb-1 { width:520px;height:520px;top:-120px;left:-100px;background:radial-gradient(circle,rgba(0,120,255,0.30) 0%,transparent 70%);animation-delay:0s;animation-duration:20s; }
-        .db-orb-2 { width:400px;height:400px;top:10%;right:-80px;background:radial-gradient(circle,rgba(120,0,255,0.22) 0%,transparent 70%);animation-delay:-7s;animation-duration:24s; }
-        .db-orb-3 { width:480px;height:480px;bottom:-80px;left:30%;background:radial-gradient(circle,rgba(0,200,255,0.18) 0%,transparent 70%);animation-delay:-13s;animation-duration:22s; }
-        .db-orb-4 { width:300px;height:300px;top:45%;right:25%;background:radial-gradient(circle,rgba(60,0,180,0.16) 0%,transparent 70%);animation-delay:-4s;animation-duration:19s; }
-        .db-orb-5 { width:350px;height:350px;bottom:10%;right:-50px;background:radial-gradient(circle,rgba(0,255,180,0.12) 0%,transparent 70%);animation-delay:-9s;animation-duration:26s; }
+        .db-orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0; animation:orbDrift 20s ease-in-out infinite; }
+        .db-orb-1 { width:560px;height:560px;top:-140px;left:-120px;background:radial-gradient(circle, {{ company.color }}35 0%,transparent 70%);animation-delay:0s;animation-duration:22s; }
+        .db-orb-2 { width:440px;height:440px;top:15%;right:-100px;background:radial-gradient(circle,rgba(147,51,234,0.22) 0%,transparent 70%);animation-delay:-7s;animation-duration:26s; }
+        .db-orb-3 { width:500px;height:500px;bottom:-100px;left:25%;background:radial-gradient(circle,rgba(16,185,129,0.18) 0%,transparent 70%);animation-delay:-13s;animation-duration:24s; }
         @keyframes orbDrift {
             0%   { opacity:0.6; transform:translate(0,0) scale(1); }
-            25%  { opacity:0.8; transform:translate(30px,-20px) scale(1.05); }
-            50%  { opacity:0.55; transform:translate(-20px,30px) scale(0.97); }
-            75%  { opacity:0.75; transform:translate(15px,10px) scale(1.03); }
+            25%  { opacity:0.85; transform:translate(35px,-25px) scale(1.06); }
+            50%  { opacity:0.55; transform:translate(-25px,35px) scale(0.96); }
+            75%  { opacity:0.8; transform:translate(20px,15px) scale(1.04); }
             100% { opacity:0.6; transform:translate(0,0) scale(1); }
         }
         .db-grid {
             position:absolute; inset:0;
-            background-image: linear-gradient(rgba(0,200,255,0.035) 1px,transparent 1px), linear-gradient(90deg,rgba(0,200,255,0.035) 1px,transparent 1px);
+            background-image: linear-gradient(rgba(0,220,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,220,255,0.03) 1px,transparent 1px);
             background-size:60px 60px;
-            mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
-            -webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
+            mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%);
+            -webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%);
         }
         .db-particles { position:absolute; inset:0; }
         .db-star { position:absolute; border-radius:50%; background:#ffffff; animation:starTwinkle linear infinite; }
         @keyframes starTwinkle {
             0%,100% { opacity:0.05; transform:scale(1); }
-            50%      { opacity:0.55; transform:scale(1.6); }
+            50%      { opacity:0.6; transform:scale(1.7); }
         }
         .db-topbar-glow {
             position:absolute; top:0; left:0; right:0; height:2px;
-            background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.7) 30%,rgba(120,0,255,0.7) 70%,transparent 100%);
-            animation:topbarGlowPulse 4s ease-in-out infinite;
+            background:linear-gradient(90deg,transparent 0%, {{ company.color }} 35%, #38bdf8 70%,transparent 100%);
         }
-        @keyframes topbarGlowPulse { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+
+        /* ══ HERO DETAIL BANNER ══ */
+        .detail-hero-card {
+            background: rgba(10, 20, 44, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 38px 42px;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6), 0 0 35px var(--accent-glow);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 36px;
+        }
+
+        .detail-hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 28px;
+            background: linear-gradient(135deg, {{ company.color }}15 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-logo-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: rgba(15, 25, 50, 0.9);
+            border: 2px solid {{ company.color }}40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 25px {{ company.color }}35;
+        }
+
+        .hero-title-white {
+            color: #ffffff !important;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-desc-text {
+            color: #cbd5e1 !important;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* ══ RESOURCE CARDS ══ */
+        .resource-vault-card {
+            background: rgba(10, 20, 42, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.4);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .resource-vault-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--card-accent);
+            box-shadow: 0 20px 45px -10px rgba(0,0,0,0.7), 0 0 30px var(--card-glow);
+        }
+
+        .res-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: rgba(15, 28, 55, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: var(--card-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            transition: all 0.35s ease;
+        }
+
+        .resource-vault-card:hover .res-icon-box {
+            background: var(--card-accent);
+            color: #ffffff !important;
+            border-color: var(--card-accent);
+            box-shadow: 0 0 20px var(--card-accent);
+            transform: scale(1.08);
+        }
+
+        .res-platform-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--card-accent);
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .res-title {
+            color: #ffffff !important;
+            font-size: 1.22rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .res-desc {
+            color: #94a3b8 !important;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .btn-direct-access {
+            background: rgba(15, 28, 55, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+            border-radius: 14px;
+            padding: 10px 18px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .btn-direct-access:hover {
+            background: var(--card-accent);
+            border-color: var(--card-accent);
+            color: #ffffff !important;
+            box-shadow: 0 0 18px var(--card-accent);
+            gap: 10px;
+        }
+
+        /* ══ PRO TIP BANNER ══ */
+        .pro-tip-banner {
+            background: linear-gradient(135deg, rgba(8, 16, 36, 0.85) 0%, rgba(15, 28, 55, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            padding: 26px 30px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 36px;
+        }
+
+        .pro-tip-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fbbf24;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        /* Back Button */
+        .btn-back-detail {
+            background: rgba(15, 28, 55, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.04em;
+        }
+        .btn-back-detail:hover {
+            background: #1e3a8a !important;
+            border-color: #38bdf8 !important;
+            color: #38bdf8 !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Micro-animations */
+        @keyframes fadeInItem {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-item {
+            animation: fadeInItem 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
         ::-webkit-scrollbar{width:6px;height:6px;}
         ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:rgba(0,255,255,0.2);border-radius:99px;}
+        ::-webkit-scrollbar-thumb{background:rgba(0,220,255,0.25);border-radius:99px;}
         ::-webkit-scrollbar-thumb:hover{background:#00ffff;}
     </style>
 </head>
 <body>
-
-{% include 'navbar.html' %}
 
 <!-- ══ GOATED ANIMATED BACKGROUND ══ -->
 <div class="db-bg" aria-hidden="true">
     <div class="db-orb db-orb-1"></div>
     <div class="db-orb db-orb-2"></div>
     <div class="db-orb db-orb-3"></div>
-    <div class="db-orb db-orb-4"></div>
-    <div class="db-orb db-orb-5"></div>
     <div class="db-grid"></div>
     <div class="db-particles" id="dbParticles"></div>
     <div class="db-topbar-glow"></div>
 </div>
 
-<!-- Background Tech Effects -->
-<div class="cyber-grid"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
+<div class="container py-5" style="max-width: 1140px; position: relative; z-index: 10;">
 
-<div class="container py-5" style="max-width: 1100px; position: relative; z-index: 10;">
-
-    <!-- Breadcrumb -->
+    <!-- ══ BREADCRUMB ══ -->
     <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb mb-0" style="font-size:0.875rem;">
-            <li class="breadcrumb-item"><a href="/tech-questions" class="text-decoration-none text-muted">Company Hub</a></li>
-            <li class="breadcrumb-item active" style="color:#0f172a; font-weight:600;">{{ company.name }}</li>
+        <ol class="breadcrumb mb-0" style="font-size: 0.88rem;">
+            <li class="breadcrumb-item">
+                <a href="/tech-questions" class="text-decoration-none" style="color: #38bdf8; font-weight: 600;">
+                    <i class="bi bi-grid-fill me-1"></i> Resources &amp; Prep Hub
+                </a>
+            </li>
+            <li class="breadcrumb-item active" style="color: #ffffff; font-weight: 700;">{{ company.name }}</li>
         </ol>
     </nav>
 
-    <!-- Hero Banner -->
-    <div class="company-hero" style="--accent: {{ company.color }}; --accent-glow: {{ company.color }}20;">
+    <!-- ══ HERO BANNER ══ -->
+    <div class="detail-hero-card" style="--accent: {{ company.color }}; --accent-glow: {{ company.color }}30;">
         <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-            <!-- Glassmorphic Badge with Official Logo -->
-            <div class="hero-logo-badge">
+            <!-- Icon/Logo Box -->
+            <div class="hero-logo-box">
                 {% set logo_map = {
-                    'google': 'https://cdn.simpleicons.org/google',
-                    'microsoft': 'https://cdn.simpleicons.org/microsoft',
-                    'amazon': 'https://cdn.simpleicons.org/amazon',
-                    'meta': 'https://cdn.simpleicons.org/meta',
-                    'netflix': 'https://cdn.simpleicons.org/netflix',
-                    'tcs': 'https://cdn.simpleicons.org/tataconsultancyservices',
-                    'infosys': 'https://cdn.simpleicons.org/infosys',
-                    'wipro': 'https://cdn.simpleicons.org/wipro',
-                    'accenture': 'https://cdn.simpleicons.org/accenture',
-                    'cognizant': 'https://cdn.simpleicons.org/cognizant'
+                    'google': 'https://www.google.com/s2/favicons?sz=128&domain=google.com',
+                    'microsoft': 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com',
+                    'amazon': 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com',
+                    'meta': 'https://www.google.com/s2/favicons?sz=128&domain=meta.com',
+                    'apple': 'https://www.google.com/s2/favicons?sz=128&domain=apple.com',
+                    'netflix': 'https://www.google.com/s2/favicons?sz=128&domain=netflix.com',
+                    'adobe': 'https://www.google.com/s2/favicons?sz=128&domain=adobe.com',
+                    'salesforce': 'https://www.google.com/s2/favicons?sz=128&domain=salesforce.com',
+                    'oracle': 'https://www.google.com/s2/favicons?sz=128&domain=oracle.com',
+                    'cisco': 'https://www.google.com/s2/favicons?sz=128&domain=cisco.com',
+                    'nvidia': 'https://www.google.com/s2/favicons?sz=128&domain=nvidia.com',
+                    'uber': 'https://www.google.com/s2/favicons?sz=128&domain=uber.com',
+                    'atlassian': 'https://www.google.com/s2/favicons?sz=128&domain=atlassian.com',
+                    'ibm': 'https://www.google.com/s2/favicons?sz=128&domain=ibm.com',
+                    'paypal': 'https://www.google.com/s2/favicons?sz=128&domain=paypal.com',
+                    'qualcomm': 'https://www.google.com/s2/favicons?sz=128&domain=qualcomm.com',
+                    'tcs': 'https://www.google.com/s2/favicons?sz=128&domain=tcs.com',
+                    'infosys': 'https://www.google.com/s2/favicons?sz=128&domain=infosys.com',
+                    'wipro': 'https://www.google.com/s2/favicons?sz=128&domain=wipro.com',
+                    'accenture': 'https://www.google.com/s2/favicons?sz=128&domain=accenture.com',
+                    'cognizant': 'https://www.google.com/s2/favicons?sz=128&domain=cognizant.com',
+                    'capgemini': 'https://www.google.com/s2/favicons?sz=128&domain=capgemini.com',
+                    'zoho': 'https://www.google.com/s2/favicons?sz=128&domain=zoho.com',
+                    'flipkart': 'https://www.google.com/s2/favicons?sz=128&domain=flipkart.com',
+                    'swiggy-zomato': 'https://www.google.com/s2/favicons?sz=128&domain=swiggy.com',
+                    'deloitte': 'https://www.google.com/s2/favicons?sz=128&domain=deloitte.com',
+                    'ey': 'https://www.google.com/s2/favicons?sz=128&domain=ey.com',
+                    'pwc': 'https://www.google.com/s2/favicons?sz=128&domain=pwc.com',
+                    'kpmg': 'https://www.google.com/s2/favicons?sz=128&domain=kpmg.com',
+                    'mckinsey': 'https://www.google.com/s2/favicons?sz=128&domain=mckinsey.com',
+                    'bcg': 'https://www.google.com/s2/favicons?sz=128&domain=bcg.com',
+                    'bain': 'https://www.google.com/s2/favicons?sz=128&domain=bain.com',
+                    'hdfc-bank': 'https://www.google.com/s2/favicons?sz=128&domain=hdfcbank.com',
+                    'icici-bank': 'https://www.google.com/s2/favicons?sz=128&domain=icicibank.com',
+                    'sbi': 'https://www.google.com/s2/favicons?sz=128&domain=sbi.co.in',
+                    'axis-bank': 'https://www.google.com/s2/favicons?sz=128&domain=axisbank.com',
+                    'kotak-bank': 'https://www.google.com/s2/favicons?sz=128&domain=kotak.com',
+                    'bob-pnb': 'https://www.google.com/s2/favicons?sz=128&domain=bankofbaroda.in',
+                    'goldman-sachs': 'https://www.google.com/s2/favicons?sz=128&domain=goldmansachs.com',
+                    'jpmorgan': 'https://www.google.com/s2/favicons?sz=128&domain=jpmorgan.com',
+                    'morgan-stanley': 'https://www.google.com/s2/favicons?sz=128&domain=morganstanley.com',
+                    'citigroup-barclays': 'https://www.google.com/s2/favicons?sz=128&domain=citi.com',
+                    'tata-group': 'https://www.google.com/s2/favicons?sz=128&domain=tata.com',
+                    'reliance-jio': 'https://www.google.com/s2/favicons?sz=128&domain=ril.com',
+                    'hul-itc': 'https://www.google.com/s2/favicons?sz=128&domain=hul.co.in',
+                    'lt-infra': 'https://www.google.com/s2/favicons?sz=128&domain=larsentoubro.com',
+                    'indigo-airindia': 'https://www.google.com/s2/favicons?sz=128&domain=goindigo.in'
                 } %}
-                {% set logo_url = logo_map[company_key] %}
+                {% set generic_icon_map = {
+                    'fullstack-dev': 'bi-globe',
+                    'genai-llm': 'bi-robot',
+                    'data-science-ml': 'bi-bar-chart-line-fill',
+                    'cloud-architecture': 'bi-cloud-check-fill',
+                    'devops-sre': 'bi-gear-wide-connected',
+                    'cybersecurity': 'bi-shield-lock-fill',
+                    'system-design': 'bi-diagram-3-fill',
+                    'mobile-app-dev': 'bi-phone-fill',
+                    'data-engineering': 'bi-database-fill-gear',
+                    'qa-automation': 'bi-check2-circle',
+                    'embedded-iot': 'bi-motherboard-fill',
+                    'blockchain-web3': 'bi-box-fill',
+                    'game-dev': 'bi-controller',
+                    'database-admin': 'bi-database-fill',
+                    'networks-os': 'bi-hdd-network-fill',
+                    'compilers-lowlevel': 'bi-cpu-fill',
+                    'finance': 'bi-cash-coin',
+                    'auditing-taxation': 'bi-journal-check',
+                    'investment-banking-pe': 'bi-graph-up-arrow',
+                    'product-management': 'bi-kanban-fill',
+                    'international-trade-exim': 'bi-globe2',
+                    'fintech-payments': 'bi-phone-fill',
+                    'marketing': 'bi-megaphone-fill',
+                    'digital-marketing-seo': 'bi-search',
+                    'hr': 'bi-people-fill',
+                    'supply-chain': 'bi-box-seam-fill',
+                    'consulting': 'bi-diagram-3-fill',
+                    'sales-bd': 'bi-person-badge-fill',
+                    'business-analytics': 'bi-pie-chart-fill',
+                    'banking-risk': 'bi-shield-shaded',
+                    'actuarial-insurance': 'bi-shield-check',
+                    'real-estate-property': 'bi-buildings-fill',
+                    'corporate-law-cs': 'bi-journal-bookmark-fill',
+                    'retail-ecommerce': 'bi-bag-check-fill',
+                    'healthcare-admin': 'bi-hospital-fill',
+                    'hospitality-tourism': 'bi-door-open-fill',
+                    'aviation': 'bi-airplane-fill',
+                    'media-pr-comms': 'bi-broadcast-pin',
+                    'python-scripting': 'bi-terminal-fill',
+                    'bash-shell': 'bi-terminal',
+                    'sql-scripting': 'bi-database-fill-gear',
+                    'javascript-scripting': 'bi-filetype-js',
+                    'typescript': 'bi-filetype-tsx',
+                    'core-java': 'bi-cup-hot-fill',
+                    'cpp-programming': 'bi-cpu-fill',
+                    'csharp-dotnet': 'bi-window-sidebar',
+                    'rust': 'bi-shield-check',
+                    'golang': 'bi-lightning-charge-fill',
+                    'kotlin': 'bi-phone-fill',
+                    'swift': 'bi-apple',
+                    'powershell': 'bi-windows',
+                    'php-scripting': 'bi-filetype-php',
+                    'ruby-scripting': 'bi-gem',
+                    'r-scripting': 'bi-bar-chart-fill',
+                    'perl-scripting': 'bi-regex',
+                    'scala-programming': 'bi-diagram-2-fill',
+                    'dart-flutter': 'bi-phone',
+                    'matlab-octave': 'bi-calculator-fill'
+                } %}
+                {% set logo_url = logo_map.get(company_key) %}
                 {% if logo_url %}
-                <img src="{{ logo_url }}" alt="{{ company.name }} logo">
+                <img src="{{ logo_url }}" alt="{{ company.name }} logo" style="width: 50px; height: 50px; object-fit: contain;">
                 {% else %}
-                <span style="color: {{ company.color }};">
-                    <i class="bi bi-buildings-fill"></i>
+                <span style="color: {{ company.color }}; font-size: 2.6rem;">
+                    <i class="bi {{ generic_icon_map.get(company_key, 'bi-code-slash') }}"></i>
                 </span>
                 {% endif %}
             </div>
+
             <div class="flex-grow-1">
-                <h1 class="hero-title">{{ company.name }} Interview Prep</h1>
-                <p class="hero-desc mb-0">{{ company.description }}</p>
+                {% if company.category %}
+                <span class="badge px-3 py-1 mb-2 rounded-pill" style="background: rgba(255,255,255,0.06); color: {{ company.color }}; border: 1px solid {{ company.color }}35; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    {{ company.category }}
+                </span>
+                {% endif %}
+                <h1 class="hero-title-white mb-2">{{ company.name }} Preparation Vault</h1>
+                <p class="hero-desc-text mb-0">{{ company.description }}</p>
             </div>
-            <a href="/tech-questions" class="btn btn-back rounded-pill px-4 py-2 border shadow-sm align-self-start flex-shrink-0">
-                <i class="bi bi-arrow-left me-1"></i> BACK
+
+            <a href="/tech-questions" class="btn btn-back-detail rounded-pill px-4 py-2 border shadow-sm align-self-start flex-shrink-0">
+                <i class="bi bi-arrow-left me-1"></i> BACK TO HUB
             </a>
         </div>
     </div>
 
-    <!-- Resource Cards -->
-    <p class="section-label">Curated Study Resources</p>
-    <div class="row g-4 mb-4">
+    <!-- ══ RESOURCE CARDS SECTION ══ -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="text-white fw-bold mb-1 fs-4">Curated Free Question Banks &amp; Assessment Papers</h3>
+            <p class="text-muted mb-0" style="font-size: 0.9rem;">Free, direct, verified links to official study materials, coding environments, and past recruitment papers.</p>
+        </div>
+        <span class="badge px-3 py-2 rounded-pill bg-dark border border-secondary border-opacity-25 text-info" style="font-size: 0.8rem;">
+            <i class="bi bi-shield-check text-success me-1"></i> 100% Free &amp; Verified
+        </span>
+    </div>
+
+    <div class="row g-4">
         {% for r in company.resources %}
-        {% set site_lower = r.site | lower | replace(' ', '') %}
-        {% set domain_map = {
-            'leetcode': 'leetcode.com',
-            'geeksforgeeks': 'geeksforgeeks.org',
-            'interviewbit': 'interviewbit.com',
-            'prepinsta': 'prepinsta.com',
-            'indiabix': 'indiabix.com',
-            'infytq': 'infosys.com',
-            'glassdoor': 'glassdoor.com'
-        } %}
-        {% set site_key = 'interviewbit' %}
-        {% if 'prepinsta' in site_lower %}{% set site_key = 'prepinsta' %}
-        {% elif 'geeks' in site_lower %}{% set site_key = 'geeksforgeeks' %}
-        {% elif 'leetcode' in site_lower %}{% set site_key = 'leetcode' %}
-        {% elif 'indiabix' in site_lower %}{% set site_key = 'indiabix' %}
-        {% elif 'infytq' in site_lower or 'infosys' in site_lower %}{% set site_key = 'infytq' %}
-        {% elif 'glassdoor' in site_lower %}{% set site_key = 'glassdoor' %}
-        {% endif %}
-        <div class="col-lg-6 col-md-6 animate-item" style="animation-delay: {{ loop.index0 * 0.05 }}s;">
-            <a href="{{ r.url }}" target="_blank" rel="noopener noreferrer"
-               class="resource-card
-                {% if 'prepinsta' in site_lower %}theme-prepinsta
-                {% elif 'geeks' in site_lower %}theme-gfg
-                {% elif 'leetcode' in site_lower %}theme-leetcode
-                {% elif 'interviewbit' in site_lower %}theme-interviewbit
-                {% elif 'indiabix' in site_lower %}theme-indiabix
-                {% elif 'infytq' in site_lower or 'infosys' in site_lower %}theme-infytq
-                {% elif 'glassdoor' in site_lower %}theme-glassdoor
-                {% else %}theme-interviewbit{% endif %}">
-                
-                <div class="card-aura"></div>
-                <span class="card-site-badge">{{ r.site }}</span>
-                
-                <!-- Glassmorphic Icon Wrapper with Official Platform Favicon Logo -->
-                <div class="card-icon-wrap" style="background: var(--icon-bg); color: var(--icon-color);">
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain={{ domain_map[site_key] }}" alt="{{ r.site }} Logo" style="width: 32px; height: 32px; object-fit: contain;">
+        <div class="col-md-6 animate-item" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+            <div class="resource-vault-card" style="--card-accent: {{ company.color }}; --card-glow: {{ company.color }}25;">
+                <div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="res-icon-box">
+                            <i class="bi {{ r.icon }}"></i>
+                        </div>
+                        <span class="badge px-3 py-1 rounded-pill" style="background: rgba(255,255,255,0.06); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; font-weight: 600;">
+                            <i class="bi bi-link-45deg me-1"></i> Direct Access
+                        </span>
+                    </div>
+
+                    <span class="res-platform-tag">{{ r.site }}</span>
+                    <h4 class="res-title">{{ r.label }}</h4>
+                    <p class="res-desc">{{ r.desc }}</p>
                 </div>
 
-                <div class="card-label">{{ r.label }}</div>
-                <div class="card-desc">{{ r.desc }}</div>
-                <span class="card-cta">
-                    Open on {{ r.site }} <i class="bi bi-arrow-up-right"></i>
-                </span>
-            </a>
+                <a href="{{ r.url }}" target="_blank" rel="noopener noreferrer" class="btn-direct-access">
+                    <span>Open Question Bank on {{ r.site }}</span>
+                    <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+            </div>
         </div>
         {% endfor %}
     </div>
 
-    <!-- Pro Tip -->
-    <div class="pro-tip animate-item" style="animation-delay: 0.25s;">
-        <div class="pro-tip-icon"><i class="bi bi-lightbulb-fill text-warning"></i></div>
-        <div class="pro-tip-text">
-            <strong>Pro Tip - Combine resources for best results</strong>
-            <p>Use PrepInsta &amp; IndiaBix for aptitude rounds, GeeksForGeeks for topic-wise DSA prep, LeetCode for timed mock coding, and InterviewBit for full-length mock interviews. Covering all four gives you an edge over 90% of candidates.</p>
+    <!-- ══ PRO TIP BANNER ══ -->
+    <div class="pro-tip-banner">
+        <div class="pro-tip-icon-wrap">
+            <i class="bi bi-lightbulb-fill"></i>
         </div>
+        <div class="flex-grow-1">
+            <h5 class="text-white fw-bold mb-1 fs-6">Pro Preparation Tip</h5>
+            <p class="text-muted mb-0 fs-7">
+                Focus on solving real-world interview scenarios and timed online assessments. Review both technical coding/analytical logic and structured behavioral communication (STAR method) to maximize your selection chances.
+            </p>
+        </div>
+        <a href="/interview" class="btn btn-outline-info rounded-pill px-4 py-2 text-nowrap fw-semibold fs-7">
+            <i class="bi bi-play-circle-fill me-1"></i> Start AI Mock Interview
+        </a>
     </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// Ambient background particle stars
 (function(){
     var c=document.getElementById('dbParticles');
     if(!c)return;
-    for(var i=0;i<60;i++){
+    for(var i=0;i<45;i++){
         var s=document.createElement('div');
         s.className='db-star';
         var sz=Math.random()*2+1;

@@ -262,5 +262,6 @@ def view_past_result(result_id):
         domain=result.domain or "General",
         is_terminated=is_terminated,
         termination_reason=result.termination_reason or "Repeated window focus loss / tab switching detected during active assessment",
-        session_code=result.session_code
+        session_code=result.session_code,
+        back_url="/my-history"
     )

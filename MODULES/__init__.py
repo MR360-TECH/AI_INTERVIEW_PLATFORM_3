@@ -137,6 +137,12 @@ def create_app():
                             conn.execute(text("ALTER TABLE interview_results ADD COLUMN termination_reason TEXT"))
                             conn.commit()
                             print("Added column 'termination_reason' dynamically to interview_results table.")
+                    if inspector.has_table('admin_settings'):
+                        settings_columns = [c['name'] for c in inspector.get_columns('admin_settings')]
+                        if 'enable_warning_strikes' not in settings_columns:
+                            conn.execute(text("ALTER TABLE admin_settings ADD COLUMN enable_warning_strikes BOOLEAN DEFAULT 1"))
+                            conn.commit()
+                            print("Added column 'enable_warning_strikes' dynamically to admin_settings table.")
             except Exception as schema_err:
                 print(f"Schema check notice: {schema_err}")
             print("Database tables verified/created successfully.")

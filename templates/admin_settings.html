@@ -312,28 +312,38 @@
             <div class="mb-4">
                 <label class="form-label"><i class="bi bi-dash-circle"></i> Minimum Questions</label>
                 <input type="number" name="min_questions" class="form-control" min="1" max="20" value="{{ settings.min_questions }}" required>
-                <div class="form-text">The minimum question threshold required before candidate assessment completion is evaluated.</div>
+                <div class="form-text">The minimum question threshold required before candidate assessment completion is evaluated (Max: 20).</div>
             </div>
 
             <div class="mb-4">
                 <label class="form-label"><i class="bi bi-plus-circle"></i> Maximum Questions</label>
                 <input type="number" name="max_questions" class="form-control" min="1" max="20" value="{{ settings.max_questions }}" required>
-                <div class="form-text">The maximum question cap. The interview session automatically concludes when reached.</div>
+                <div class="form-text">The maximum question cap. The interview session automatically concludes when reached (Max: 20).</div>
             </div>
 
             <div class="mb-4">
                 <label class="form-label"><i class="bi bi-award"></i> Passing Score Threshold (out of 10)</label>
                 <input type="number" name="pass_score" class="form-control" min="0" max="10" step="0.5" value="{{ settings.pass_score }}" required>
-                <div class="form-text">Candidates scoring at or above this overall threshold pass the assessment round.</div>
+                <div class="form-text">Candidates scoring at or above this overall threshold pass the assessment round (Max: 10).</div>
             </div>
 
             <div class="mb-4">
                 <label class="form-label"><i class="bi bi-clock-history"></i> Question Time Limit (Seconds)</label>
                 <input type="number" name="question_timer_seconds" class="form-control" min="20" max="300" step="5" value="{{ settings.question_timer_seconds or 90 }}" required>
-                <div class="form-text">Allocated seconds per question during live assessment sessions. Defaults to 90 seconds (Max: 300 seconds / 5 minutes).</div>
+                <div class="form-text">Allocated seconds per question during live assessment sessions (Max: 300 seconds / 5 minutes).</div>
             </div>
 
             <hr style="border-color: #334155; margin: 28px 0; opacity: 1;">
+
+            <div class="mb-4">
+                <div class="form-check form-switch d-flex align-items-center gap-3 p-0">
+                    <input class="form-check-input ms-0 me-2" type="checkbox" role="switch" id="enableWarningStrikes" name="enable_warning_strikes" style="width: 2.8em; height: 1.5em; cursor: pointer;" {% if settings.enable_warning_strikes %}checked{% endif %}>
+                    <label class="form-label mb-0 cursor-pointer" for="enableWarningStrikes" style="font-size: 1.05rem;">
+                        <i class="bi bi-shield-exclamation"></i> Enable Anti-Cheating Warning Strikes & Proctoring
+                    </label>
+                </div>
+                <div class="form-text mt-2">When enabled, the automated proctor monitors tab-switching and window-focus loss during active assessments with a 2-strike warning and auto-disqualification policy. If disabled, tab switching and focus loss will not issue warning strikes or terminate sessions.</div>
+            </div>
 
             <div class="mb-4">
                 <div class="form-check form-switch d-flex align-items-center gap-3 p-0">
@@ -348,7 +358,7 @@
             <div class="mb-4" id="allowedInterviewsGroup" style="{% if not settings.enable_attempt_limits %}display: none;{% endif %}">
                 <label class="form-label"><i class="bi bi-person-workspace"></i> Default Allowed Interviews Per Candidate</label>
                 <input type="number" name="default_allowed_interviews" class="form-control" min="1" max="10" value="{{ settings.default_allowed_interviews or 2 }}" required>
-                <div class="form-text">The number of standard interview attempts granted to candidates by default (Default: 2).</div>
+                <div class="form-text">The number of standard interview attempts granted to candidates by default (Max: 10).</div>
             </div>
 
             <script>

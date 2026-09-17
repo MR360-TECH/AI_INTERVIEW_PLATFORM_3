@@ -31,7 +31,8 @@ def get_settings():
                 default_difficulty='student',
                 question_timer_seconds=90,
                 enable_attempt_limits=True,
-                default_allowed_interviews=2
+                default_allowed_interviews=2,
+                enable_warning_strikes=True
             )
             db.session.add(settings_row)
             db.session.commit()

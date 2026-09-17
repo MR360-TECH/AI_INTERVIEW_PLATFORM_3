@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, redirect, session
 
 resources_bp = Blueprint('resources_bp', __name__)
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 1: TECH GIANTS, UNICORNS & IT SERVICES (25 FIRMS)
+# ═══════════════════════════════════════════════════════════════════════════════
 COMPANY_HUB = [
     {
         "key": "google",
@@ -10,10 +13,10 @@ COMPANY_HUB = [
         "description": "Data Structures, Algorithms, System Design, and Behavioral questions frequently asked at Google interviews.",
         "total_questions": 4,
         "resources": [
-            {"site": "LeetCode",      "label": "Google Tagged Problems",       "desc": "Filter and solve coding problems tagged specifically for Google — sorted by frequency and difficulty.",          "url": "https://leetcode.com/company/google/",                           "icon": "bi-code-slash"},
-            {"site": "GeeksForGeeks", "label": "Google Interview Questions",   "desc": "Topic-wise DSA prep, system design guides, and real interview experiences shared by Google candidates.",        "url": "https://www.geeksforgeeks.org/google-interview-preparation/",    "icon": "bi-mortarboard-fill"},
-            {"site": "PrepInsta",     "label": "Google Placement Papers",      "desc": "Aptitude rounds, coding tests, and placement paper patterns based on past Google recruitment drives.",          "url": "https://prepinsta.com/google/",                                  "icon": "bi-file-earmark-text-fill"},
-            {"site": "InterviewBit",  "label": "Google Interview Prep",        "desc": "Structured mock interviews, real Q&A from candidates, and company-specific preparation guides.",               "url": "https://www.interviewbit.com/google-interview-questions/",       "icon": "bi-chat-left-dots-fill"},
+            {"site": "GeeksForGeeks", "label": "Google Interview Preparation",    "desc": "Topic-wise DSA prep, system design guides, and real interview experiences shared by Google candidates.",              "url": "https://www.geeksforgeeks.org/google-interview-preparation/",                       "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Free open-source handbook covering algorithms, system design, and behavioral questions for FAANG companies.",          "url": "https://github.com/yangshun/tech-interview-handbook",                              "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Curated collection of the most commonly asked algorithmic and data structure problems with complete solutions.",   "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Placement Papers & Aptitude",     "desc": "Company placement papers, aptitude, verbal, and logical reasoning practice — all free, no login required.",           "url": "https://www.indiabix.com/placement-papers/companies/",                              "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
@@ -23,10 +26,10 @@ COMPANY_HUB = [
         "description": "OOP, OS, Networking, and problem-solving questions asked across SDE and SDET roles at Microsoft.",
         "total_questions": 4,
         "resources": [
-            {"site": "LeetCode",      "label": "Microsoft Tagged Problems",     "desc": "Practice the most frequently asked coding problems tagged for Microsoft SDE and SDET roles.",                  "url": "https://leetcode.com/company/microsoft/",                        "icon": "bi-code-slash"},
-            {"site": "GeeksForGeeks", "label": "Microsoft Interview Questions", "desc": "Round-wise preparation guide, interview experiences, and topic coverage for Microsoft placements.",            "url": "https://www.geeksforgeeks.org/microsoft-interview-preparation/", "icon": "bi-mortarboard-fill"},
-            {"site": "PrepInsta",     "label": "Microsoft Placement Papers",    "desc": "Aptitude test patterns, coding round formats, and previous year placement papers from Microsoft.",             "url": "https://prepinsta.com/microsoft/",                               "icon": "bi-file-earmark-text-fill"},
-            {"site": "InterviewBit",  "label": "Microsoft Interview Prep",      "desc": "Real interview experiences, mock tests, and structured question sets for Microsoft roles.",                    "url": "https://www.interviewbit.com/microsoft-interview-questions/",    "icon": "bi-chat-left-dots-fill"},
+            {"site": "GeeksForGeeks", "label": "Microsoft Interview Preparation", "desc": "Round-wise preparation guide, interview experiences, and topic coverage for Microsoft placements.",                  "url": "https://www.geeksforgeeks.org/microsoft-interview-preparation/",                    "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "A complete CS study plan with topics covering everything Microsoft interviewers ask — 100% free.",                   "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Must-Do Coding Questions",        "desc": "Curated list of must-solve algorithmic and coding problems for companies like Microsoft and Adobe.",               "url": "https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude & Logical Reasoning",    "desc": "Sharpen aptitude and reasoning skills with thousands of free practice questions.",                                    "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
@@ -36,10 +39,10 @@ COMPANY_HUB = [
         "description": "Leadership Principles, problem-solving, system design, and behavioral rounds for Amazon SDE roles.",
         "total_questions": 4,
         "resources": [
-            {"site": "LeetCode",      "label": "Amazon Tagged Problems",        "desc": "Solve the most frequently asked Amazon SDE problems, filtered by topic and difficulty level.",                 "url": "https://leetcode.com/company/amazon/",                           "icon": "bi-code-slash"},
-            {"site": "GeeksForGeeks", "label": "Amazon Interview Questions",    "desc": "Comprehensive preparation covering DSA, Leadership Principles, system design, and past experiences.",          "url": "https://www.geeksforgeeks.org/amazon-interview-preparation/",    "icon": "bi-mortarboard-fill"},
-            {"site": "PrepInsta",     "label": "Amazon Placement Papers",       "desc": "Amazon online assessment patterns, aptitude questions, and coding test formats from recent drives.",           "url": "https://prepinsta.com/amazon/",                                  "icon": "bi-file-earmark-text-fill"},
-            {"site": "InterviewBit",  "label": "Amazon Interview Prep",         "desc": "Behavioral question bank aligned to Amazon Leadership Principles plus technical DSA prep.",                    "url": "https://www.interviewbit.com/amazon-interview-questions/",       "icon": "bi-chat-left-dots-fill"},
+            {"site": "GeeksForGeeks", "label": "Amazon Interview Preparation",    "desc": "Comprehensive prep covering DSA, Leadership Principles, system design, and past interview experiences.",             "url": "https://www.geeksforgeeks.org/amazon-interview-preparation/",                       "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Covers behavioral questions aligned to Amazon Leadership Principles plus full DSA and system design prep.",           "url": "https://github.com/yangshun/tech-interview-handbook",                              "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Must-Do Coding Questions",        "desc": "Must-solve coding interview questions frequently asked in Amazon online assessments and onsite loops.",             "url": "https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Placement Papers & Aptitude",     "desc": "Aptitude, reasoning, and placement paper archives — free to browse without login.",                                  "url": "https://www.indiabix.com/placement-papers/companies/",                              "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
@@ -49,10 +52,23 @@ COMPANY_HUB = [
         "description": "Graphs, Dynamic Programming, system design at scale, and product sense questions asked at Meta.",
         "total_questions": 4,
         "resources": [
-            {"site": "LeetCode",      "label": "Meta Tagged Problems",          "desc": "Top Meta/Facebook-tagged coding problems covering graphs, DP, and array manipulations.",                       "url": "https://leetcode.com/company/facebook/",                         "icon": "bi-code-slash"},
-            {"site": "GeeksForGeeks", "label": "Meta Interview Questions",      "desc": "Interview experiences, system design at scale concepts, and topic-wise guides for Meta.",                      "url": "https://www.geeksforgeeks.org/facebook-interview-preparation/",  "icon": "bi-mortarboard-fill"},
-            {"site": "PrepInsta",     "label": "Meta Placement Papers",         "desc": "Aptitude and coding round patterns from Meta campus and off-campus recruitment drives.",                       "url": "https://prepinsta.com/facebook/",                                "icon": "bi-file-earmark-text-fill"},
-            {"site": "InterviewBit",  "label": "Meta Interview Prep",           "desc": "Real Meta interview Q&A, mock assessments, and tips from candidates who cracked the process.",                "url": "https://www.interviewbit.com/facebook-interview-questions/",     "icon": "bi-chat-left-dots-fill"},
+            {"site": "GeeksForGeeks", "label": "Facebook Interview Preparation",  "desc": "Interview experiences, system design at scale concepts, and topic-wise guides for Meta/Facebook.",                 "url": "https://www.geeksforgeeks.org/facebook-interview-preparation/",                     "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Learn system design at scale — exactly what Meta tests in design rounds. Open-source and completely free.",          "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Dynamic Programming",      "desc": "Master Dynamic Programming with 50 top interview problems — highly tested in Meta coding rounds.",                 "url": "https://www.geeksforgeeks.org/top-50-dynamic-programming-coding-problems-for-interviews/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Strengthen analytical reasoning with thousands of free problems for aptitude rounds.",                               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "apple",
+        "name": "Apple",
+        "color": "#A2AAAD",
+        "description": "OS internals, concurrency, Swift, low-level architecture, and hardware-software integration questions at Apple.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Apple Interview Experiences",     "desc": "Round-wise questions, OS and memory management topics, and candidate interview experiences at Apple.",              "url": "https://www.geeksforgeeks.org/apple-interview-experience/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Deep CS fundamentals: OS, memory, concurrency — all core topics that Apple engineering interviews cover.",           "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Practice essential array and pointer manipulation problems frequently asked in Apple technical rounds.",           "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Verbal Ability & Reasoning",      "desc": "Verbal and logical reasoning practice sets for the aptitude component of Apple hiring process.",                    "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
@@ -62,126 +78,1592 @@ COMPANY_HUB = [
         "description": "Distributed systems, microservices, system design, and culture-fit questions asked at Netflix.",
         "total_questions": 4,
         "resources": [
-            {"site": "LeetCode",      "label": "Netflix Tagged Problems",       "desc": "Netflix-tagged coding problems focusing on system design and complex algorithmic challenges.",                  "url": "https://leetcode.com/company/netflix/",                          "icon": "bi-code-slash"},
-            {"site": "GeeksForGeeks", "label": "Netflix Interview Questions",   "desc": "Distributed systems, microservices architecture concepts, and interview experience guides.",                   "url": "https://www.geeksforgeeks.org/netflix-interview-questions/",     "icon": "bi-mortarboard-fill"},
-            {"site": "PrepInsta",     "label": "Netflix Placement Papers",      "desc": "Placement test formats, aptitude rounds, and coding assessment patterns from Netflix drives.",                 "url": "https://prepinsta.com/netflix/",                                 "icon": "bi-file-earmark-text-fill"},
-            {"site": "InterviewBit",  "label": "Netflix Interview Prep",        "desc": "System design deep dives, culture-fit Q&A, and mock interview practice for Netflix roles.",                   "url": "https://www.interviewbit.com/netflix-interview-questions/",      "icon": "bi-chat-left-dots-fill"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Master distributed systems design — the core technical skill Netflix evaluates in all senior engineering roles.",   "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Structured culture-fit and behavioral Q&A plus technical prep — aligned with Netflix culture-first approach.",     "url": "https://github.com/yangshun/tech-interview-handbook",                              "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "System Design Tutorial",          "desc": "High-level and low-level system design concepts covering scalability, microservices, and distributed caching.",      "url": "https://www.geeksforgeeks.org/system-design-tutorial/",                             "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 10 Algorithms Guide",         "desc": "Deep dive into the 10 most critical algorithmic paradigms tested in top-tier engineering interviews.",              "url": "https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/",          "icon": "bi-code-slash"},
         ],
     },
     {
-        "key": "tcs",
-        "name": "TCS",
-        "color": "#00579C",
-        "description": "Aptitude, verbal, logical reasoning, and coding questions for TCS NQT and campus drives.",
+        "key": "adobe",
+        "name": "Adobe",
+        "color": "#FF0000",
+        "description": "Computational geometry, C++, graphics algorithms, and data structure questions asked at Adobe.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "TCS NQT Placement Papers",      "desc": "Full TCS NQT mock tests, aptitude papers, verbal ability, and coding round preparation.",                     "url": "https://prepinsta.com/tcs/",                                     "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "TCS Interview Questions",       "desc": "Topic-wise preparation guide, HR round questions, and technical interview experiences for TCS.",               "url": "https://www.geeksforgeeks.org/tcs-interview-experience/",        "icon": "bi-mortarboard-fill"},
-            {"site": "IndiaBix",      "label": "TCS Aptitude Practice",         "desc": "Quantitative aptitude, logical reasoning, and verbal practice sets matched to TCS NQT patterns.",             "url": "https://www.indiabix.com/",                                      "icon": "bi-calculator-fill"},
-            {"site": "InterviewBit",  "label": "TCS Interview Prep",            "desc": "TCS-specific mock tests, real interview Q&A, and structured coding practice for campus drives.",              "url": "https://www.interviewbit.com/tcs-interview-questions/",          "icon": "bi-chat-left-dots-fill"},
+            {"site": "GeeksForGeeks", "label": "Adobe Interview Preparation",     "desc": "Comprehensive round breakdown, technical DSA concepts, and past interview experiences at Adobe.",                  "url": "https://www.geeksforgeeks.org/adobe-interview-preparation/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Free C++ coding challenges covering STL, OOP, and algorithms — core skills for Adobe engineering roles.",          "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Must-Do Coding Questions",        "desc": "Curated set of must-solve coding interview questions frequently encountered in Adobe technical rounds.",           "url": "https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude & Logical Reasoning",    "desc": "Aptitude and analytical reasoning practice for Adobe online assessment and placement rounds.",                     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "nvidia",
+        "name": "NVIDIA",
+        "color": "#76B900",
+        "description": "GPU architecture, CUDA programming, parallel computing, and system-level DSA questions at NVIDIA.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C++ Interview Questions",         "desc": "Pointers, memory management, templates, and concurrency Q&A — foundational for NVIDIA roles.",                     "url": "https://www.geeksforgeeks.org/cpp-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Deep computer science fundamentals covering OS, architecture, and low-level systems — NVIDIA essentials.",         "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Build strong C++ skills with free challenges — essential for CUDA and GPU kernel development at NVIDIA.",          "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Master fundamental algorithmic and data structure problem sets for technical screening rounds.",                  "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "salesforce",
+        "name": "Salesforce",
+        "color": "#00A1E0",
+        "description": "Apex, cloud platform design, SOQL, and object-oriented problem solving questions for Salesforce roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "OOP principles, collections, multithreading, and design patterns essential for Salesforce backend roles.",        "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Understand cloud-scale system design — directly applicable to CRM platform architecture at Salesforce.",          "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Java is widely used at Salesforce — sharpen your skills with free HackerRank challenges.",                        "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "String manipulation and algorithmic problems frequently asked in Salesforce technical screening.",                 "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "uber",
+        "name": "Uber",
+        "color": "#000000",
+        "description": "Graph algorithms, real-time systems, geospatial problems, and scalability design questions at Uber.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Design scalable real-time systems like ride-matching and surge pricing — exactly what Uber tests.",               "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Comprehensive problem collection covering graphs, heaps, and shortest-path algorithms used in Uber loops.",       "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Behavioral frameworks and algorithmic strategies tailored for fast-paced tech giants like Uber.",                 "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Aptitude & Reasoning",            "desc": "Build a strong aptitude foundation for Uber initial screening and online assessment rounds.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "linkedin",
+        "name": "LinkedIn",
+        "color": "#0A66C2",
+        "description": "Graphs, social network algorithms, API design, and product engineering questions at LinkedIn.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Behavioral questions, system design, and DSA — complete prep aligned with LinkedIn hiring process.",              "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Dynamic Programming",      "desc": "Solve DP and graph algorithmic problems that frequently appear in LinkedIn software engineering rounds.",          "url": "https://www.geeksforgeeks.org/top-50-dynamic-programming-coding-problems-for-interviews/", "icon": "bi-code-slash"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Learn feed generation, graph caching, and high-concurrency architecture tested in LinkedIn design rounds.",       "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is widely used at LinkedIn — build skills with free HackerRank challenges covering all core topics.",      "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "twitter",
+        "name": "Twitter / X",
+        "color": "#1DA1F2",
+        "description": "Real-time streaming, feed ranking algorithms, distributed caching, and behavioral questions at Twitter.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Learn to design Twitter-scale systems: timelines, fan-out, caching — key concepts for Twitter interviews.",        "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 10 Algorithms Guide",         "desc": "Master heap, streaming algorithms, and data structures critical for high-throughput real-time systems.",          "url": "https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/",          "icon": "bi-code-slash"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Structured behavioral and coding interview frameworks designed for high-scale tech firms.",                       "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Verbal & Logical Reasoning",      "desc": "Practice verbal and logical reasoning for Twitter initial screening and aptitude assessment rounds.",             "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "flipkart",
+        "name": "Flipkart",
+        "color": "#F9A01B",
+        "description": "E-commerce system design, DSA, product sense, and OOP questions for Flipkart SDE roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Must-Do Coding Questions",        "desc": "Real interview questions, OOP design patterns, and DSA practice relevant for Flipkart SDE loops.",                "url": "https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/", "icon": "bi-code-slash"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Complete interview guide covering DSA, system design, and behavioral rounds relevant to Flipkart hiring.",         "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "E-commerce scale system design: cart management, inventory locking, and order processing architectures.",          "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Placement Papers & Aptitude",     "desc": "Browse placement papers, aptitude, and reasoning questions from top e-commerce companies — all free.",           "url": "https://www.indiabix.com/placement-papers/companies/",                              "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
         "key": "infosys",
         "name": "Infosys",
         "color": "#007CC3",
-        "description": "Aptitude, reasoning, verbal, and coding questions for Infosys InfyTQ and Springboard assessments.",
+        "description": "Aptitude, verbal reasoning, coding, and HR interview questions for Infosys Instep and campus hiring.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "Infosys Placement Papers",      "desc": "Mock tests for Infosys online aptitude rounds, verbal sections, and coding challenges.",                      "url": "https://prepinsta.com/infosys/",                                 "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "Infosys Interview Questions",   "desc": "Interview experiences, HR round preparation, and topic-wise technical prep for Infosys roles.",               "url": "https://www.geeksforgeeks.org/infosys-interview-experience/",    "icon": "bi-mortarboard-fill"},
-            {"site": "InfyTQ",        "label": "Infosys InfyTQ Platform",       "desc": "Official Infosys learning and certification platform — complete courses and mock assessments.",               "url": "https://www.infytq.com/",                                        "icon": "bi-award-fill"},
-            {"site": "InterviewBit",  "label": "Infosys Interview Prep",        "desc": "Real interview Q&A from Infosys candidates, aptitude practice, and placement preparation tips.",              "url": "https://www.interviewbit.com/infosys-interview-questions/",      "icon": "bi-chat-left-dots-fill"},
+            {"site": "IndiaBix",      "label": "Infosys Placement Papers",        "desc": "Official-style Infosys placement papers with aptitude, verbal, and logical sections — free to practice.",         "url": "https://www.indiabix.com/placement-papers/infosys/",                                "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Array manipulation and searching/sorting algorithms commonly asked in Infosys DSE and SP coding rounds.",          "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Thousands of free aptitude questions matching Infosys InfyTQ and campus assessment formats.",                     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python coding challenges — Infosys frequently tests Python in digital and specialist role assessments.",          "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "tcs",
+        "name": "TCS",
+        "color": "#0B3D91",
+        "description": "TCS NQT aptitude, verbal, reasoning, and coding questions for campus and digital drive hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "TCS Placement Papers",            "desc": "Practice TCS NQT-style aptitude, verbal, and logical reasoning questions — completely free, no login needed.",    "url": "https://www.indiabix.com/placement-papers/tcs/",                                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "String manipulation and basic algorithmic questions frequently tested in TCS Digital and Ninja coding rounds.",    "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude & Verbal Practice",      "desc": "Full-length aptitude and verbal practice aligned with TCS NQT and BPS test patterns.",                           "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Sharpen coding and standard library syntax for TCS NQT advanced programming section.",                            "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
         ],
     },
     {
         "key": "wipro",
         "name": "Wipro",
-        "color": "#4CAF50",
-        "description": "Aptitude, reasoning, verbal ability, and coding assessments for Wipro NLTH and campus placements.",
+        "color": "#341C5C",
+        "description": "Aptitude, NLTH coding test, and HR interview questions for Wipro campus and lateral hiring.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "Wipro NLTH Placement Papers",   "desc": "Wipro NLTH mock tests, aptitude patterns, written communication, and coding round prep.",                    "url": "https://prepinsta.com/wipro/",                                   "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "Wipro Interview Questions",     "desc": "Interview experiences, technical Q&A, and preparation guides for Wipro placement rounds.",                    "url": "https://www.geeksforgeeks.org/wipro-interview-experience/",      "icon": "bi-mortarboard-fill"},
-            {"site": "IndiaBix",      "label": "Wipro Aptitude Practice",       "desc": "Quantitative aptitude, logical reasoning, and verbal ability practice aligned to Wipro patterns.",           "url": "https://www.indiabix.com/",                                      "icon": "bi-calculator-fill"},
-            {"site": "InterviewBit",  "label": "Wipro Interview Prep",          "desc": "Wipro-specific mock interviews, HR round tips, and structured technical preparation.",                        "url": "https://www.interviewbit.com/wipro-interview-questions/",        "icon": "bi-chat-left-dots-fill"},
+            {"site": "IndiaBix",      "label": "Wipro Placement Papers",          "desc": "Practice Wipro NLTH-style aptitude, logical, and verbal questions — all free without any registration.",         "url": "https://www.indiabix.com/placement-papers/wipro/",                                  "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Array and math-based coding problems frequently tested in Wipro Elite National Talent Hunt.",                    "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Focused logical reasoning practice matching Wipro NLTH assessment pattern and difficulty.",                       "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Java challenges aligned with Wipro coding assessment — free to access without a premium account.",                "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
         ],
     },
     {
         "key": "accenture",
         "name": "Accenture",
         "color": "#A100FF",
-        "description": "Cognitive ability, verbal, logical, and communication-focused questions for Accenture campus drives.",
+        "description": "Cognitive, verbal, abstract reasoning, and coding challenges for Accenture campus recruitment.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "Accenture Placement Papers",    "desc": "Accenture mock tests covering cognitive ability, verbal reasoning, and communication rounds.",                 "url": "https://prepinsta.com/accenture/",                               "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "Accenture Interview Questions", "desc": "Interview experiences, HR round Q&A, and technical preparation guides for Accenture placements.",             "url": "https://www.geeksforgeeks.org/accenture-interview-experience/",  "icon": "bi-mortarboard-fill"},
-            {"site": "IndiaBix",      "label": "Accenture Aptitude Practice",   "desc": "Quantitative aptitude and logical reasoning practice sets matched to Accenture test patterns.",              "url": "https://www.indiabix.com/",                                      "icon": "bi-calculator-fill"},
-            {"site": "InterviewBit",  "label": "Accenture Interview Prep",      "desc": "Real Accenture interview Q&A, placement tips, and mock rounds from recent campus candidates.",               "url": "https://www.interviewbit.com/accenture-interview-questions/",    "icon": "bi-chat-left-dots-fill"},
+            {"site": "IndiaBix",      "label": "Accenture Placement Papers",      "desc": "Accenture-style aptitude, abstract reasoning, and verbal questions — free practice for all hiring rounds.",      "url": "https://www.indiabix.com/placement-papers/accenture/",                              "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "String and logic-based problems commonly tested in Accenture technical assessment and coding round.",               "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Build aptitude skills with thousands of free problems aligned with Accenture cognitive assessment.",               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python coding exercises for Accenture technical coding round — all free with no premium subscription.",          "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
         ],
     },
     {
         "key": "cognizant",
         "name": "Cognizant",
-        "color": "#1565C0",
-        "description": "Aptitude, coding, verbal, and HR round questions for Cognizant GenC, GenC Next, and campus drives.",
+        "color": "#0033A0",
+        "description": "GenC aptitude, verbal, logical reasoning, and coding interview questions for Cognizant hiring.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "Cognizant Placement Papers",    "desc": "Cognizant GenC and GenC Next mock tests, aptitude papers, and coding challenge preparation.",                "url": "https://prepinsta.com/cognizant/",                               "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "Cognizant Interview Questions", "desc": "Interview experiences, topic-wise prep, and HR round guidance for Cognizant campus placements.",              "url": "https://www.geeksforgeeks.org/cognizant-interview-experience/",  "icon": "bi-mortarboard-fill"},
-            {"site": "IndiaBix",      "label": "Cognizant Aptitude Practice",   "desc": "Quantitative aptitude, verbal, and logical reasoning practice for Cognizant assessment rounds.",             "url": "https://www.indiabix.com/",                                      "icon": "bi-calculator-fill"},
-            {"site": "InterviewBit",  "label": "Cognizant Interview Prep",      "desc": "Real interview Q&A and mock rounds specifically tailored for Cognizant placement preparation.",               "url": "https://www.interviewbit.com/cognizant-interview-questions/",    "icon": "bi-chat-left-dots-fill"},
+            {"site": "IndiaBix",      "label": "Placement Papers & Aptitude",     "desc": "GenC-style aptitude, verbal, and logical reasoning practice sets — free access with no login required.",         "url": "https://www.indiabix.com/placement-papers/companies/",                              "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Curated DSA problem sets for Cognizant GenC Elevate and GenC Next technical rounds.",                              "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Logical reasoning problems matching the difficulty and pattern of Cognizant GenC aptitude test.",                "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "SQL challenges aligned with Cognizant database and coding assessment sections — completely free.",                "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "hcl",
+        "name": "HCL Technologies",
+        "color": "#0076CE",
+        "description": "Aptitude, coding, and technical interview questions for HCL campus and lateral hiring drives.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Placement Papers & Aptitude",     "desc": "Practice IT service company aptitude, verbal, and analytical reasoning questions — free with no sign-up.",        "url": "https://www.indiabix.com/placement-papers/companies/",                              "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "C Interview Questions",           "desc": "C and data structures interview Q&A — frequently tested in HCL technical rounds.",                                "url": "https://www.geeksforgeeks.org/c-interview-questions/",                              "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Verbal Practice",      "desc": "Sharpen aptitude and verbal skills with thousands of free problems for HCL online assessment.",                  "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Array coding problems commonly encountered in HCL technical programming rounds.",                                  "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "oracle",
+        "name": "Oracle",
+        "color": "#F80000",
+        "description": "Java, SQL, database internals, distributed systems, and core DSA questions for Oracle engineering roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "SQL Interview Questions",         "desc": "Database internals, indexing, query optimization, and transaction Q&A for Oracle technical interviews.",           "url": "https://www.geeksforgeeks.org/sql-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "Deep Java OOP, collections, multithreading, and JVM internals tested in Oracle engineering loops.",              "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Oracle heavily tests SQL — master queries, joins, and optimization with free in-browser challenges.",             "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Java is Oracle core language — strengthen skills with free challenges covering OOP, collections, and JVM.",      "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "ibm",
+        "name": "IBM",
+        "color": "#006699",
+        "description": "Cloud, AI/ML, Java, and problem-solving questions for IBM campus and experienced hiring drives.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "IBM Placement Papers",            "desc": "IBM-style aptitude, verbal, and analytical reasoning questions — all free for campus candidates.",                "url": "https://www.indiabix.com/placement-papers/ibm/",                                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Machine Learning Guide",          "desc": "AI, cloud, and ML concepts covered with complete theoretical and algorithmic explanations.",                       "url": "https://www.geeksforgeeks.org/machine-learning/",                                   "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free ML & AI Courses",            "desc": "IBM invests heavily in AI — use Kaggle free courses to build ML skills relevant to IBM data roles.",             "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is key for IBM AI and data engineering roles — free HackerRank challenges to build proficiency.",         "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "samsung",
+        "name": "Samsung",
+        "color": "#1428A0",
+        "description": "Embedded C, DSA, OS concepts, and hardware-software co-design questions for Samsung R&D hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C++ Interview Questions",         "desc": "Memory management, pointers, and performance optimization questions for Samsung R&D hiring.",                    "url": "https://www.geeksforgeeks.org/cpp-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Advanced graph, tree, and DP problems aligned with Samsung Advanced Coding Test requirements.",                    "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Samsung primarily uses C/C++ — sharpen pointer, memory, and STL skills with free challenges.",                   "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "OS, memory management, and system-level CS fundamentals — exactly what Samsung R&D interviews test.",            "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "zoho",
+        "name": "Zoho",
+        "color": "#E42527",
+        "description": "Pure programming logic, problem-solving, and deep coding rounds without standard library bias at Zoho.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C Language Interview Q&A",        "desc": "Raw logic, pointer manipulation, and custom data structure implementations tested in Zoho written rounds.",       "url": "https://www.geeksforgeeks.org/c-interview-questions/",                              "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "Zoho heavily focuses on custom string parsing and pattern printing — practice top problems here.",                "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python coding challenges — Zoho frequently uses Python in written and coding rounds.",                            "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Zoho has aptitude in early rounds — practice arithmetic, reasoning, and logic problems here for free.",           "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "goldman",
+        "name": "Goldman Sachs",
+        "color": "#6699CC",
+        "description": "Quantitative reasoning, DSA, financial algorithms, and system design questions for Goldman Sachs engineering.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Top 50 Dynamic Programming",      "desc": "Goldman Sachs tests advanced DSA — practice hard problems covering DP, graphs, and mathematical algorithms.",     "url": "https://www.geeksforgeeks.org/top-50-dynamic-programming-coding-problems-for-interviews/", "icon": "bi-code-slash"},
+            {"site": "GeeksForGeeks", "label": "Top 10 Algorithms Guide",         "desc": "Deep algorithmic concepts, probability puzzles, and quantitative problem-solving guides.",                         "url": "https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/",          "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "System design, behavioral rounds, and DSA prep relevant to Goldman Sachs engineering interview loops.",            "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude problems matching the level Goldman Sachs tests in initial screening rounds.",              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "deloitte",
+        "name": "Deloitte",
+        "color": "#86BC25",
+        "description": "Aptitude, reasoning, and technical interview questions for Deloitte technology and consulting roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Deloitte Placement Papers",       "desc": "Deloitte-style aptitude and verbal reasoning papers — all free to practice for campus and lateral hiring.",       "url": "https://www.indiabix.com/placement-papers/deloitte/",                               "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Fundamental algorithmic and problem-solving practice for Deloitte technology analyst technical rounds.",          "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Verbal & Logical Reasoning",      "desc": "Deloitte assessments emphasize verbal and logical reasoning — practice thousands of free questions here.",         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Strengthen database and SQL query skills for Deloitte data and technology consulting assessments.",              "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+]
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 2: TECH & ENGINEERING DOMAINS (20 DOMAINS)
+# ═══════════════════════════════════════════════════════════════════════════════
+TECH_DOMAIN_HUB = [
+    {
+        "key": "dsa",
+        "name": "Data Structures & Algorithms",
+        "category": "Core CS",
+        "color": "#FF6B35",
+        "description": "Arrays, Trees, Graphs, DP, Sorting, Searching — the backbone of every software engineering interview.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "DSA Complete Course",             "desc": "Topic-by-topic DSA theory, practice problems, and complexity analysis — completely free.",                        "url": "https://www.geeksforgeeks.org/data-structures/",                                    "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Curated collection of 100 essential data structure and algorithmic coding interview questions.",                   "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "A full CS study plan covering every DSA topic with free resources — used by thousands worldwide.",               "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Curated algorithm study cheatsheets, problem patterns, and best practices for technical interviews.",              "url": "https://github.com/yangshun/tech-interview-handbook",                              "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "system-design",
+        "name": "System Design",
+        "category": "Architecture",
+        "color": "#845EC2",
+        "description": "Scalability, distributed systems, load balancing, caching, and database design for senior engineering roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "The most popular open-source system design guide — covers every major concept with diagrams and examples.",       "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "System Design Tutorial",          "desc": "Free system design articles covering scalability, microservices, databases, and real-world architectures.",      "url": "https://www.geeksforgeeks.org/system-design-tutorial/",                             "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "System design interview section covering common question patterns and structured response frameworks.",           "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 10 Algorithms Guide",         "desc": "Fundamental algorithms that power large scale distributed systems and backend infrastructure.",                   "url": "https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/",          "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "web-dev",
+        "name": "Web Development",
+        "category": "Full Stack",
+        "color": "#00C9A7",
+        "description": "HTML, CSS, JavaScript, REST APIs, frameworks (React, Node), and full-stack architecture interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "500+ JavaScript interview Q&A — closures, async, DOM, ES6+, and frameworks. Open-source and free.",            "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+            {"site": "GitHub",        "label": "ReactJS Interview Questions",     "desc": "300+ React interview Q&A covering hooks, state management, performance, and advanced patterns.",               "url": "https://github.com/sudheerj/reactjs-interview-questions",                           "icon": "bi-github"},
+            {"site": "W3Schools",     "label": "JavaScript Quiz",                 "desc": "Test your JavaScript knowledge with a free quiz — instant feedback, no login, covers core JS concepts.",         "url": "https://www.w3schools.com/js/js_quiz.asp",                                          "icon": "bi-question-circle-fill"},
+            {"site": "HackerRank",    "label": "JavaScript Challenges",           "desc": "Free JavaScript coding challenges from HackerRank — solve problems in your browser, no setup needed.",          "url": "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",                "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "machine-learning",
+        "name": "Machine Learning & AI",
+        "category": "AI/ML",
+        "color": "#FF8066",
+        "description": "Supervised/unsupervised learning, neural networks, model evaluation, and ML system design interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "Kaggle",        "label": "Free ML Courses",                 "desc": "Free hands-on ML courses — Python, ML fundamentals, deep learning, NLP — from Kaggle Learn.",                  "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "GeeksForGeeks", "label": "Machine Learning Guide",          "desc": "Topic-wise ML algorithms, metrics, bias-variance, and feature engineering — all free.",                         "url": "https://www.geeksforgeeks.org/machine-learning/",                                   "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "CS fundamentals every ML engineer needs — algorithms, math, and systems — all free and open source.",           "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is the primary ML language — strengthen skills with free HackerRank coding challenges.",                "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "devops",
+        "name": "DevOps & Cloud",
+        "category": "Infrastructure",
+        "color": "#F9C74F",
+        "description": "CI/CD pipelines, Docker, Kubernetes, cloud providers (AWS/GCP/Azure), and infrastructure-as-code questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "DevOps Exercises",                "desc": "1,000+ free DevOps interview questions covering Docker, Kubernetes, CI/CD, cloud, and Linux — by topic.",      "url": "https://github.com/bregman-arie/devops-exercises",                                 "icon": "bi-github"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Cloud architecture, distributed systems, and scalability concepts — core for any DevOps engineer.",             "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Free shell scripting and Linux command challenges — essential for DevOps and SRE role interviews.",              "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+            {"site": "IndiaBix",      "label": "Linux MCQs & Questions",          "desc": "Test your Linux administration, permission models, and networking commands knowledge.",                          "url": "https://www.indiabix.com/linux/questions-and-answers/",                             "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "cybersecurity",
+        "name": "Cybersecurity",
+        "category": "Security",
+        "color": "#43AA8B",
+        "description": "Network security, ethical hacking, cryptography, OWASP, and penetration testing interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Computer Networks Tutorial",      "desc": "Free comprehensive networking guide — TCP/IP, OSI model, firewalls, and encryption protocols.",                  "url": "https://www.geeksforgeeks.org/computer-network-tutorials/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Systems and networking fundamentals every cybersecurity professional needs — free study guide.",                "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Linux command mastery is critical for security professionals — free shell challenges from beginner to advanced.",  "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+            {"site": "IndiaBix",      "label": "Networking Q&A",                  "desc": "Practice multiple-choice questions on network security, subnetting, and protocols.",                             "url": "https://www.indiabix.com/networking/questions-and-answers/",                        "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "database",
+        "name": "Databases & SQL",
+        "category": "Data",
+        "color": "#277DA1",
+        "description": "SQL queries, query optimization, NoSQL, indexing, transactions, and database design interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Free SQL challenges covering SELECT, JOIN, GROUP BY, subqueries, and window functions — all in-browser.",        "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "SQL Quiz",                        "desc": "Test your SQL knowledge with a free interactive quiz — great for quick revision before database interviews.",    "url": "https://www.w3schools.com/sql/sql_quiz.asp",                                        "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "DBMS Interview Questions",        "desc": "Free Q&A covering ACID, normalization, indexing, joins, stored procedures, and NoSQL concepts.",                "url": "https://www.geeksforgeeks.org/commonly-asked-dbms-interview-questions/",            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "SQL Interview Questions",         "desc": "Comprehensive free SQL interview Q&A covering queries, optimization, and database architecture.",                 "url": "https://www.geeksforgeeks.org/sql-interview-questions/",                            "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "mobile-dev",
+        "name": "Mobile Development",
+        "category": "Mobile",
+        "color": "#F3722C",
+        "description": "Android (Java/Kotlin), iOS (Swift/SwiftUI), React Native, and Flutter interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "Core Java, OOP, and lifecycle concepts essential for native Android development.",                                 "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Android uses Java/Kotlin — build a strong Java foundation with free HackerRank challenges.",                    "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "ReactJS Interview Questions",     "desc": "Master component state and lifecycle patterns relevant to React Native mobile development.",                      "url": "https://github.com/sudheerj/reactjs-interview-questions",                           "icon": "bi-github"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "System design, behavioral rounds, and coding prep for mobile engineering roles at top tech companies.",           "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "data-engineering",
+        "name": "Data Engineering",
+        "category": "Big Data",
+        "color": "#F77F00",
+        "description": "ETL pipelines, Apache Spark, Kafka, data warehousing, and big data architecture interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "DBMS Interview Questions",        "desc": "Database internals, indexing, distributed queries, and warehousing concepts for data engineering.",               "url": "https://www.geeksforgeeks.org/commonly-asked-dbms-interview-questions/",            "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free Data Science Courses",       "desc": "Kaggle free courses on Python, Pandas, SQL, and ML — essential foundations for data engineering roles.",        "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Strong SQL is mandatory for data engineers — practice complex queries with free in-browser challenges.",          "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is the primary tool for data pipeline development — strengthen skills with free coding challenges.",       "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "blockchain",
+        "name": "Blockchain & Web3",
+        "category": "Web3",
+        "color": "#F9844A",
+        "description": "Smart contracts, Solidity, consensus mechanisms, DeFi, and decentralized application interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Distributed systems and P2P architecture knowledge — foundational for understanding blockchain design.",         "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Blockchain engineering roles require strong DSA — practice top problems to ace technical screening rounds.",     "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "W3Schools",     "label": "JavaScript Quiz",                 "desc": "Solidity is JS-like — strengthen JS fundamentals with this free quiz before moving to smart contract dev.",      "url": "https://www.w3schools.com/js/js_quiz.asp",                                          "icon": "bi-question-circle-fill"},
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "Asynchronous programming, promise handling, and cryptographic library usage in Web3 applications.",              "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "embedded",
+        "name": "Embedded Systems",
+        "category": "Hardware",
+        "color": "#90BE6D",
+        "description": "Microcontrollers, RTOS, interrupt handling, bare-metal programming, and firmware interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C Language Interview Q&A",        "desc": "Pointers, memory layout, bitwise manipulation, and volatile keywords tested in embedded interviews.",             "url": "https://www.geeksforgeeks.org/c-interview-questions/",                              "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "OS, memory management, and C fundamentals that every embedded engineer must master — fully free.",              "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Embedded development uses C/C++ — sharpen pointer and memory skills with free in-browser challenges.",          "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Operating Systems Q&A",           "desc": "Process scheduling, context switching, memory management, and interrupt handling fundamentals.",                 "url": "https://www.geeksforgeeks.org/commonly-asked-operating-systems-interview-questions/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "cloud-computing",
+        "name": "Cloud Computing",
+        "category": "Cloud",
+        "color": "#4ECDC4",
+        "description": "AWS, GCP, Azure services, serverless, containers, and cloud architecture interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Cloud architecture patterns, distributed systems, and scalability design — core for cloud role interviews.",     "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GitHub",        "label": "DevOps Exercises",                "desc": "1,000+ cloud and DevOps questions covering AWS, Kubernetes, Terraform, CI/CD — free and open source.",          "url": "https://github.com/bregman-arie/devops-exercises",                                 "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Computer Networks Tutorial",      "desc": "VPC, load balancing, DNS, routing, and cloud networking fundamentals explained step by step.",                   "url": "https://www.geeksforgeeks.org/computer-network-tutorials/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free Python & ML Courses",        "desc": "Python and ML skills are increasingly required for cloud ML/AI services — build them free on Kaggle.",           "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+        ],
+    },
+    {
+        "key": "ai-nlp",
+        "name": "Natural Language Processing",
+        "category": "AI/NLP",
+        "color": "#FF6B9D",
+        "description": "Text classification, transformers, BERT, LLMs, tokenization, and NLP pipeline interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Machine Learning Guide",          "desc": "Foundational ML algorithms, embeddings, text vectorization, and model evaluation metrics.",                        "url": "https://www.geeksforgeeks.org/machine-learning/",                                   "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free Data Science Courses",       "desc": "Hands-on Python, NLP feature engineering, and neural network courses with runnable notebooks.",                   "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Strong CS and ML foundations needed for NLP roles — fully free curriculum used by thousands.",                  "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is the standard NLP language — build proficiency with free HackerRank challenges.",                      "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "computer-vision",
+        "name": "Computer Vision",
+        "category": "AI/CV",
+        "color": "#7B2D8B",
+        "description": "Image classification, CNNs, object detection, OpenCV, and vision model interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Machine Learning Guide",          "desc": "CNN architectures, image preprocessing, feature extraction, and transfer learning fundamentals.",                 "url": "https://www.geeksforgeeks.org/machine-learning/",                                   "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free Computer Vision Course",     "desc": "Kaggle free Computer Vision course — CNNs, data augmentation, transfer learning with real exercises.",         "url": "https://www.kaggle.com/learn/computer-vision",                                      "icon": "bi-robot"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python drives computer vision — sharpen your coding with free HackerRank Python challenges.",                   "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Mathematical and algorithmic foundations needed for CV roles — all topics covered, completely free.",             "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "game-dev",
+        "name": "Game Development",
+        "category": "Game Dev",
+        "color": "#FF4500",
+        "description": "Unity, Unreal Engine, game physics, rendering pipelines, and graphics programming interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C++ Interview Questions",         "desc": "Memory management, performance, OOP, and vectors — essential for game engine development.",                         "url": "https://www.geeksforgeeks.org/cpp-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Game engine roles require strong DSA — practice problems covering graphs, trees, and math optimization.",         "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "C++ is the primary game engine language — build advanced skills with free in-browser challenges.",               "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "DSA, system design, and behavioral prep for game company engineering interviews (Unity, Riot, EA, etc.).",       "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+        ],
+    },
+    {
+        "key": "testing-qa",
+        "name": "Software Testing & QA",
+        "category": "QA",
+        "color": "#2ECC71",
+        "description": "Manual testing, automation (Selenium/Cypress), test design, and SDET interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "Core Java concepts, exception handling, and collections tested in Selenium/JUnit QA interviews.",                 "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is widely used for test automation — build scripting skills with free HackerRank challenges.",          "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Java is used in Selenium and JUnit testing — build your Java foundation with free coding challenges.",           "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "SDET roles include coding rounds — practice string manipulation and algorithm problems.",                         "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "networking",
+        "name": "Computer Networking",
+        "category": "Networks",
+        "color": "#3498DB",
+        "description": "TCP/IP, HTTP, DNS, OSI model, subnetting, protocols, and network architecture interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Computer Networks Tutorial",      "desc": "Comprehensive guide covering OSI model, TCP/IP, DNS, HTTP, subnetting, routing, and network protocols.",        "url": "https://www.geeksforgeeks.org/computer-network-tutorials/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Networking fundamentals are tested heavily at FAANG — this free guide covers every required CN topic.",         "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Networking Quiz & Practice",      "desc": "Computer networking MCQs — test your knowledge of protocols, routing, and TCP/IP for free.",                    "url": "https://www.indiabix.com/networking/questions-and-answers/",                        "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Network engineers use shell tools daily — build command-line skills with free Linux challenges.",                "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "os-concepts",
+        "name": "Operating Systems",
+        "category": "Core CS",
+        "color": "#9B59B6",
+        "description": "Process management, memory management, concurrency, file systems, and kernel concepts for interviews.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "OS Interview Questions",          "desc": "Free Q&A covering processes, threads, scheduling, deadlocks, paging, segmentation, and file systems.",          "url": "https://www.geeksforgeeks.org/commonly-asked-operating-systems-interview-questions/", "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Deep OS coverage: processes, threads, memory, and I/O — all required for system-level engineering roles.",      "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Learn shell scripting and Linux internals with free hands-on challenges — essential for OS-related roles.",      "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+            {"site": "IndiaBix",      "label": "Linux / OS Questions",            "desc": "Linux and operating systems MCQs — free practice covering file systems, permissions, and shell basics.",       "url": "https://www.indiabix.com/linux/questions-and-answers/",                             "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "api-design",
+        "name": "API Design & Microservices",
+        "category": "Backend",
+        "color": "#16A085",
+        "description": "REST, GraphQL, gRPC, microservices patterns, API security, and backend architecture interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "System Design Tutorial",          "desc": "API gateway patterns, microservices communication, rate limiting, and caching architectures.",                   "url": "https://www.geeksforgeeks.org/system-design-tutorial/",                             "icon": "bi-mortarboard-fill"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "API design patterns, load balancing, and service decomposition — essential for backend and microservice roles.",  "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "APIs typically back databases — strong SQL skills are required for all backend and API engineering roles.",       "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "Asynchronous handlers, REST conventions, JWT auth, and middleware architectures in Node.js.",                     "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+        ],
+    },
+]
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 3: BUSINESS COMPANIES & INDIAN BANKS (25 FIRMS)
+# ═══════════════════════════════════════════════════════════════════════════════
+BUSINESS_COMPANY_HUB = [
+    {
+        "key": "sbi",
+        "name": "State Bank of India",
+        "category": "PSU Bank",
+        "color": "#2C3E7B",
+        "description": "SBI PO, SBI Clerk, and SBI SO exam questions covering banking awareness, quantitative aptitude, and reasoning.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "SBI PO/Clerk style aptitude, verbal, and banking awareness questions — free, no registration needed.",           "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Quantitative Aptitude",           "desc": "Number systems, percentages, profit/loss, and ratio problems matching SBI exam standards — all free.",           "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "GeeksForGeeks", "label": "Economics & Banking Q&A",         "desc": "Macroeconomic concepts, monetary policy, repo rates, and banking operations explained.",                           "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Verbal & Reasoning Practice",     "desc": "Verbal ability and logical reasoning practice sets aligned with SBI PO/Clerk exam pattern — all free.",         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "hdfc",
+        "name": "HDFC Bank",
+        "category": "Private Bank",
+        "color": "#004C97",
+        "description": "HDFC Bank graduate trainee, sales, and operations interview questions covering banking, finance, and aptitude.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "HDFC Bank-style aptitude and banking questions used in campus drives and entry-level hiring — all free.",        "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude problems aligned with HDFC Bank assessment format — free with no login.",                  "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Balance sheet basics, loan products, and retail financial metrics practiced freely.",                            "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "Reading comprehension, grammar, and vocabulary questions for HDFC English proficiency sections.",                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "icici",
+        "name": "ICICI Bank",
+        "category": "Private Bank",
+        "color": "#F57E20",
+        "description": "ICICI Bank PO, analyst, and relationship manager interview questions covering banking operations and finance.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Banking Exams Practice",          "desc": "ICICI Bank interview-style aptitude and banking questions — free practice for banking sector entry.",            "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Quantitative Aptitude",           "desc": "Aptitude problems covering ratio, time-work, and data interpretation for banking sector assessments.",           "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Logical reasoning and puzzles practice aligned with ICICI Bank recruitment screening format.",                   "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Accounting Practice",             "desc": "Financial statement analysis, depreciation, and ratio analysis for financial analyst roles.",                     "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "axis-bank",
+        "name": "Axis Bank",
+        "category": "Private Bank",
+        "color": "#97144D",
+        "description": "Axis Bank JAIIB, retail, and operations interview questions covering banking products and financial concepts.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative and reasoning practice questions aligned with Axis Bank entry-level hiring assessment.",             "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "Retail banking products, CASA ratios, lending regulations, and credit analysis questions.",                      "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English language proficiency practice for Axis Bank verbal sections in placement and PO exams.",                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Puzzles, syllogisms, and analytical reasoning questions for banking sector assessments.",                         "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "pnb",
+        "name": "Punjab National Bank",
+        "category": "PSU Bank",
+        "color": "#00539C",
+        "description": "PNB PO, Clerk, and SO exam questions covering quantitative aptitude, general awareness, and banking operations.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Number series, data interpretation, and arithmetic problems for PNB PO/Clerk exam preparation.",                 "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "Banking awareness, priority sector lending, and monetary policy questions for PSU bank recruitment.",           "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "English grammar, comprehension, and vocabulary questions for PNB banking exams and interviews.",                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Reasoning and puzzle questions for the mental ability sections of PNB PO and Clerk exams.",                      "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "rbi",
+        "name": "Reserve Bank of India",
+        "category": "Central Bank",
+        "color": "#006400",
+        "description": "RBI Grade B, Assistant, and Officer-level exam questions covering economics, finance, and monetary policy.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude problems matching the level and pattern of RBI Grade B and Assistant exams.",             "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "GeeksForGeeks", "label": "Economics & Finance Q&A",         "desc": "Economic concepts, monetary policy, banking regulations, and finance theory relevant to RBI exams.",            "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Banking Awareness Practice",      "desc": "Central banking policies, inflation management, CRR/SLR requirements, and forex operations.",                     "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning and decision-making questions for RBI Grade B and Officer-level exams.",                   "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "kotak",
+        "name": "Kotak Mahindra Bank",
+        "category": "Private Bank",
+        "color": "#ED1B24",
+        "description": "Kotak Bank analyst, sales, and operations interview questions covering banking, finance, and aptitude.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning problems for Kotak Bank entry-level hiring and assessment rounds.",          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "Wealth management, retail banking, and commercial lending interview questions.",                                  "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English grammar and reading comprehension practice for Kotak verbal assessment sections.",                       "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Logical reasoning and analytical ability practice for banking recruitment screening rounds.",                    "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "mckinsey",
+        "name": "McKinsey & Company",
+        "category": "Consulting",
+        "color": "#00458B",
+        "description": "Case interview frameworks, market sizing, business problem-solving, and McKinsey PST preparation.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Economics & Market Sizing",       "desc": "Macro principles, market structures, elasticity, and economic models useful in case interviews.",                 "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Sharp analytical reasoning required for McKinsey PST — practice thousands of free logic problems.",            "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude for McKinsey Problem Solving Test — covering data analysis and math reasoning.",          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "Strong communication is critical at McKinsey — practice verbal ability and comprehension questions here.",       "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "bcg",
+        "name": "Boston Consulting Group",
+        "category": "Consulting",
+        "color": "#009A44",
+        "description": "BCG Potential Test, case interviews, market entry frameworks, and strategy consulting Q&A.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Economics Fundamentals",          "desc": "Supply-demand dynamics, cost structures, and competitive economics for strategy consulting.",                      "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "BCG Potential Test involves analytical reasoning — practice thousands of free logic and reasoning problems.",   "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Quantitative Aptitude",           "desc": "Quantitative and data interpretation problems that match BCG analytical assessment format.",                    "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills practice for BCG case interview and presentation rounds.",                                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "pwc",
+        "name": "PricewaterhouseCoopers",
+        "category": "Big 4",
+        "color": "#D04A02",
+        "description": "Audit, tax, advisory, and consulting interview questions for PwC campus and experienced hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Financial accounting, audit, balance sheets, and depreciation Q&A relevant to PwC service lines.",              "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Aptitude and reasoning practice for PwC online assessment and campus recruitment screening.",                   "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "English communication and comprehension skills practice for PwC verbal and interview rounds.",                   "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical and logical reasoning questions for PwC assessment tests and case discussion rounds.",               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "deloitte-consulting",
+        "name": "Deloitte Consulting",
+        "category": "Big 4",
+        "color": "#86BC25",
+        "description": "Strategy, technology consulting, and management advisory interview questions for Deloitte consulting roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Deloitte Placement Papers",        "desc": "Deloitte-style aptitude and logical reasoning papers — free to practice for consulting and tech roles.",        "url": "https://www.indiabix.com/placement-papers/deloitte/",                               "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Operations & Management MCQs",    "desc": "Process optimization, scheduling, and project management MCQs for consulting trainees.",                        "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Reasoning",            "desc": "Quantitative and analytical reasoning practice aligned with Deloitte assessment pattern.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English proficiency practice for Deloitte communication and aptitude assessment rounds.",                        "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "kpmg",
+        "name": "KPMG",
+        "category": "Big 4",
+        "color": "#00338D",
+        "description": "Audit, risk advisory, tax, and management consulting interview questions for KPMG campus hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Accounting, audit, risk, and tax concepts Q&A for KPMG service line interviews and campus hiring.",            "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning practice for KPMG campus assessment and online test.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning practice for KPMG aptitude and decision-making assessment rounds.",                        "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English language and communication skills practice for KPMG interviews and written assessment.",                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "ey",
+        "name": "Ernst & Young (EY)",
+        "category": "Big 4",
+        "color": "#2E2E2E",
+        "description": "Assurance, tax, consulting, and transaction advisory interview questions for EY campus and lateral hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Financial accounting, assurance, and consulting Q&A relevant to EY service line interviews.",                   "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and data interpretation for EY campus online assessment rounds.",                          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and English language practice for EY verbal reasoning and interview rounds.",                      "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical and logical reasoning questions for EY assessment pattern across all service lines.",                 "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "amazon-business",
+        "name": "Amazon (Business Roles)",
+        "category": "E-Commerce",
+        "color": "#FF9900",
+        "description": "Amazon operations, supply chain, business analyst, and MBA associate interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Operations Management MCQs",      "desc": "Supply chain, inventory forecasting, and logistics questions tailored for Amazon operations.",                   "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude and data reasoning practice for Amazon online business assessment.",                       "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning and decision-making practice for Amazon leadership principle-based assessments.",           "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Master SQL querying and data manipulation required for Amazon Business Analyst and Program Manager roles.",        "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "reliance",
+        "name": "Reliance Industries",
+        "category": "Conglomerate",
+        "color": "#003087",
+        "description": "Management trainee, operations, and business strategy interview questions for Reliance group roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Business MCQs",       "desc": "Marketing management, retail distribution, and brand positioning multiple choice questions.",                    "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning for Reliance campus and management trainee assessments.",                   "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and language skills practice for Reliance interview and GD rounds.",                              "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning practice for Reliance management trainee selection process.",                              "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "tata",
+        "name": "Tata Group",
+        "category": "Conglomerate",
+        "color": "#003478",
+        "description": "Tata GEMS, management trainee, and analyst interview questions across Tata group companies.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "TCS Placement Papers",            "desc": "Tata group aptitude and placement paper practice — TCS NQT style for all Tata companies.",                      "url": "https://www.indiabix.com/placement-papers/tcs/",                                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Operations Management Practice",   "desc": "Supply chain, manufacturing operations, and corporate strategy questions.",                                      "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative practice for Tata GEMS and management trainee online assessment rounds.",                          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English language skills practice for Tata group GD, PI, and written communication rounds.",                    "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "unilever",
+        "name": "Hindustan Unilever",
+        "category": "FMCG",
+        "color": "#005A8B",
+        "description": "FMCG management trainee, sales & marketing, and Future Leaders Program interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing MCQs & Practice",       "desc": "Marketing concepts, brand management, and consumer insights Q&A for FMCG management trainee roles.",           "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for HUL online assessment and management trainee selection process.",                     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning practice for HUL Future Leaders Program selection process.",                               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and comprehension practice for HUL GD, case study, and PI rounds.",                              "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "nestle",
+        "name": "Nestle India",
+        "category": "FMCG",
+        "color": "#005DAA",
+        "description": "Sales, marketing, supply chain, and management trainee interview questions for Nestle India hiring.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing Management MCQs",       "desc": "FMCG marketing, brand management, and distribution strategy Q&A for Nestle management trainee prep.",         "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning problems for Nestle online assessment rounds.",                             "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English communication and comprehension practice for Nestle interview and GD process.",                         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Operations Management",           "desc": "Supply chain, inventory replenishment, and plant logistics practice questions.",                                 "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "jpmorgan",
+        "name": "JP Morgan Chase",
+        "category": "Investment Bank",
+        "color": "#003087",
+        "description": "Investment banking, financial modeling, valuation, and quantitative analyst interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Financial statement analysis, DCF fundamentals, and valuation metrics for investment bank interviews.",         "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Advanced quantitative aptitude for JP Morgan numerical reasoning and online assessment tests.",                 "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Logical and analytical reasoning practice for JP Morgan quantitative screening rounds.",                       "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is extensively used for quant finance and algorithmic models — practice free challenges.",               "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "morgan-stanley",
+        "name": "Morgan Stanley",
+        "category": "Investment Bank",
+        "color": "#1A1A2E",
+        "description": "Equity research, fixed income, M&A, and wealth management interview questions for Morgan Stanley roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Finance & Accounting Practice",   "desc": "Equity valuation, fixed income basics, ratio analysis, and portfolio metrics.",                                  "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Quantitative Aptitude",           "desc": "Quantitative reasoning and numerical aptitude for Morgan Stanley analytical screening.",                        "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English communication practice for Morgan Stanley interview, GD, and case presentation rounds.",               "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Strengthen scripting and quantitative modeling algorithms for Morgan Stanley technology and analyst roles.",    "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "itc",
+        "name": "ITC Limited",
+        "category": "FMCG",
+        "color": "#006B3C",
+        "description": "ITC management trainee, business development, and cross-functional leadership interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Sales Practice",      "desc": "Channel distribution, FMCG brand strategy, and consumer behavior question bank for ITC hiring.",                "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning for ITC online assessment and written test rounds.",                        "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and comprehension skills practice for ITC group discussion and PI rounds.",                       "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning practice for ITC management trainee and business development selection.",                 "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
         ],
     },
     {
         "key": "capgemini",
         "name": "Capgemini",
+        "category": "IT Consulting",
         "color": "#0070AD",
-        "description": "Aptitude, pseudocode, essay writing, and behavioral questions for Capgemini recruitment assessments.",
+        "description": "Capgemini aptitude, pseudocode, essay writing, and technical interview questions for campus hiring.",
         "total_questions": 4,
         "resources": [
-            {"site": "PrepInsta",     "label": "Capgemini Placement Papers",    "desc": "Capgemini mock tests covering aptitude, pseudocode, essay writing, and behavioral assessment rounds.",        "url": "https://prepinsta.com/capgemini/",                               "icon": "bi-file-earmark-text-fill"},
-            {"site": "GeeksForGeeks", "label": "Capgemini Interview Questions", "desc": "Interview preparation guide, HR round Q&A, and technical experiences for Capgemini placements.",             "url": "https://www.geeksforgeeks.org/capgemini-interview-experience/",  "icon": "bi-mortarboard-fill"},
-            {"site": "IndiaBix",      "label": "Capgemini Aptitude Practice",   "desc": "Aptitude, logical reasoning, and verbal practice sets matching Capgemini assessment patterns.",              "url": "https://www.indiabix.com/",                                      "icon": "bi-calculator-fill"},
-            {"site": "InterviewBit",  "label": "Capgemini Interview Prep",      "desc": "Real Capgemini interview Q&A, placement tips, and structured mock preparation resources.",                   "url": "https://www.interviewbit.com/capgemini-interview-questions/",    "icon": "bi-chat-left-dots-fill"},
+            {"site": "IndiaBix",      "label": "Capgemini Placement Papers",      "desc": "Capgemini-style aptitude, reasoning, and pseudocode questions — free to practice without any login.",          "url": "https://www.indiabix.com/placement-papers/capgemini/",                               "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "Pseudocode parsing, string algorithms, and logical problem solving for Capgemini recruitment.",                 "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative and reasoning problems aligned with Capgemini assessment pattern.",                               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python coding for Capgemini technical and pseudocode rounds — free challenges to build coding skills.",        "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "airtel",
+        "name": "Bharti Airtel",
+        "category": "Telecom",
+        "color": "#CC0000",
+        "description": "Telecom operations, product management, data analytics, and business development interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Business MCQs",       "desc": "Product management, telecom ARPU, customer retention, and business strategy Q&A.",                             "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude and reasoning for Airtel campus and management trainee assessment.",                     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills practice for Airtel interview and group discussion rounds.",                               "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Data analysis and query writing for customer segmentation and telecom churn prediction roles.",                  "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
         ],
     },
 ]
 
-COMPANY_HUB_MAP = {c["key"]: c for c in COMPANY_HUB}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 4: BUSINESS & COMMERCE DOMAINS (25 DOMAINS)
+# ═══════════════════════════════════════════════════════════════════════════════
+BUSINESS_HUB = [
+    {
+        "key": "financial-accounting",
+        "name": "Financial Accounting",
+        "category": "Accounting",
+        "color": "#2E86AB",
+        "description": "Balance sheets, P&L statements, journal entries, depreciation, and IFRS/GAAP interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Free accounting and finance MCQs covering balance sheets, trial balance, and financial ratios.",               "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Numerical aptitude for accounting roles — percentage, profit/loss, and ratio problems.",                        "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English communication practice for accounting interviews, GD rounds, and written assessment.",                  "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning and statement analysis for audit and accounting roles.",                                   "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "marketing-management",
+        "name": "Marketing Management",
+        "category": "Marketing",
+        "color": "#E84855",
+        "description": "4Ps of marketing, brand management, digital marketing, consumer behavior, and STP interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing MCQs",                  "desc": "Free multiple-choice questions on marketing management, advertising, and consumer behavior concepts.",          "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-megaphone-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for marketing roles — data analysis and market research numerical skills.",              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and comprehension for marketing roles — essential for presentations and client work.",            "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Market segmentation logic, decision trees, and strategic reasoning practice.",                                  "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "human-resource",
+        "name": "Human Resource Management",
+        "category": "HRM",
+        "color": "#F18F01",
+        "description": "Recruitment, performance management, training & development, labor law, and HR analytics interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "HR Management MCQs",              "desc": "Free MCQs on HRM topics: manpower planning, job analysis, and performance management.",                        "url": "https://www.indiabix.com/human-resources/questions-and-answers/",                   "icon": "bi-people-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills practice — critical for HR professionals dealing with employees and stakeholders.",         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning for HR analyst and HRBP roles with data-driven decision responsibilities.",               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Compensation benchmarking, payroll arithmetic, and headcount analytics math.",                                 "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "business-analytics",
+        "name": "Business Analytics",
+        "category": "Analytics",
+        "color": "#7FB5B5",
+        "description": "Data-driven decision making, SQL, Excel, visualization, and business intelligence interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "SQL is the #1 skill for business analysts — practice complex queries for free with HackerRank challenges.",     "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "Kaggle",        "label": "Free Data Analysis Courses",      "desc": "Free Kaggle courses on Pandas, data visualization, and Python for data analysis — perfect for BA prep.",       "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude and data interpretation for business analyst assessment rounds.",                         "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Deductive logic, case analysis, and problem structuring for analyst interviews.",                               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "corporate-finance",
+        "name": "Corporate Finance",
+        "category": "Finance",
+        "color": "#1E3A5F",
+        "description": "DCF valuation, WACC, capital structure, M&A, IPO, and corporate finance interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance MCQs",       "desc": "Free finance MCQs covering TVM, capital budgeting, cost of capital, and financial planning.",                 "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for finance roles — ratio, percentage, and interest calculations.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning for finance analyst roles — data interpretation and decision-making problems.",           "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Economics Fundamentals",          "desc": "Cost of capital, interest rate mechanics, inflation impact, and capital markets overview.",                     "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+        ],
+    },
+    {
+        "key": "supply-chain",
+        "name": "Supply Chain & Operations",
+        "category": "Operations",
+        "color": "#8D99AE",
+        "description": "Logistics, inventory management, demand forecasting, procurement, and SCM interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Operations Management MCQs",      "desc": "Free operations MCQs on capacity, scheduling, and quality management.",                                        "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-truck"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative practice for supply chain analyst roles — data interpretation and problem-solving.",              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning practice for operations and SCM roles requiring data-driven decisions.",                  "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Inventory tracking, warehouse queries, and supply chain reporting in relational databases.",                    "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "entrepreneurship",
+        "name": "Entrepreneurship & Strategy",
+        "category": "Strategy",
+        "color": "#FF6B35",
+        "description": "Business model canvas, competitive strategy, go-to-market, Porter's Five Forces, and startup interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing MCQs",                  "desc": "Market entry strategy, go-to-market positioning, and competitive advantage principles.",                        "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Sharp analytical thinking for strategy roles — practice thousands of free reasoning problems.",                "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Strong communication is critical for entrepreneurship — practice comprehension and writing skills.",            "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for business case analysis, market sizing, and financial modeling.",                     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "economics",
+        "name": "Economics",
+        "category": "Economics",
+        "color": "#2DC653",
+        "description": "Micro and macroeconomics, demand-supply, elasticity, GDP, inflation, and trade policy interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Economics Complete Guide",         "desc": "Free guide covering micro/macro economics, demand-supply analysis, market structures, and policy concepts.",     "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Economics MCQs",                  "desc": "Free MCQs on economic theory, national income, trade, money, and banking.",                                    "url": "https://www.indiabix.com/economics/questions-and-answers/",                         "icon": "bi-graph-up"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for economics roles — index numbers, percentages, and statistical problems.",            "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English comprehension and vocabulary practice for economics-related written and interview assessments.",         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "banking-finance",
+        "name": "Banking & Financial Services",
+        "category": "Banking",
+        "color": "#0066CC",
+        "description": "Banking operations, credit analysis, RBI regulations, FOREX, and financial product interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Banking Awareness MCQs",          "desc": "Free banking awareness — RBI, SEBI, monetary policy, NPA, RTGS, NEFT, and banking products.",                 "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude for bank exams — interest calculations, DI, and arithmetic problems.",                   "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Reasoning and puzzles for banking exams (IBPS, SBI) — seating arrangement, blood relations, coding.",         "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "Economics & Monetary Policy",     "desc": "In-depth overview of central banking, inflation controls, money supply, and macro indicators.",                    "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+        ],
+    },
+    {
+        "key": "taxation",
+        "name": "Taxation & GST",
+        "category": "Tax",
+        "color": "#6B4226",
+        "description": "GST, income tax, TDS, corporate tax, and Indian taxation framework interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance MCQs",       "desc": "Taxation-related accounting MCQs covering income tax, TDS, and financial compliance concepts.",               "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-receipt"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative problems involving tax calculations, interest, and financial computations.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "English comprehension for CA Foundation, CS, and taxation professional exams.",                                "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical evaluation of taxation scenarios, deduction eligibility, and compliance rules.",                     "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "investment-banking",
+        "name": "Investment Banking",
+        "category": "IB",
+        "color": "#1A1A2E",
+        "description": "M&A, LBO, IPO, DCF modeling, pitchbooks, and investment banking interview technical questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Finance & Accounting MCQs",       "desc": "Financial accounting and corporate finance MCQs covering valuation, capital markets, and derivatives.",        "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for IB screening tests — arithmetic, data interpretation, and reasoning.",              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills for investment banking — comprehension, grammar, and vocabulary practice.",              "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Critical financial problem solving, scenario analysis, and logic test practice.",                               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "operations-management",
+        "name": "Operations Management",
+        "category": "Operations",
+        "color": "#4A90D9",
+        "description": "Production planning, quality control, Six Sigma, lean manufacturing, and operations interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Operations Management MCQs",      "desc": "Free MCQs on production management, quality circles, inventory control, and scheduling.",                      "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-gear-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for operations roles — work, time, and efficiency calculation problems.",               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning for operations manager roles requiring data-driven problem solving.",                     "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Operational team leadership and stakeholder communication practice exercises.",                                 "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "business-law",
+        "name": "Business Law & Compliance",
+        "category": "Law",
+        "color": "#5C4033",
+        "description": "Companies Act, contract law, IPR, corporate governance, and business law interview questions for CS/LLB.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "Reading comprehension and legal language skills for CS, LLB, and corporate law role assessments.",            "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning for law and compliance roles — argument evaluation and decision-making problems.",        "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for CS and compliance analyst roles requiring numerical analysis.",                      "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Accounting Standards MCQs",       "desc": "Corporate governance and statutory financial reporting multiple-choice questions.",                              "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-journal-richtext"},
+        ],
+    },
+    {
+        "key": "digital-marketing",
+        "name": "Digital Marketing",
+        "category": "Marketing",
+        "color": "#FF6B6B",
+        "description": "SEO, SEM, social media marketing, email campaigns, analytics, and growth hacking interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing MCQs",                  "desc": "Marketing management MCQs covering branding, advertising, digital channels, and consumer behavior.",          "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-megaphone-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Digital marketers analyze data with SQL — build query skills with free in-browser HackerRank challenges.",     "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "Kaggle",        "label": "Free Data Analysis Course",       "desc": "Learn data analysis with Python and Pandas — essential for digital marketing analytics and reporting.",        "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Ad copywriting, campaign messaging, and marketing communication practice tests.",                              "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "project-management",
+        "name": "Project Management",
+        "category": "PM",
+        "color": "#6BCB77",
+        "description": "PMP, Agile, Scrum, project scheduling, risk management, and stakeholder communication interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Operations & Scheduling MCQs",    "desc": "Critical path analysis, capacity planning, and project milestone multiple-choice questions.",                  "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-calendar-check"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Analytical reasoning for PM roles — critical thinking, scheduling analysis, and problem-solving.",            "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-calendar-check"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "Communication skills practice — PMs need excellent written and verbal skills for stakeholder management.",     "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for project management — estimation, scheduling math, and budget calculations.",        "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "retail-management",
+        "name": "Retail & Sales Management",
+        "category": "Retail",
+        "color": "#FF9F1C",
+        "description": "Sales process, customer relationship management, merchandising, and retail operations interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Retail MCQs",         "desc": "Retail and sales MCQs covering distribution channels, merchandising, and pricing strategies.",               "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-shop"},
+            {"site": "IndiaBix",      "label": "Operations Management",           "desc": "Store inventory management, order fulfillment, and logistics operational questions.",                           "url": "https://www.indiabix.com/operations-management/questions-and-answers/",             "icon": "bi-truck"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and persuasion skills practice — critical for sales roles and customer-facing positions.",       "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Numerical aptitude for retail analytics and sales target calculations in assessment rounds.",                 "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "international-business",
+        "name": "International Business",
+        "category": "Global Trade",
+        "color": "#023E8A",
+        "description": "Foreign trade, EXIM, tariffs, WTO, international marketing, and cross-border business interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Economics & Trade MCQs",          "desc": "International trade theory, balance of payments, and trade policy MCQs — free, no login required.",          "url": "https://www.indiabix.com/economics/questions-and-answers/",                         "icon": "bi-globe"},
+            {"site": "GeeksForGeeks", "label": "Economics Guide",                 "desc": "Currency exchange rates, tariffs, comparative advantage, and global trade economics.",                              "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability Practice",         "desc": "Communication and comprehension for international business roles requiring cross-cultural skills.",           "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for FOREX, trade finance, and international business analytics roles.",               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "organizational-behavior",
+        "name": "Organizational Behavior",
+        "category": "Management",
+        "color": "#C77DFF",
+        "description": "Motivation theories, leadership styles, group dynamics, organizational culture, and change management Q&A.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "HR & OB Management MCQs",         "desc": "MCQs on OB topics: Maslow, Herzberg, McGregor, group dynamics, and organizational structure.",               "url": "https://www.indiabix.com/human-resources/questions-and-answers/",                   "icon": "bi-people-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and interpersonal skills practice — core competencies in OB and HR roles.",                    "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning and case analysis for management and OB consultant roles.",                             "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "General quantitative analysis and logical deduction tests for management trainees.",                          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "financial-markets",
+        "name": "Financial Markets & Securities",
+        "category": "Capital Markets",
+        "color": "#16213E",
+        "description": "Stock markets, mutual funds, derivatives, SEBI regulations, and capital market interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance MCQs",       "desc": "Financial instruments, capital markets, and securities analysis MCQs — free without registration.",          "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-graph-up-arrow"},
+            {"site": "IndiaBix",      "label": "Banking & Markets Practice",      "desc": "SEBI frameworks, mutual funds, money markets, and primary/secondary market concepts.",                          "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for securities analysis and portfolio management numerical assessments.",              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills practice for capital markets, broking, and financial advisory roles.",               "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "ca-cma",
+        "name": "CA / CMA / CS Exams",
+        "category": "Professional Exams",
+        "color": "#C1121F",
+        "description": "Chartered Accountancy, Cost Management Accounting, and Company Secretary exam preparation Q&A.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance MCQs",       "desc": "CA Foundation, IPCC, and Final-level accounting and finance questions — comprehensive free practice.",         "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-journal-richtext"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "CA Foundation mathematics and statistics questions — free, no login required.",                              "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability (Business English)","desc": "English language and comprehension for CA Foundation Business Communication paper.",                          "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Logical thinking and reasoning required for legal and auditing aptitude exams.",                                "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "entrepreneurship-management",
+        "name": "Entrepreneurship & Innovation",
+        "category": "Startup",
+        "color": "#E9C46A",
+        "description": "Design thinking, lean startup, MVP strategy, product-market fit, and innovation management interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing Strategy MCQs",         "desc": "Customer discovery, product adoption curves, and growth marketing practice questions.",                         "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-lightbulb-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning Practice",      "desc": "Critical thinking and analytical reasoning for entrepreneurial problem-solving and decision-making.",         "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-lightbulb-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and persuasion skills for pitching, stakeholder management, and entrepreneur interviews.",      "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Market sizing, business math, and financial calculation skills for startup and innovation roles.",           "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "insurance",
+        "name": "Insurance & Risk Management",
+        "category": "Insurance",
+        "color": "#457B9D",
+        "description": "Life insurance, general insurance, risk assessment, actuarial concepts, and IRDA regulatory Q&A.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Banking & Insurance MCQs",        "desc": "Insurance-related finance MCQs covering risk pooling, premiums, and investment-linked products.",            "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-shield-check"},
+            {"site": "IndiaBix",      "label": "Accounting & Finance Practice",   "desc": "Actuarial reserves, policyholder liabilities, and insurance accounting concepts.",                              "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Quantitative aptitude for actuarial and insurance analyst assessment rounds.",                               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills for client-facing insurance and relationship management roles.",                         "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "ecommerce",
+        "name": "E-Commerce & FinTech",
+        "category": "Digital Commerce",
+        "color": "#FF4500",
+        "description": "Online business models, payment systems, UPI, digital lending, and e-commerce operations interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Retail MCQs",         "desc": "Customer acquisition cost, conversion rate optimization, and marketplace economics.",                           "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-credit-card-fill"},
+            {"site": "IndiaBix",      "label": "Banking & Digital Payments",      "desc": "Payment gateways, UPI settlement, digital banking products, and fintech regulation questions.",                 "url": "https://www.indiabix.com/bank-exams/questions-and-answers/",                        "icon": "bi-bank2"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude for e-commerce analyst roles — data interpretation and financial reasoning.",          "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "SQL is critical for e-commerce analytics and FinTech data roles — practice free challenges here.",           "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "real-estate",
+        "name": "Real Estate & Construction",
+        "category": "Real Estate",
+        "color": "#8B5E3C",
+        "description": "Property valuation, RERA, real estate finance, construction management, and realty sector Q&A.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Accounting & Finance MCQs",       "desc": "Cap rates, NPV/IRR in property development, asset depreciation, and financial analysis.",                         "url": "https://www.indiabix.com/accounting/questions-and-answers/",                        "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Aptitude & Quantitative",         "desc": "Quantitative aptitude for real estate analyst roles — area, volume, profit/loss, and ROI calculations.",     "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication skills for property consultants and real estate sales professionals.",                          "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical and critical thinking for real estate project management and advisory roles.",                    "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+        ],
+    },
+    {
+        "key": "media-entertainment",
+        "name": "Media & Entertainment",
+        "category": "Media",
+        "color": "#E040FB",
+        "description": "Content creation, media planning, OTT strategy, advertising, and entertainment business interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "IndiaBix",      "label": "Marketing & Advertising MCQs",    "desc": "Advertising, media planning, and entertainment marketing MCQs — free, no registration required.",            "url": "https://www.indiabix.com/marketing/questions-and-answers/",                         "icon": "bi-camera-video-fill"},
+            {"site": "IndiaBix",      "label": "Verbal Ability",                  "desc": "Communication and creative writing practice for media, content, and entertainment business roles.",          "url": "https://www.indiabix.com/verbal-ability/questions-and-answers/",                    "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Logical Reasoning",               "desc": "Analytical reasoning for media analytics, audience measurement, and content strategy roles.",               "url": "https://www.indiabix.com/logical-reasoning/questions-and-answers/",                 "icon": "bi-file-earmark-text-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Data interpretation, TRP rating analysis, and advertising budget arithmetic.",                                  "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+]
 
 
-@resources_bp.route("/company-questions")
-def company_questions_home():
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 5: SCRIPTING & PROGRAMMING LANGUAGES (22 LANGUAGES)
+# ═══════════════════════════════════════════════════════════════════════════════
+SCRIPT_HUB = [
+    {
+        "key": "python",
+        "name": "Python",
+        "category": "General Purpose",
+        "color": "#3776AB",
+        "description": "Python syntax, OOP, data structures, libraries (NumPy/Pandas), and coding interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Free Python challenges from beginner to advanced — solve in-browser with instant feedback.",                   "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "Python Quiz",                     "desc": "Test your Python knowledge with an interactive free quiz — great for quick revision.",                         "url": "https://www.w3schools.com/python/python_quiz.asp",                                  "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "Python Interview Questions",      "desc": "Free topic-wise Python interview Q&A covering syntax, OOP, libraries, decorators, and generators.",           "url": "https://www.geeksforgeeks.org/python-interview-questions/",                         "icon": "bi-mortarboard-fill"},
+            {"site": "Kaggle",        "label": "Free Python Courses",             "desc": "Learn Python for data science, automation, and algorithmic problem solving with interactive notebooks.",        "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+        ],
+    },
+    {
+        "key": "javascript",
+        "name": "JavaScript",
+        "category": "Web / Frontend",
+        "color": "#F7DF1E",
+        "description": "ES6+, closures, async/await, DOM manipulation, and JavaScript interview questions for frontend and backend roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "10 Days of JavaScript",           "desc": "Free 10-day JavaScript challenge covering all core concepts — beginner friendly and no login required.",       "url": "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",                "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "JavaScript Quiz",                 "desc": "Free interactive JavaScript quiz — instant results, no login, covers core JS and ES6+ concepts.",              "url": "https://www.w3schools.com/js/js_quiz.asp",                                          "icon": "bi-question-circle-fill"},
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "500+ JS interview Q&A with detailed answers — closures, prototypes, event loop, promises, and more.",         "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "Master string manipulation and parsing in JavaScript with 50 top interview questions.",                           "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "java",
+        "name": "Java",
+        "category": "Enterprise",
+        "color": "#ED8B00",
+        "description": "Java OOP, collections, multithreading, JVM internals, Spring, and Java coding interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Free Java challenges covering OOP, data structures, streams, generics, and concurrency.",                      "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "Java Quiz",                       "desc": "Free interactive Java quiz to test knowledge of syntax, OOP, exceptions, and Java basics.",                    "url": "https://www.w3schools.com/java/java_quiz.asp",                                      "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "Comprehensive free Java interview Q&A — OOP principles, collections, JVM, Spring, and Hibernate.",            "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Practice essential Java data structures and algorithms questions with complete solutions.",                        "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "cpp",
+        "name": "C++",
+        "category": "Systems / Performance",
+        "color": "#00599C",
+        "description": "STL, memory management, pointers, OOP, templates, and C++ competitive programming interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Free C++ challenges from HackerRank — covers STL, templates, pointers, and OOP concepts.",                    "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "C++ Quiz",                        "desc": "Free C++ quiz to test your knowledge of syntax, OOP, vectors, and standard library usage.",                   "url": "https://www.w3schools.com/cpp/cpp_quiz.asp",                                        "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "C++ Interview Questions",         "desc": "Topic-wise free C++ Q&A covering pointers, memory, RAII, templates, and competitive programming.",            "url": "https://www.geeksforgeeks.org/cpp-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Must-Do Coding Questions",        "desc": "Solve competitive programming and DSA problems in C++ — ideal for systems and game dev interview prep.",       "url": "https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "c",
+        "name": "C Language",
+        "category": "Systems",
+        "color": "#A8B9CC",
+        "description": "Pointers, memory management, structs, bitwise operations, and low-level C programming interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "C Interview Questions",           "desc": "Free C language Q&A covering pointers, structs, memory management, bitwise ops, and I/O.",                   "url": "https://www.geeksforgeeks.org/c-interview-questions/",                              "icon": "bi-mortarboard-fill"},
+            {"site": "W3Schools",     "label": "C Programming Tutorial",          "desc": "Comprehensive C reference and interactive online examples covering syntax and pointers.",                     "url": "https://www.w3schools.com/c/c_intro.php",                                           "icon": "bi-question-circle-fill"},
+            {"site": "IndiaBix",      "label": "C Programming MCQs",              "desc": "C programming MCQs covering output-based, pointer, and logical questions — free, no login required.",         "url": "https://www.indiabix.com/c-programming/questions-and-answers/",                     "icon": "bi-file-earmark-text-fill"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "C developers work closely with Linux — build shell and systems skills with free HackerRank challenges.",       "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "sql",
+        "name": "SQL & Databases",
+        "category": "Data",
+        "color": "#F29111",
+        "description": "SELECT, JOIN, subqueries, window functions, stored procedures, and SQL optimization interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Free SQL challenges from basic to advanced — solve queries directly in the browser, no setup needed.",         "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "SQL Quiz",                        "desc": "Test your SQL knowledge with a free interactive quiz covering SELECT, JOIN, and aggregate functions.",         "url": "https://www.w3schools.com/sql/sql_quiz.asp",                                        "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "SQL Interview Questions",         "desc": "Comprehensive free SQL Q&A covering queries, optimization, normalization, and DBMS concepts.",                "url": "https://www.geeksforgeeks.org/sql-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "DBMS Interview Questions",        "desc": "Deep dive into ACID properties, locking mechanisms, indexing structures, and distributed databases.",            "url": "https://www.geeksforgeeks.org/commonly-asked-dbms-interview-questions/",            "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "typescript",
+        "name": "TypeScript",
+        "category": "Web / Typed JS",
+        "color": "#3178C6",
+        "description": "TypeScript types, interfaces, generics, decorators, and TS in React/Node interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "JavaScript fundamentals are the base of TypeScript — 500+ Q&A to master both languages together.",           "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+            {"site": "W3Schools",     "label": "JavaScript Quiz",                 "desc": "TypeScript builds on JS — test your JavaScript fundamentals with this free interactive quiz.",                 "url": "https://www.w3schools.com/js/js_quiz.asp",                                          "icon": "bi-question-circle-fill"},
+            {"site": "GitHub",        "label": "ReactJS Interview Questions",     "desc": "Component typing, generics with hooks, and type-safe state management interview guides.",                       "url": "https://github.com/sudheerj/reactjs-interview-questions",                           "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "JavaScript Challenges",           "desc": "Build deep algorithmic proficiency in JavaScript/TypeScript with in-browser coding tests.",                     "url": "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",                "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "react",
+        "name": "React.js",
+        "category": "Frontend Framework",
+        "color": "#61DAFB",
+        "description": "React hooks, state management, component lifecycle, Context API, and performance optimization questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "ReactJS Interview Questions",     "desc": "300+ React interview Q&A with detailed answers — hooks, lifecycle, Redux, performance, and patterns.",         "url": "https://github.com/sudheerj/reactjs-interview-questions",                           "icon": "bi-github"},
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "Closures, event delegation, and asynchronous Javascript that every React developer must master.",              "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+            {"site": "W3Schools",     "label": "JavaScript Quiz",                 "desc": "Strong JS fundamentals are needed for React — test your knowledge with this free interactive quiz.",           "url": "https://www.w3schools.com/js/js_quiz.asp",                                          "icon": "bi-question-circle-fill"},
+            {"site": "HackerRank",    "label": "JavaScript Challenges",           "desc": "Build JavaScript skills with free HackerRank challenges — essential foundation for React development.",       "url": "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",                "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "nodejs",
+        "name": "Node.js",
+        "category": "Backend / Runtime",
+        "color": "#339933",
+        "description": "Node.js event loop, Express.js, REST APIs, async programming, and backend JavaScript interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "JavaScript Interview Questions",  "desc": "Core JavaScript mastery is essential for Node.js — 500+ Q&A to build deep language understanding.",          "url": "https://github.com/sudheerj/javascript-interview-questions",                        "icon": "bi-github"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Scalable backend architecture, microservices, and asynchronous event streams in Node environments.",             "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "JavaScript Challenges",           "desc": "Free JavaScript coding challenges — the foundation of Node.js backend development.",                          "url": "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",                "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "Relational database querying and connection pooling for Node.js backend engineers.",                              "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "go",
+        "name": "Go (Golang)",
+        "category": "Systems / Cloud",
+        "color": "#00ADD8",
+        "description": "Go concurrency, goroutines, channels, interfaces, and backend service interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "Go By Example",                   "desc": "Free hands-on Go programming examples covering goroutines, channels, interfaces, and error handling.",         "url": "https://gobyexample.com/",                                                          "icon": "bi-github"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Distributed backend systems, gRPC services, and high-concurrency microservices designed with Go.",               "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Go is heavily used in cloud/DevOps — shell skills complement Go development in systems roles.",               "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Implement core algorithms and data structures cleanly using Go standard libraries.",                              "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "rust",
+        "name": "Rust",
+        "category": "Systems / Safety",
+        "color": "#CE412B",
+        "description": "Rust ownership, borrowing, lifetimes, traits, async Rust, and systems programming interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "Rust By Example",                 "desc": "Official Rust examples — learn ownership, borrowing, traits, and async programming hands-on for free.",         "url": "https://doc.rust-lang.org/rust-by-example/",                                        "icon": "bi-github"},
+            {"site": "GitHub",        "label": "Coding Interview University",     "desc": "Low-level CS fundamentals, memory hierarchy, and cache efficiency concepts in Rust.",                           "url": "https://github.com/jwasham/coding-interview-university",                            "icon": "bi-github"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Strengthen memory allocation, pointer semantics, and systems concepts relevant to Rust.",                         "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "Linux Shell Challenges",          "desc": "Rust developers work with OS and systems — complement Rust skills with Linux and shell expertise.",           "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "kotlin",
+        "name": "Kotlin",
+        "category": "Android / JVM",
+        "color": "#7F52FF",
+        "description": "Kotlin syntax, coroutines, Android development, null safety, and Kotlin vs Java interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "JVM internals, garbage collection, and bytecode execution that every Kotlin developer relies on.",                 "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Kotlin runs on JVM — strong Java foundation speeds up Kotlin mastery. Free Java challenges on HackerRank.",    "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "W3Schools",     "label": "Java Quiz",                       "desc": "Java fundamentals quiz — understanding Java deeply makes Kotlin much easier to learn and use.",                "url": "https://www.w3schools.com/java/java_quiz.asp",                                      "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "Array and collection manipulation problems — solve cleanly using Kotlin higher-order functions.",                 "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "swift",
+        "name": "Swift",
+        "category": "iOS / macOS",
+        "color": "#FA7343",
+        "description": "Swift syntax, optionals, ARC, protocols, SwiftUI, and iOS development interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "System design and behavioral frameworks for Apple platform software engineers.",                                   "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Data structures, protocol-oriented algorithms, and tree problems tested in iOS engineering rounds.",              "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "HackerRank",    "label": "C++ Practice Domain",             "desc": "Deepen your understanding of memory models, ARC pointers, and low-level performance.",                             "url": "https://www.hackerrank.com/domains/cpp",                                            "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Many Swift developers use Python for scripting — build Python skills as a complementary tool.",                "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+        ],
+    },
+    {
+        "key": "php",
+        "name": "PHP",
+        "category": "Web Backend",
+        "color": "#777BB4",
+        "description": "PHP OOP, Laravel, Symfony, MySQL integration, and server-side web development interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "W3Schools",     "label": "PHP Quiz",                        "desc": "Free interactive PHP quiz to test syntax, forms, databases, and server-side programming knowledge.",            "url": "https://www.w3schools.com/php/php_quiz.asp",                                        "icon": "bi-question-circle-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "PHP developers constantly use MySQL — sharpen SQL skills with free HackerRank challenges.",                   "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "SQL Interview Questions",         "desc": "Database query optimization, indexing, and connection management for PHP backends.",                              "url": "https://www.geeksforgeeks.org/sql-interview-questions/",                            "icon": "bi-mortarboard-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 50 String Problems",          "desc": "String sanitization, regular expressions, and parsing problems tested in backend web interviews.",                 "url": "https://www.geeksforgeeks.org/top-50-string-coding-problems-for-interviews/",       "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "ruby",
+        "name": "Ruby / Ruby on Rails",
+        "category": "Web Backend",
+        "color": "#CC342D",
+        "description": "Ruby syntax, metaprogramming, Rails MVC, ActiveRecord, and full-stack Ruby development interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "Ruby Practice Domain",            "desc": "Free Ruby coding challenges covering basic syntax, OOP, and algorithmic problem solving in Ruby.",            "url": "https://www.hackerrank.com/domains/ruby",                                           "icon": "bi-terminal-fill"},
+            {"site": "HackerRank",    "label": "SQL Practice Domain",             "desc": "ActiveRecord queries and database schema design for Ruby on Rails web applications.",                             "url": "https://www.hackerrank.com/domains/sql",                                            "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "System design and web application scalability frameworks tailored for full-stack developers.",                   "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Strengthen mathematical aptitude skills for Ruby developer technical screening assessments.",                   "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "scala",
+        "name": "Scala",
+        "category": "Functional / Big Data",
+        "color": "#DC322F",
+        "description": "Scala functional programming, case classes, pattern matching, Akka, and Spark with Scala interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "JVM memory management, garbage collection, and class loading essential for Scala mastery.",                       "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Scala runs on JVM — deep Java knowledge speeds up Scala mastery. Free Java challenges on HackerRank.",     "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "System Design Primer",            "desc": "Distributed data processing and high-throughput microservices built on Spark and Akka.",                           "url": "https://github.com/donnemartin/system-design-primer",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Solve recursion, tree traversal, and dynamic programming challenges with functional paradigms.",                   "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "r-lang",
+        "name": "R (Statistics / Data Science)",
+        "category": "Data Science",
+        "color": "#2765AE",
+        "description": "R programming, statistical analysis, ggplot2, tidyverse, and data science interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "Kaggle",        "label": "Free Data Science Courses",       "desc": "Free Kaggle courses for data analysis — learn with real datasets, notebooks, and hands-on exercises.",         "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "GeeksForGeeks", "label": "Economics & Statistics Guide",    "desc": "Probability distributions, regression models, hypothesis testing, and statistical estimation concepts.",          "url": "https://www.geeksforgeeks.org/economics/",                                          "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python and R are closely related in data science — Python skills complement R knowledge effectively.",         "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "IndiaBix",      "label": "Aptitude Practice",               "desc": "Data interpretation, probability, and permutation & combination questions for data science roles.",               "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "bash",
+        "name": "Bash / Shell Scripting",
+        "category": "Scripting / DevOps",
+        "color": "#4EAA25",
+        "description": "Shell scripting, automation, Linux commands, cron jobs, and Bash interview questions for DevOps/SRE roles.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "Linux Shell Practice Domain",     "desc": "Free shell scripting challenges covering awk, sed, grep, pipes, and Bash scripting from beginner to expert.",  "url": "https://www.hackerrank.com/domains/shell",                                          "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "DevOps Exercises",                "desc": "1,000+ DevOps questions including shell scripting, Linux, and automation — open-source and free.",              "url": "https://github.com/bregman-arie/devops-exercises",                                 "icon": "bi-github"},
+            {"site": "IndiaBix",      "label": "Linux / OS Questions",            "desc": "Linux and operating systems MCQs — free practice covering file systems, permissions, and shell basics.",       "url": "https://www.indiabix.com/linux/questions-and-answers/",                             "icon": "bi-file-earmark-text-fill"},
+            {"site": "GeeksForGeeks", "label": "OS Concepts & Shell Q&A",         "desc": "Process signals, piping, I/O redirection, environment variables, and daemon management.",                         "url": "https://www.geeksforgeeks.org/commonly-asked-operating-systems-interview-questions/", "icon": "bi-mortarboard-fill"},
+        ],
+    },
+    {
+        "key": "matlab",
+        "name": "MATLAB",
+        "category": "Scientific Computing",
+        "color": "#E16737",
+        "description": "MATLAB syntax, matrix operations, signal processing, control systems, and engineering interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "Kaggle",        "label": "Free Python & Math Courses",      "desc": "Python is increasingly replacing MATLAB — learn Python with Kaggle free courses for data/science work.",     "url": "https://www.kaggle.com/learn",                                                      "icon": "bi-robot"},
+            {"site": "HackerRank",    "label": "Python Practice Domain",          "desc": "Python is often used alongside MATLAB — build Python skills to complement scientific computing roles.",        "url": "https://www.hackerrank.com/domains/python",                                         "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Linear algebra algorithms, matrix multiplication, and numerical optimization problem sets.",                       "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+            {"site": "IndiaBix",      "label": "Quantitative Aptitude",           "desc": "Calculus, matrix mathematics, and arithmetic problem sets for scientific engineering interviews.",                "url": "https://www.indiabix.com/aptitude/questions-and-answers/",                         "icon": "bi-calculator"},
+        ],
+    },
+    {
+        "key": "dart-flutter",
+        "name": "Dart / Flutter",
+        "category": "Cross-Platform Mobile",
+        "color": "#0175C2",
+        "description": "Dart language, Flutter widgets, state management, navigation, and cross-platform mobile interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Dart OOP is similar to Java — build strong fundamentals with free HackerRank Java challenges.",                "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GitHub",        "label": "ReactJS Interview Questions",     "desc": "Declarative UI concepts, widget trees, and state management paradigms shared between React and Flutter.",         "url": "https://github.com/sudheerj/reactjs-interview-questions",                           "icon": "bi-github"},
+            {"site": "GitHub",        "label": "Tech Interview Handbook",         "desc": "Mobile app architecture, asynchronous event handling, and interview preparation strategies.",                      "url": "https://github.com/yangshun/tech-interview-handbook",                               "icon": "bi-github"},
+            {"site": "GeeksForGeeks", "label": "Top 50 Array Problems",           "desc": "List manipulation, asynchronous streams, and fundamental algorithmic problem solving.",                            "url": "https://www.geeksforgeeks.org/top-50-array-coding-problems-for-interviews/",        "icon": "bi-code-slash"},
+        ],
+    },
+    {
+        "key": "csharp",
+        "name": "C# / .NET",
+        "category": "Enterprise / Microsoft",
+        "color": "#239120",
+        "description": "C# OOP, LINQ, async/await, ASP.NET Core, Entity Framework, and .NET interview questions.",
+        "total_questions": 4,
+        "resources": [
+            {"site": "W3Schools",     "label": "C# Tutorial & Reference",         "desc": "Comprehensive C# syntax, OOP, LINQ, and .NET classes interactive online reference.",                               "url": "https://www.w3schools.com/cs/index.php",                                            "icon": "bi-question-circle-fill"},
+            {"site": "GeeksForGeeks", "label": "Java Interview Questions",        "desc": "OOP principles, garbage collection, and runtime concepts shared directly between Java and C#.",                   "url": "https://www.geeksforgeeks.org/java-interview-questions/",                           "icon": "bi-mortarboard-fill"},
+            {"site": "HackerRank",    "label": "Java Practice Domain",            "desc": "Sharpen object-oriented problem-solving and collections usage with in-browser coding exercises.",                 "url": "https://www.hackerrank.com/domains/java",                                           "icon": "bi-terminal-fill"},
+            {"site": "GeeksForGeeks", "label": "Top 100 DSA Problems",            "desc": "Practice essential data structures and algorithms commonly asked in enterprise .NET interview loops.",            "url": "https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/", "icon": "bi-code-slash"},
+        ],
+    },
+]
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMPLETE GLOBAL VAULT MAP
+# ═══════════════════════════════════════════════════════════════════════════════
+ALL_HUBS_MAP = {}
+
+for _lst in (COMPANY_HUB, TECH_DOMAIN_HUB, BUSINESS_COMPANY_HUB, BUSINESS_HUB, SCRIPT_HUB):
+    for _item in _lst:
+        ALL_HUBS_MAP[_item["key"].lower()] = _item
+
+
+@resources_bp.route("/company-questions/<hub_key>")
+@resources_bp.route("/business-questions/<hub_key>")
+@resources_bp.route("/script-questions/<hub_key>")
+@resources_bp.route("/tech-domain-questions/<hub_key>")
+@resources_bp.route("/business-company-questions/<hub_key>")
+@resources_bp.route("/resources-prep/<hub_key>")
+def resources_prep_redirect(hub_key):
     if "user_id" not in session:
         return redirect("/login")
-    return redirect("/tech-questions")
-
-
-@resources_bp.route("/company-questions/<company_key>")
-def company_questions_detail(company_key):
-    if "user_id" not in session:
-        return redirect("/login")
-    return redirect(f"/tech-questions/{company_key}")
+    return redirect(f"/tech-questions/{hub_key}")
 
 
 @resources_bp.route("/tech-questions")
 def tech_questions():
     if "user_id" not in session:
         return redirect("/login")
-    companies = [
+
+    tech_companies = [
         {"key": c["key"], "name": c["name"], "color": c["color"],
          "description": c["description"], "total_questions": c["total_questions"]}
         for c in COMPANY_HUB
     ]
-    return render_template("tech_questions.html", companies=companies)
+    tech_domains = [
+        {"key": t["key"], "name": t["name"], "color": t["color"], "category": t.get("category", ""),
+         "description": t["description"], "total_questions": t["total_questions"]}
+        for t in TECH_DOMAIN_HUB
+    ]
+    business_companies = [
+        {"key": bc["key"], "name": bc["name"], "color": bc["color"], "category": bc.get("category", ""),
+         "description": bc["description"], "total_questions": bc["total_questions"]}
+        for bc in BUSINESS_COMPANY_HUB
+    ]
+    business_domains = [
+        {"key": b["key"], "name": b["name"], "color": b["color"], "category": b.get("category", ""),
+         "description": b["description"], "total_questions": b["total_questions"]}
+        for b in BUSINESS_HUB
+    ]
+    scripts = [
+        {"key": s["key"], "name": s["name"], "color": s["color"], "category": s.get("category", ""),
+         "description": s["description"], "total_questions": s["total_questions"]}
+        for s in SCRIPT_HUB
+    ]
+
+    return render_template(
+        "tech_questions.html",
+        companies=tech_companies,
+        tech_domains=tech_domains,
+        business_companies=business_companies,
+        business_domains=business_domains,
+        scripts=scripts
+    )
 
 
 @resources_bp.route("/tech-questions/<company_key>")
 def tech_questions_detail(company_key):
     if "user_id" not in session:
         return redirect("/login")
-    company = COMPANY_HUB_MAP.get(company_key.lower())
-    if not company:
+
+    item = ALL_HUBS_MAP.get(company_key.lower())
+    if not item:
         return redirect("/tech-questions")
-    return render_template("company_questions.html", company=company, company_key=company_key.lower())
+
+    return render_template("company_questions.html", company=item, company_key=company_key.lower())

@@ -783,7 +783,7 @@
         <button onclick="window.print()" class="btn-action btn-primary-action" id="btn-print-top">
             <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF Report
         </button>
-        <a href="/dashboard" class="back-btn-global" id="btn-back-top">
+        <a href="{{ back_url | default('/dashboard') }}" class="back-btn-global" id="btn-back-top">
             <i class="bi bi-arrow-left"></i> BACK
         </a>
     </div>
@@ -950,7 +950,7 @@
         <button onclick="window.print()" class="btn-bottom btn-bottom-secondary" id="btn-print-bottom">
             <i class="bi bi-printer-fill"></i> Print Report
         </button>
-        <a href="/dashboard" class="btn-bottom btn-bottom-primary" id="btn-back-bottom">
+        <a href="{{ back_url | default('/dashboard') }}" class="btn-bottom btn-bottom-primary" id="btn-back-bottom">
             <i class="bi bi-arrow-left"></i> BACK
         </a>
     </div>

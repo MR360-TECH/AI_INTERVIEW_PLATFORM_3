@@ -164,11 +164,22 @@ def interview():
     if not is_practice and q_count >= MAX_QUESTIONS:
         return redirect("/interview-result")
 
+    enable_warning_strikes = getattr(settings, "enable_warning_strikes", True)
+
     if chat_history and chat_history[-1]["role"] == "question":
         last_question_entry = chat_history[-1]
         last_question = last_question_entry["text"]
         question_type = last_question_entry.get("type", "text")
-        return render_template("interview.html", question=last_question, q_num=q_count + 1, total=MAX_QUESTIONS, question_type=question_type, is_practice=is_practice, timer_seconds=timer_seconds)
+        return render_template(
+            "interview.html",
+            question=last_question,
+            q_num=q_count + 1,
+            total=MAX_QUESTIONS,
+            question_type=question_type,
+            is_practice=is_practice,
+            timer_seconds=timer_seconds,
+            enable_warning_strikes=enable_warning_strikes
+        )
 
     conversation_text = ""
     for entry in chat_history:
@@ -238,7 +249,16 @@ def interview():
     session.modified = True
     save_progress(user_id, chat_history, q_count)
 
-    return render_template("interview.html", question=question_text, q_num=q_count + 1, total=MAX_QUESTIONS, question_type=question_type, is_practice=is_practice, timer_seconds=timer_seconds)
+    return render_template(
+        "interview.html",
+        question=question_text,
+        q_num=q_count + 1,
+        total=MAX_QUESTIONS,
+        question_type=question_type,
+        is_practice=is_practice,
+        timer_seconds=timer_seconds,
+        enable_warning_strikes=enable_warning_strikes
+    )
 
 
 @interview_bp.route("/interview/submit", methods=["POST"])

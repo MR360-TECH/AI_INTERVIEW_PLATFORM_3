@@ -1,19 +1,19 @@
-﻿<!DOCTYPE html>
-<html lang="en" class="dark-theme">
+<!DOCTYPE html>
+<html lang="en" class="dark-theme" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Company Tech Questions ” AI Assessment Platform</title>
+    <title>Resources &amp; Prep Hub — AI Assessment Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script>
     (function() {
         document.documentElement.classList.add('dark-theme');
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
     })();
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -21,350 +21,366 @@
         * {
             font-family: 'Inter', sans-serif;
         }
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6, .outfit-font {
             font-family: 'Outfit', sans-serif;
+        }
+        code, pre, .mono-font {
+            font-family: 'JetBrains Mono', monospace;
         }
 
         body {
-            
-            color: var(--ink);
+            color: #f1f5f9;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            transition: background-color 0.25s ease, color 0.25s ease;
-        }
-
-        /* Abstract Organic Background Orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(130px);
-            z-index: -1;
-            opacity: 0.5;
-            pointer-events: none;
-            animation: floatOrb 20s infinite alternate ease-in-out;
-        }
-        .orb-1 {
-            top: -10%;
-            left: -5%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #ff007f 0%, rgba(255,0,127,0) 70%);
-            animation-duration: 25s;
-        }
-        .orb-2 {
-            bottom: 10%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #0070f3 0%, rgba(0,112,243,0) 70%);
-            animation-duration: 30s;
-        }
-        .orb-3 {
-            top: 40%;
-            left: 20%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, #7928ca 0%, rgba(121,40,202,0) 70%);
-            animation-duration: 22s;
-        }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(60px, -40px) scale(1.15); }
-            100% { transform: translate(-30px, 50px) scale(0.9); }
-        }
-
-        /* Grid lines for cyber-tech texture */
-        .cyber-grid {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* Header Title Premium Style */
-        .catalog-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #67e8f9 50%, #00d4ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.03em;
-            text-shadow: none;
-            filter: drop-shadow(0 2px 12px rgba(0,212,255,0.35));
-        }
-
-        .catalog-subtitle {
-            font-size: 1.05rem;
-            color: #cbd5e1;
-            max-width: 650px;
-            line-height: 1.6;
-        }
-
-        /* Cards Layout styling */
-        .company-card {
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 28px;
-            background: rgba(255, 255, 255, 0.45);
-            /* Reduced glow shadow */
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02), 0 0 10px var(--brand-glow);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            z-index: 1;
-        }
-
-        .company-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 28px;
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2) 50%, var(--brand-color) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 2;
-        }
-
-        .company-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            /* Reduced hover glow shadow */
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.04), 0 0 15px var(--brand-glow);
-            border-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .card-aura {
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: radial-gradient(circle at 100% 0%, var(--brand-glow) 0%, transparent 65%);
-            z-index: -1;
-            pointer-events: none;
-            transition: all 0.5s ease;
-            opacity: 0.8;
-        }
-
-        .company-card:hover .card-aura {
-            opacity: 1.2;
-            background: radial-gradient(circle at 100% 0%, var(--brand-color) 20%, transparent 75%);
-        }
-
-        .logo-badge {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 8px 24px -6px rgba(0,0,0,0.04);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .company-card:hover .logo-badge {
-            transform: scale(1.1) rotate(4deg);
-            background: #ffffff;
-            box-shadow: 0 12px 28px -4px rgba(0,0,0,0.1);
-        }
-
-        .logo-badge img {
-            width: 44px;
-            height: 44px;
-            object-fit: contain;
-            transition: transform 0.4s;
-        }
-
-        .card-explore-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--brand-color);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 8px 18px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 12px var(--brand-glow);
-        }
-
-        .company-card:hover .card-explore-btn {
-            gap: 10px;
-            background: var(--brand-color);
-            color: #ffffff !important;
-            border-color: var(--brand-color);
-            box-shadow: 0 0 15px var(--brand-color);
-        }
-
-        /* Back Button Style with Blue Hover Glow */
-        .btn-back {
-            background: rgba(255, 255, 255, 0.7) !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            color: #475569 !important;
-            font-weight: 600;
-        }
-        .btn-back:hover {
-            background: #ffffff !important;
-            border-color: #0070f3 !important;
-            color: #0070f3 !important;
-            box-shadow: 0 0 15px rgba(0, 112, 243, 0.45) !important;
-            transform: translateY(-2px);
-        }
-
-        /* Dark Theme Overrides */
-        html.dark-theme body {
-            
-        }
-        html.dark-theme .catalog-title {
-            background: linear-gradient(135deg, #ffffff 0%, #67e8f9 50%, #00d4ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 12px rgba(0,212,255,0.35));
-        }
-        html.dark-theme .catalog-subtitle {
-            color: #cbd5e1;
-        }
-        html.dark-theme .cyber-grid {
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-        }
-        html.dark-theme .company-card {
-            background: rgba(15, 30, 58, 0.45);
-            border-color: rgba(30, 58, 95, 0.6);
-            color: #f0f6ff;
-        }
-        html.dark-theme .company-card::before {
-            background: linear-gradient(135deg, rgba(30,58,95,0.8), rgba(30,58,95,0.2) 50%, var(--brand-color) 100%);
-        }
-        html.dark-theme .company-card:hover {
-            border-color: var(--brand-color);
-        }
-        html.dark-theme .logo-badge {
-            background: rgba(10, 22, 40, 0.85);
-            border-color: rgba(30, 58, 95, 0.85);
-        }
-        html.dark-theme .company-card h4 {
-            color: #f0f6ff !important;
-        }
-        html.dark-theme .company-card .text-muted {
-            color: var(--text-desc) !important;
-        }
-        html.dark-theme .card-explore-btn {
-            background: rgba(10, 22, 40, 0.7);
-            border-color: rgba(30, 58, 95, 0.9);
-            color: var(--brand-color) !important;
-        }
-        html.dark-theme .btn-back {
-            background: rgba(15, 30, 58, 0.7) !important;
-            border-color: rgba(30, 58, 95, 0.8) !important;
-            color: #c0d4f0 !important;
-        }
-        html.dark-theme .btn-back:hover {
-            background: #162040 !important;
-            border-color: #3b82f6 !important;
-            color: #3b82f6 !important;
-        }
-
-        /* Micro-animations for loading cards */
-        @keyframes cardFadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-card {
-            animation: cardFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        /* Disable pre-existing static orbs and cyber-grid in dark theme */
-        html.dark-theme .orb {
-            display: none !important;
-        }
-        html.dark-theme .cyber-grid {
-            display: none !important;
-        }
-
-        /* ══ GOATED BG OVERRIDES ══ */
-        html.dark-theme body {
             background: #020510 !important;
-            background-image: none !important;
         }
+
+        /* ══ GOATED BG ══ */
         .db-bg {
             position: fixed; inset: 0; z-index: 0;
-            pointer-events: none; overflow: hidden; display: none;
+            pointer-events: none; overflow: hidden; display: block;
         }
-        html.dark-theme .db-bg { display: block; }
         .db-bg::before {
             content: ''; position: absolute; inset: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0,150,255,0.18) 0%, transparent 55%),
-                radial-gradient(ellipse 60% 50% at 85% 10%, rgba(100,0,255,0.14) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 55% at 50% 100%, rgba(0,255,220,0.10) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 40% at 90% 80%, rgba(0,80,255,0.12) 0%, transparent 50%),
-                linear-gradient(160deg,#02060f 0%,#010416 30%,#020820 60%,#010512 100%);
+                radial-gradient(ellipse 85% 65% at 15% 15%, rgba(0, 150, 255, 0.16) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 55% at 85% 15%, rgba(139, 92, 246, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse 75% 60% at 50% 100%, rgba(16, 185, 129, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse 55% 45% at 90% 85%, rgba(0, 80, 255, 0.12) 0%, transparent 50%),
+                linear-gradient(160deg,#02060f 0%,#010416 35%,#020820 65%,#010512 100%);
         }
-        .db-orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:0; animation:orbDrift 18s ease-in-out infinite; }
-        .db-orb-1 { width:520px;height:520px;top:-120px;left:-100px;background:radial-gradient(circle,rgba(0,120,255,0.30) 0%,transparent 70%);animation-delay:0s;animation-duration:20s; }
-        .db-orb-2 { width:400px;height:400px;top:10%;right:-80px;background:radial-gradient(circle,rgba(120,0,255,0.22) 0%,transparent 70%);animation-delay:-7s;animation-duration:24s; }
-        .db-orb-3 { width:480px;height:480px;bottom:-80px;left:30%;background:radial-gradient(circle,rgba(0,200,255,0.18) 0%,transparent 70%);animation-delay:-13s;animation-duration:22s; }
-        .db-orb-4 { width:300px;height:300px;top:45%;right:25%;background:radial-gradient(circle,rgba(60,0,180,0.16) 0%,transparent 70%);animation-delay:-4s;animation-duration:19s; }
-        .db-orb-5 { width:350px;height:350px;bottom:10%;right:-50px;background:radial-gradient(circle,rgba(0,255,180,0.12) 0%,transparent 70%);animation-delay:-9s;animation-duration:26s; }
+        .db-orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0; animation:orbDrift 20s ease-in-out infinite; }
+        .db-orb-1 { width:560px;height:560px;top:-140px;left:-120px;background:radial-gradient(circle,rgba(0,140,255,0.28) 0%,transparent 70%);animation-delay:0s;animation-duration:22s; }
+        .db-orb-2 { width:440px;height:440px;top:15%;right:-100px;background:radial-gradient(circle,rgba(147,51,234,0.22) 0%,transparent 70%);animation-delay:-7s;animation-duration:26s; }
+        .db-orb-3 { width:500px;height:500px;bottom:-100px;left:25%;background:radial-gradient(circle,rgba(16,185,129,0.18) 0%,transparent 70%);animation-delay:-13s;animation-duration:24s; }
+        .db-orb-4 { width:380px;height:380px;top:50%;right:20%;background:radial-gradient(circle,rgba(56,189,248,0.16) 0%,transparent 70%);animation-delay:-5s;animation-duration:20s; }
         @keyframes orbDrift {
             0%   { opacity:0.6; transform:translate(0,0) scale(1); }
-            25%  { opacity:0.8; transform:translate(30px,-20px) scale(1.05); }
-            50%  { opacity:0.55; transform:translate(-20px,30px) scale(0.97); }
-            75%  { opacity:0.75; transform:translate(15px,10px) scale(1.03); }
+            25%  { opacity:0.85; transform:translate(35px,-25px) scale(1.06); }
+            50%  { opacity:0.55; transform:translate(-25px,35px) scale(0.96); }
+            75%  { opacity:0.8; transform:translate(20px,15px) scale(1.04); }
             100% { opacity:0.6; transform:translate(0,0) scale(1); }
         }
         .db-grid {
             position:absolute; inset:0;
-            background-image: linear-gradient(rgba(0,200,255,0.035) 1px,transparent 1px), linear-gradient(90deg,rgba(0,200,255,0.035) 1px,transparent 1px);
+            background-image: linear-gradient(rgba(0,220,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,220,255,0.03) 1px,transparent 1px);
             background-size:60px 60px;
-            mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
-            -webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 20%,transparent 80%);
+            mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%);
+            -webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%);
         }
         .db-particles { position:absolute; inset:0; }
         .db-star { position:absolute; border-radius:50%; background:#ffffff; animation:starTwinkle linear infinite; }
         @keyframes starTwinkle {
             0%,100% { opacity:0.05; transform:scale(1); }
-            50%      { opacity:0.55; transform:scale(1.6); }
+            50%      { opacity:0.6; transform:scale(1.7); }
         }
         .db-topbar-glow {
             position:absolute; top:0; left:0; right:0; height:2px;
-            background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.7) 30%,rgba(120,0,255,0.7) 70%,transparent 100%);
+            background:linear-gradient(90deg,transparent 0%,rgba(0,220,255,0.8) 25%,rgba(168,85,247,0.8) 75%,transparent 100%);
             animation:topbarGlowPulse 4s ease-in-out infinite;
         }
         @keyframes topbarGlowPulse { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+
+        /* ══ HERO BANNER & TITLES ══ */
+        .hub-hero-card {
+            background: rgba(10, 20, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 38px 42px;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6), 0 0 35px rgba(0, 180, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .hub-hero-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(0, 220, 255, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .catalog-title {
+            color: #ffffff !important;
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .catalog-subtitle {
+            color: #cbd5e1 !important;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 820px;
+        }
+
+        /* ══ STICKY NAVIGATION CONTROLS & SEARCH ══ */
+        .controls-wrapper {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(6, 13, 31, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 14px 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+        }
+
+        .quick-nav-pills {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-chip-btn {
+            background: rgba(15, 28, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 8px 15px;
+            color: #e2e8f0;
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-chip-btn:hover {
+            background: rgba(0, 220, 255, 0.18);
+            border-color: rgba(0, 220, 255, 0.45);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 220, 255, 0.2);
+        }
+
+        .nav-chip-btn .badge-count {
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 8px;
+        }
+
+        .hub-search-wrap {
+            position: relative;
+            min-width: 280px;
+        }
+
+        .hub-search-input {
+            background: rgba(10, 20, 44, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            border-radius: 12px !important;
+            color: #ffffff !important;
+            font-size: 0.88rem !important;
+            padding: 9px 16px 9px 38px !important;
+            transition: all 0.25s ease !important;
+        }
+
+        .hub-search-input:focus {
+            background: rgba(12, 25, 55, 0.95) !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.35) !important;
+        }
+
+        .hub-search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        /* ══ SECTION HEADERS (PURE WHITE TITLES) ══ */
+        .section-header-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            scroll-margin-top: 100px;
+        }
+
+        .section-heading-white {
+            color: #ffffff !important;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            margin-bottom: 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-desc-light {
+            color: #94a3b8 !important;
+            font-size: 0.92rem;
+            margin-bottom: 0;
+        }
+
+        .section-badge-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* ══ CARD GRID & ITEMS ══ */
+        .item-card {
+            background: rgba(10, 20, 42, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.4);
+        }
+
+        .item-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--brand-color);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7), 0 0 25px var(--brand-glow);
+        }
+
+        .card-aura {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
+            pointer-events: none;
+            transition: all 0.5s ease;
+            opacity: 0.7;
+        }
+
+        .item-card:hover .card-aura {
+            transform: scale(1.4);
+            opacity: 1;
+        }
+
+        .logo-badge-wrap {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: rgba(15, 25, 50, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            transition: all 0.35s ease;
+        }
+
+        .logo-badge-wrap img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .item-card:hover .logo-badge-wrap {
+            border-color: var(--brand-color);
+            box-shadow: 0 0 16px var(--brand-glow);
+            transform: scale(1.05);
+        }
+
+        .category-badge-chip {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-explore-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--brand-color);
+            transition: all 0.35s ease;
+            padding: 5px 12px;
+            border-radius: 14px;
+            background: rgba(8, 16, 32, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 12px var(--brand-glow);
+        }
+
+        .item-card:hover .card-explore-pill {
+            gap: 8px;
+            background: var(--brand-color);
+            color: #ffffff !important;
+            border-color: var(--brand-color);
+            box-shadow: 0 0 16px var(--brand-color);
+        }
+
+        /* Back Button */
+        .btn-back-hub {
+            background: rgba(15, 28, 55, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.04em;
+        }
+        .btn-back-hub:hover {
+            background: #1e3a8a !important;
+            border-color: #38bdf8 !important;
+            color: #38bdf8 !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Micro-animations */
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-card {
+            animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
         ::-webkit-scrollbar{width:6px;height:6px;}
         ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:rgba(0,255,255,0.2);border-radius:99px;}
+        ::-webkit-scrollbar-thumb{background:rgba(0,220,255,0.25);border-radius:99px;}
         ::-webkit-scrollbar-thumb:hover{background:#00ffff;}
     </style>
 </head>
 <body>
-
-{% include 'navbar.html' %}
 
 <!-- ══ GOATED ANIMATED BACKGROUND ══ -->
 <div class="db-bg" aria-hidden="true">
@@ -372,81 +388,468 @@
     <div class="db-orb db-orb-2"></div>
     <div class="db-orb db-orb-3"></div>
     <div class="db-orb db-orb-4"></div>
-    <div class="db-orb db-orb-5"></div>
     <div class="db-grid"></div>
     <div class="db-particles" id="dbParticles"></div>
     <div class="db-topbar-glow"></div>
 </div>
 
-<!-- Background Tech Effects -->
-<div class="cyber-grid"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<div class="container py-5" style="position: relative; z-index: 10; max-width: 1280px;">
 
-<div class="container py-5" style="position: relative; z-index: 10;">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-5 border-bottom border-light pb-4">
-        <div>
-            <h2 class="catalog-title mb-2">Company Interview Prep Hub</h2>
-            <p class="catalog-subtitle mb-0">Study highly targeted technical and behavioral questions gathered from recent placement assessments at top-tier firms.</p>
+    <!-- ══ MAIN HERO HEADER ══ -->
+    <div class="hub-hero-card">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge px-3 py-1 rounded-pill" style="background: rgba(0, 220, 255, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">
+                        <i class="bi bi-patch-check-fill me-1"></i> Verified Career Preparation Matrix
+                    </span>
+                    <span class="badge px-3 py-1 rounded-pill" style="background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.78rem; font-weight: 700;">
+                        <i class="bi bi-database-fill me-1"></i> 113 Curated Preparation Vaults
+                    </span>
+                </div>
+                <h1 class="catalog-title mb-2">Resources &amp; Prep Hub</h1>
+                <p class="catalog-subtitle mb-0">Explore 105+ verified question banks, recruitment test papers, Indian banking assessments, management case studies, and hands-on scripting challenges.</p>
+            </div>
+            <a href="/dashboard" class="btn btn-back-hub rounded-pill px-4 py-2 border shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i> BACK TO DASHBOARD
+            </a>
         </div>
-        <a href="/dashboard" class="btn btn-back rounded-pill px-4 py-2 border shadow-sm">
-            <i class="bi bi-arrow-left me-1"></i> BACK
-        </a>
     </div>
 
-    <!-- Company Grid -->
-    <div class="row g-4">
-        {% set logo_map = {
+    <!-- ══ QUICK JUMP & LIVE FILTER CONTROLS ══ -->
+    <div class="controls-wrapper">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="quick-nav-pills">
+                <a href="#tech-companies" class="nav-chip-btn">
+                    <i class="bi bi-laptop text-info"></i>
+                    <span>Tech Firms</span>
+                    <span class="badge-count">25 Firms</span>
+                </a>
+                <a href="#tech-domains" class="nav-chip-btn">
+                    <i class="bi bi-cpu-fill text-primary"></i>
+                    <span>Tech Domains</span>
+                    <span class="badge-count">16 Tracks</span>
+                </a>
+                <a href="#business-companies" class="nav-chip-btn">
+                    <i class="bi bi-bank2 text-warning"></i>
+                    <span>Business Firms &amp; Banks</span>
+                    <span class="badge-count">22 Firms</span>
+                </a>
+                <a href="#business-domains" class="nav-chip-btn">
+                    <i class="bi bi-buildings-fill text-success"></i>
+                    <span>Business Domains</span>
+                    <span class="badge-count">22 Tracks</span>
+                </a>
+                <a href="#script-domains" class="nav-chip-btn">
+                    <i class="bi bi-code-slash text-danger"></i>
+                    <span>Scripting &amp; Code</span>
+                    <span class="badge-count">20 Languages</span>
+                </a>
+            </div>
+
+            <div class="hub-search-wrap">
+                <i class="bi bi-search hub-search-icon"></i>
+                <input type="text" id="hubSearchInput" class="form-control hub-search-input" placeholder="Search 113+ companies, banks, domains, scripts...">
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION 1: TECH GIANTS, UNICORNS & IT SERVICES (25 FIRMS)  -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="tech-companies" class="section-header-box">
+        <div class="d-flex align-items-center gap-3">
+            <div class="section-badge-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);">
+                <i class="bi bi-laptop"></i>
+            </div>
+            <div>
+                <h2 class="section-heading-white fs-3 mb-1">Tech Giants, Product Unicorns &amp; IT Services</h2>
+                <p class="section-desc-light">Coding rounds, system design architectures, DSA problem banks, and placement test patterns.</p>
+            </div>
+        </div>
+        <span class="badge px-3 py-1 rounded-pill bg-dark border border-secondary border-opacity-25 text-info" style="font-size: 0.82rem;">
+            25 Global &amp; Indian Tech Leaders
+        </span>
+    </div>
+
+    <div class="row g-4 mb-5" id="techGrid">
+        {% set company_logo_map = {
             'google': 'https://www.google.com/s2/favicons?sz=128&domain=google.com',
             'microsoft': 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com',
             'amazon': 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com',
             'meta': 'https://www.google.com/s2/favicons?sz=128&domain=meta.com',
+            'apple': 'https://www.google.com/s2/favicons?sz=128&domain=apple.com',
             'netflix': 'https://www.google.com/s2/favicons?sz=128&domain=netflix.com',
+            'adobe': 'https://www.google.com/s2/favicons?sz=128&domain=adobe.com',
+            'salesforce': 'https://www.google.com/s2/favicons?sz=128&domain=salesforce.com',
+            'oracle': 'https://www.google.com/s2/favicons?sz=128&domain=oracle.com',
+            'cisco': 'https://www.google.com/s2/favicons?sz=128&domain=cisco.com',
+            'nvidia': 'https://www.google.com/s2/favicons?sz=128&domain=nvidia.com',
+            'uber': 'https://www.google.com/s2/favicons?sz=128&domain=uber.com',
+            'atlassian': 'https://www.google.com/s2/favicons?sz=128&domain=atlassian.com',
+            'ibm': 'https://www.google.com/s2/favicons?sz=128&domain=ibm.com',
+            'paypal': 'https://www.google.com/s2/favicons?sz=128&domain=paypal.com',
+            'qualcomm': 'https://www.google.com/s2/favicons?sz=128&domain=qualcomm.com',
             'tcs': 'https://www.google.com/s2/favicons?sz=128&domain=tcs.com',
             'infosys': 'https://www.google.com/s2/favicons?sz=128&domain=infosys.com',
             'wipro': 'https://www.google.com/s2/favicons?sz=128&domain=wipro.com',
             'accenture': 'https://www.google.com/s2/favicons?sz=128&domain=accenture.com',
-            'cognizant': 'https://www.google.com/s2/favicons?sz=128&domain=cognizant.com'
+            'cognizant': 'https://www.google.com/s2/favicons?sz=128&domain=cognizant.com',
+            'capgemini': 'https://www.google.com/s2/favicons?sz=128&domain=capgemini.com',
+            'zoho': 'https://www.google.com/s2/favicons?sz=128&domain=zoho.com',
+            'flipkart': 'https://www.google.com/s2/favicons?sz=128&domain=flipkart.com',
+            'swiggy-zomato': 'https://www.google.com/s2/favicons?sz=128&domain=swiggy.com'
         } %}
         {% for c in companies %}
-        <div class="col-lg-4 col-md-6 animate-card" style="animation-delay: {{ loop.index0 * 0.05 }}s;">
-            <a href="/tech-questions/{{ c.key }}" class="company-card" style="--brand-color: {{ c.color }}; --brand-glow: {{ c.color }}25;">
+        <div class="col-lg-4 col-md-6 animate-card hub-card-item" data-search="{{ c.name | lower }} {{ c.description | lower }}" style="animation-delay: {{ loop.index0 * 0.02 }}s;">
+            <a href="/tech-questions/{{ c.key }}" class="item-card" style="--brand-color: {{ c.color }}; --brand-glow: {{ c.color }}25;">
                 <div class="card-aura"></div>
                 <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between" style="position: relative; z-index: 10;">
                     <div class="d-flex flex-column align-items-start">
-                        <!-- Glassmorphic Badge with Official Logo -->
-                        <div class="logo-badge">
-                            {% set logo_url = logo_map[c.key] %}
+                        <div class="logo-badge-wrap">
+                            {% set logo_url = company_logo_map.get(c.key) %}
                             {% if logo_url %}
                             <img src="{{ logo_url }}" alt="{{ c.name }} Logo">
                             {% else %}
-                            <span style="color: {{ c.color }};">
-                                <i class="bi bi-buildings-fill" style="font-size: 2rem;"></i>
+                            <span style="color: {{ c.color }}; font-size: 1.8rem;">
+                                <i class="bi bi-buildings-fill"></i>
                             </span>
                             {% endif %}
                         </div>
 
-                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #f0f6ff !important;">{{ c.name }}</h4>
-                        <p class="text-muted fs-7 mb-3" style="line-height:1.6; min-height:60px; color: #94a3b8 !important;">{{ c.description }}</p>
+                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #ffffff !important;">{{ c.name }}</h4>
+                        <p class="fs-7 mb-3" style="line-height:1.6; min-height:55px; color: #cbd5e1 !important;">{{ c.description }}</p>
                     </div>
                     
                     <div class="mt-auto pt-3 border-top w-100 d-flex justify-content-between align-items-center" style="border-color: rgba(255,255,255,0.08) !important;">
                         <span class="fs-7 fw-semibold" style="color: {{ c.color }};">
                             <i class="bi bi-bookmark-star-fill me-1"></i> {{ c.total_questions }} Curated Resources
                         </span>
-                        <span class="card-explore-btn">Explore <i class="bi bi-arrow-right"></i></span>
+                        <span class="card-explore-pill">Explore <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION 2: TECH & ENGINEERING DOMAINS (16 DOMAINS)         -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="tech-domains" class="section-header-box pt-4 border-top border-light border-opacity-10 mt-5">
+        <div class="d-flex align-items-center gap-3">
+            <div class="section-badge-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">
+                <i class="bi bi-cpu-fill"></i>
+            </div>
+            <div>
+                <h2 class="section-heading-white fs-3 mb-1">Tech &amp; Engineering Specialization Domains</h2>
+                <p class="section-desc-light">Role-specific engineering interview questions, system architecture patterns, and hands-on coding problem sets.</p>
+            </div>
+        </div>
+        <span class="badge px-3 py-1 rounded-pill bg-dark border border-secondary border-opacity-25 text-primary" style="font-size: 0.82rem;">
+            16 Engineering Tracks
+        </span>
+    </div>
+
+    <div class="row g-4 mb-5" id="techDomainsGrid">
+        {% set tech_domain_icon_map = {
+            'fullstack-dev': 'bi-globe',
+            'genai-llm': 'bi-robot',
+            'data-science-ml': 'bi-bar-chart-line-fill',
+            'cloud-architecture': 'bi-cloud-check-fill',
+            'devops-sre': 'bi-gear-wide-connected',
+            'cybersecurity': 'bi-shield-lock-fill',
+            'system-design': 'bi-diagram-3-fill',
+            'mobile-app-dev': 'bi-phone-fill',
+            'data-engineering': 'bi-database-fill-gear',
+            'qa-automation': 'bi-check2-circle',
+            'embedded-iot': 'bi-motherboard-fill',
+            'blockchain-web3': 'bi-box-fill',
+            'game-dev': 'bi-controller',
+            'database-admin': 'bi-database-fill',
+            'networks-os': 'bi-hdd-network-fill',
+            'compilers-lowlevel': 'bi-cpu-fill'
+        } %}
+        {% for td in tech_domains %}
+        <div class="col-lg-4 col-md-6 animate-card hub-card-item" data-search="{{ td.name | lower }} {{ td.category | lower }} {{ td.description | lower }}" style="animation-delay: {{ loop.index0 * 0.02 }}s;">
+            <a href="/tech-questions/{{ td.key }}" class="item-card" style="--brand-color: {{ td.color }}; --brand-glow: {{ td.color }}25;">
+                <div class="card-aura"></div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between" style="position: relative; z-index: 10;">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="logo-badge-wrap" style="border-color: {{ td.color }}35;">
+                            <span style="color: {{ td.color }}; font-size: 1.8rem;">
+                                <i class="bi {{ tech_domain_icon_map.get(td.key, 'bi-code-square') }}"></i>
+                            </span>
+                        </div>
+
+                        {% if td.category %}
+                        <span class="category-badge-chip" style="color: {{ td.color }}; border-color: {{ td.color }}30;">
+                            {{ td.category }}
+                        </span>
+                        {% endif %}
+
+                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #ffffff !important;">{{ td.name }}</h4>
+                        <p class="fs-7 mb-3" style="line-height:1.6; min-height:55px; color: #cbd5e1 !important;">{{ td.description }}</p>
+                    </div>
+                    
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-content-between align-items-center" style="border-color: rgba(255,255,255,0.08) !important;">
+                        <span class="fs-7 fw-semibold" style="color: {{ td.color }};">
+                            <i class="bi bi-stack me-1"></i> {{ td.total_questions }} Problem Vaults
+                        </span>
+                        <span class="card-explore-pill">Explore <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION 3: BUSINESS FIRMS, BANKS & CONGLOMERATES (22 FIRMS)-->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="business-companies" class="section-header-box pt-4 border-top border-light border-opacity-10 mt-5">
+        <div class="d-flex align-items-center gap-3">
+            <div class="section-badge-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);">
+                <i class="bi bi-bank2"></i>
+            </div>
+            <div>
+                <h2 class="section-heading-white fs-3 mb-1">Top Business Firms, Indian Banks &amp; Conglomerates</h2>
+                <p class="section-desc-light">Big 4 audit papers, consulting cases, Indian banking exams (PO/Clerk), and corporate finance interviews for B.Com &amp; BBA graduates.</p>
+            </div>
+        </div>
+        <span class="badge px-3 py-1 rounded-pill bg-dark border border-secondary border-opacity-25 text-warning" style="font-size: 0.82rem;">
+            22 Corporate &amp; Banking Giants
+        </span>
+    </div>
+
+    <div class="row g-4 mb-5" id="bizCompGrid">
+        {% set biz_company_logo_map = {
+            'deloitte': 'https://www.google.com/s2/favicons?sz=128&domain=deloitte.com',
+            'ey': 'https://www.google.com/s2/favicons?sz=128&domain=ey.com',
+            'pwc': 'https://www.google.com/s2/favicons?sz=128&domain=pwc.com',
+            'kpmg': 'https://www.google.com/s2/favicons?sz=128&domain=kpmg.com',
+            'mckinsey': 'https://www.google.com/s2/favicons?sz=128&domain=mckinsey.com',
+            'bcg': 'https://www.google.com/s2/favicons?sz=128&domain=bcg.com',
+            'bain': 'https://www.google.com/s2/favicons?sz=128&domain=bain.com',
+            'hdfc-bank': 'https://www.google.com/s2/favicons?sz=128&domain=hdfcbank.com',
+            'icici-bank': 'https://www.google.com/s2/favicons?sz=128&domain=icicibank.com',
+            'sbi': 'https://www.google.com/s2/favicons?sz=128&domain=sbi.co.in',
+            'axis-bank': 'https://www.google.com/s2/favicons?sz=128&domain=axisbank.com',
+            'kotak-bank': 'https://www.google.com/s2/favicons?sz=128&domain=kotak.com',
+            'bob-pnb': 'https://www.google.com/s2/favicons?sz=128&domain=bankofbaroda.in',
+            'goldman-sachs': 'https://www.google.com/s2/favicons?sz=128&domain=goldmansachs.com',
+            'jpmorgan': 'https://www.google.com/s2/favicons?sz=128&domain=jpmorgan.com',
+            'morgan-stanley': 'https://www.google.com/s2/favicons?sz=128&domain=morganstanley.com',
+            'citigroup-barclays': 'https://www.google.com/s2/favicons?sz=128&domain=citi.com',
+            'tata-group': 'https://www.google.com/s2/favicons?sz=128&domain=tata.com',
+            'reliance-jio': 'https://www.google.com/s2/favicons?sz=128&domain=ril.com',
+            'hul-itc': 'https://www.google.com/s2/favicons?sz=128&domain=hul.co.in',
+            'lt-infra': 'https://www.google.com/s2/favicons?sz=128&domain=larsentoubro.com',
+            'indigo-airindia': 'https://www.google.com/s2/favicons?sz=128&domain=goindigo.in'
+        } %}
+        {% for bc in business_companies %}
+        <div class="col-lg-4 col-md-6 animate-card hub-card-item" data-search="{{ bc.name | lower }} {{ bc.category | lower }} {{ bc.description | lower }}" style="animation-delay: {{ loop.index0 * 0.02 }}s;">
+            <a href="/tech-questions/{{ bc.key }}" class="item-card" style="--brand-color: {{ bc.color }}; --brand-glow: {{ bc.color }}25;">
+                <div class="card-aura"></div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between" style="position: relative; z-index: 10;">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="logo-badge-wrap">
+                            {% set logo_url = biz_company_logo_map.get(bc.key) %}
+                            {% if logo_url %}
+                            <img src="{{ logo_url }}" alt="{{ bc.name }} Logo">
+                            {% else %}
+                            <span style="color: {{ bc.color }}; font-size: 1.8rem;">
+                                <i class="bi bi-buildings-fill"></i>
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        {% if bc.category %}
+                        <span class="category-badge-chip" style="color: {{ bc.color }}; border-color: {{ bc.color }}30;">
+                            {{ bc.category }}
+                        </span>
+                        {% endif %}
+
+                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #ffffff !important;">{{ bc.name }}</h4>
+                        <p class="fs-7 mb-3" style="line-height:1.6; min-height:55px; color: #cbd5e1 !important;">{{ bc.description }}</p>
+                    </div>
+                    
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-content-between align-items-center" style="border-color: rgba(255,255,255,0.08) !important;">
+                        <span class="fs-7 fw-semibold" style="color: {{ bc.color }};">
+                            <i class="bi bi-journal-bookmark-fill me-1"></i> {{ bc.total_questions }} Prep Sets
+                        </span>
+                        <span class="card-explore-pill">Explore <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION 4: BUSINESS, COMMERCE & MANAGEMENT (22 DOMAINS)    -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="business-domains" class="section-header-box pt-4 border-top border-light border-opacity-10 mt-5">
+        <div class="d-flex align-items-center gap-3">
+            <div class="section-badge-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+                <i class="bi bi-buildings-fill"></i>
+            </div>
+            <div>
+                <h2 class="section-heading-white fs-3 mb-1">Business, Commerce &amp; Management Domains</h2>
+                <p class="section-desc-light">Curated question banks for B.Com, BBA, MBA, Auditing, Tax/GST, Finance, Product Management, and Operations.</p>
+            </div>
+        </div>
+        <span class="badge px-3 py-1 rounded-pill bg-dark border border-secondary border-opacity-25 text-success" style="font-size: 0.82rem;">
+            22 Career Tracks
+        </span>
+    </div>
+
+    <div class="row g-4 mb-5" id="businessGrid">
+        {% set domain_icon_map = {
+            'finance': 'bi-cash-coin',
+            'auditing-taxation': 'bi-journal-check',
+            'investment-banking-pe': 'bi-graph-up-arrow',
+            'product-management': 'bi-kanban-fill',
+            'international-trade-exim': 'bi-globe2',
+            'fintech-payments': 'bi-phone-fill',
+            'marketing': 'bi-megaphone-fill',
+            'digital-marketing-seo': 'bi-search',
+            'hr': 'bi-people-fill',
+            'supply-chain': 'bi-box-seam-fill',
+            'consulting': 'bi-diagram-3-fill',
+            'sales-bd': 'bi-person-badge-fill',
+            'business-analytics': 'bi-pie-chart-fill',
+            'banking-risk': 'bi-shield-shaded',
+            'actuarial-insurance': 'bi-shield-check',
+            'real-estate-property': 'bi-buildings-fill',
+            'corporate-law-cs': 'bi-journal-bookmark-fill',
+            'retail-ecommerce': 'bi-bag-check-fill',
+            'healthcare-admin': 'bi-hospital-fill',
+            'hospitality-tourism': 'bi-door-open-fill',
+            'aviation': 'bi-airplane-fill',
+            'media-pr-comms': 'bi-broadcast-pin'
+        } %}
+        {% for b in business_domains %}
+        <div class="col-lg-4 col-md-6 animate-card hub-card-item" data-search="{{ b.name | lower }} {{ b.category | lower }} {{ b.description | lower }}" style="animation-delay: {{ loop.index0 * 0.02 }}s;">
+            <a href="/tech-questions/{{ b.key }}" class="item-card" style="--brand-color: {{ b.color }}; --brand-glow: {{ b.color }}25;">
+                <div class="card-aura"></div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between" style="position: relative; z-index: 10;">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="logo-badge-wrap" style="border-color: {{ b.color }}35;">
+                            <span style="color: {{ b.color }}; font-size: 1.8rem;">
+                                <i class="bi {{ domain_icon_map.get(b.key, 'bi-briefcase-fill') }}"></i>
+                            </span>
+                        </div>
+
+                        {% if b.category %}
+                        <span class="category-badge-chip" style="color: {{ b.color }}; border-color: {{ b.color }}30;">
+                            {{ b.category }}
+                        </span>
+                        {% endif %}
+
+                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #ffffff !important;">{{ b.name }}</h4>
+                        <p class="fs-7 mb-3" style="line-height:1.6; min-height:55px; color: #cbd5e1 !important;">{{ b.description }}</p>
+                    </div>
+                    
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-content-between align-items-center" style="border-color: rgba(255,255,255,0.08) !important;">
+                        <span class="fs-7 fw-semibold" style="color: {{ b.color }};">
+                            <i class="bi bi-journal-bookmark-fill me-1"></i> {{ b.total_questions }} Question Sets
+                        </span>
+                        <span class="card-explore-pill">Explore <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION 5: SCRIPTING & PROGRAMMING LANGUAGES (20 LANGUAGES)-->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="script-domains" class="section-header-box pt-4 border-top border-light border-opacity-10 mt-5">
+        <div class="d-flex align-items-center gap-3">
+            <div class="section-badge-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <i class="bi bi-code-slash"></i>
+            </div>
+            <div>
+                <h2 class="section-heading-white fs-3 mb-1">Scripting &amp; Programming Languages</h2>
+                <p class="section-desc-light">Hands-on syntax puzzles, algorithmic problems, concurrency, and script automation questions for 20 languages.</p>
+            </div>
+        </div>
+        <span class="badge px-3 py-1 rounded-pill bg-dark border border-secondary border-opacity-25 text-danger" style="font-size: 0.82rem;">
+            20 Scripting Languages
+        </span>
+    </div>
+
+    <div class="row g-4 mb-4" id="scriptGrid">
+        {% set script_icon_map = {
+            'python-scripting': 'bi-terminal-fill',
+            'bash-shell': 'bi-terminal',
+            'sql-scripting': 'bi-database-fill-gear',
+            'javascript-scripting': 'bi-filetype-js',
+            'typescript': 'bi-filetype-tsx',
+            'core-java': 'bi-cup-hot-fill',
+            'cpp-programming': 'bi-cpu-fill',
+            'csharp-dotnet': 'bi-window-sidebar',
+            'rust': 'bi-shield-check',
+            'golang': 'bi-lightning-charge-fill',
+            'kotlin': 'bi-phone-fill',
+            'swift': 'bi-apple',
+            'powershell': 'bi-windows',
+            'php-scripting': 'bi-filetype-php',
+            'ruby-scripting': 'bi-gem',
+            'r-scripting': 'bi-bar-chart-fill',
+            'perl-scripting': 'bi-regex',
+            'scala-programming': 'bi-diagram-2-fill',
+            'dart-flutter': 'bi-phone',
+            'matlab-octave': 'bi-calculator-fill'
+        } %}
+        {% for s in scripts %}
+        <div class="col-lg-4 col-md-6 animate-card hub-card-item" data-search="{{ s.name | lower }} {{ s.category | lower }} {{ s.description | lower }}" style="animation-delay: {{ loop.index0 * 0.02 }}s;">
+            <a href="/tech-questions/{{ s.key }}" class="item-card" style="--brand-color: {{ s.color }}; --brand-glow: {{ s.color }}25;">
+                <div class="card-aura"></div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between" style="position: relative; z-index: 10;">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="logo-badge-wrap" style="border-color: {{ s.color }}35;">
+                            <span style="color: {{ s.color }}; font-size: 1.8rem;">
+                                <i class="bi {{ script_icon_map.get(s.key, 'bi-code-slash') }}"></i>
+                            </span>
+                        </div>
+
+                        {% if s.category %}
+                        <span class="category-badge-chip" style="color: {{ s.color }}; border-color: {{ s.color }}30;">
+                            {{ s.category }}
+                        </span>
+                        {% endif %}
+
+                        <h4 class="fw-bold mb-2" style="letter-spacing: -0.02em; color: #ffffff !important;">{{ s.name }}</h4>
+                        <p class="fs-7 mb-3" style="line-height:1.6; min-height:55px; color: #cbd5e1 !important;">{{ s.description }}</p>
+                    </div>
+                    
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-content-between align-items-center" style="border-color: rgba(255,255,255,0.08) !important;">
+                        <span class="fs-7 fw-semibold" style="color: {{ s.color }};">
+                            <i class="bi bi-file-code-fill me-1"></i> {{ s.total_questions }} Practice Sets
+                        </span>
+                        <span class="card-explore-pill">Explore <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- No results alert for search -->
+    <div id="noResultsMsg" class="alert alert-dark text-center d-none my-5 p-4 rounded-4" style="background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(255, 255, 255, 0.2);">
+        <i class="bi bi-search text-warning fs-3 mb-2 d-block"></i>
+        <h5 class="text-white mb-1">No matching resources found</h5>
+        <p class="text-muted mb-0">Try searching for keywords like "HDFC", "SBI", "Tata", "Python", "Rust", "DevOps", "Aviation", or "SQL".</p>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// Ambient background particle stars
 (function(){
     var c=document.getElementById('dbParticles');
     if(!c)return;
@@ -458,6 +861,32 @@
         c.appendChild(s);
     }
 })();
+
+// Instant Client-Side Search Filter across all 105+ items
+document.getElementById('hubSearchInput')?.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.hub-card-item');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const text = card.getAttribute('data-search') || '';
+        if (!query || text.includes(query)) {
+            card.style.display = '';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const noResults = document.getElementById('noResultsMsg');
+    if (noResults) {
+        if (visibleCount === 0) {
+            noResults.classList.remove('d-none');
+        } else {
+            noResults.classList.add('d-none');
+        }
+    }
+});
 </script>
 </body>
 </html>

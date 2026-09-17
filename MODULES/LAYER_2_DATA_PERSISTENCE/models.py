@@ -83,6 +83,7 @@ class AdminSettings(db.Model):
     question_timer_seconds = db.Column(db.Integer, default=90)
     enable_attempt_limits = db.Column(db.Boolean, default=True)
     default_allowed_interviews = db.Column(db.Integer, default=2)
+    enable_warning_strikes = db.Column(db.Boolean, default=True)
 
 
 class SettingsSnapshot:
@@ -96,3 +97,6 @@ class SettingsSnapshot:
         if self.enable_attempt_limits is None:
             self.enable_attempt_limits = True
         self.default_allowed_interviews = getattr(s, 'default_allowed_interviews', 2) or 2
+        self.enable_warning_strikes = getattr(s, 'enable_warning_strikes', True)
+        if self.enable_warning_strikes is None:
+            self.enable_warning_strikes = True
