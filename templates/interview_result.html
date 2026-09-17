@@ -277,6 +277,15 @@
         pointer-events: none;
     }
 
+    .letterhead-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
     .lh-badge {
         display: inline-flex;
         align-items: center;
@@ -291,8 +300,32 @@
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: #00ffff;
-        margin-bottom: 14px;
+        margin-bottom: 0;
         box-shadow: 0 0 14px rgba(0, 255, 255, 0.3);
+    }
+
+    .top-session-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 100px;
+        background: rgba(0, 255, 255, 0.10);
+        border: 1.5px solid rgba(0, 255, 255, 0.4);
+        font-family: 'Outfit', 'Inter', monospace, sans-serif;
+        font-size: 0.88rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: #00ffff;
+        box-shadow: 0 0 14px rgba(0, 255, 255, 0.25);
+        transition: all 0.2s ease;
+        user-select: all;
+    }
+    .top-session-tag:hover {
+        background: rgba(0, 255, 255, 0.22);
+        border-color: #00ffff;
+        transform: translateY(-1px);
+        box-shadow: 0 0 22px rgba(0, 255, 255, 0.5);
     }
 
     .lh-title {
@@ -597,6 +630,41 @@
     }
     .eval-text p:last-child { margin-bottom: 0; }
 
+    .eval-heading {
+        color: #00ffff !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 800 !important;
+        font-size: 1.15rem !important;
+        margin-top: 24px !important;
+        margin-bottom: 12px !important;
+        letter-spacing: -0.01em;
+    }
+    .eval-heading:first-child {
+        margin-top: 0 !important;
+    }
+
+    .eval-list {
+        background: #080f24;
+        border: 1px solid #334155;
+        border-radius: 14px;
+        padding: 18px 24px 18px 42px;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        list-style-type: disc;
+    }
+    .eval-list li {
+        margin-bottom: 8px;
+        line-height: 1.75;
+        color: #e2e8f0;
+    }
+    .eval-list li:last-child {
+        margin-bottom: 0;
+    }
+    .eval-text strong {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
     /* Certification Note */
     .report-note {
         display: flex;
@@ -723,10 +791,14 @@
     <div class="report-card" id="report-main">
 
         <div class="letterhead">
-            <div class="lh-badge">
-                <i class="bi bi-cpu-fill"></i> AI Evaluation System
+            <div class="letterhead-top">
+                <div class="lh-badge">
+                    <i class="bi bi-cpu-fill"></i> AI Evaluation System
+                </div>
                 {% if session_code %}
-                &bull; <span onclick="copySessionId('{{ session_code }}', this);" style="cursor: pointer;" title="Click to copy Session ID">SESSION ID: <strong>{{ session_code }}</strong> <i class="bi bi-copy ms-1" style="font-size:0.75rem;"></i></span>
+                <div class="top-session-tag" onclick="copySessionId('{{ session_code }}', this);" style="cursor: pointer;" title="Click to copy Session ID">
+                    {{ session_code }}
+                </div>
                 {% endif %}
             </div>
             <h1 class="lh-title">
@@ -737,14 +809,6 @@
             </p>
 
             <div class="meta-grid">
-                {% if session_code %}
-                <div class="meta-card" onclick="copySessionId('{{ session_code }}', this);" style="cursor: pointer;" title="Click to copy Session ID">
-                    <div class="meta-label d-flex align-items-center justify-content-between">
-                        Session ID <i class="bi bi-copy" style="font-size: 0.72rem; color: #00ffff;"></i>
-                    </div>
-                    <div class="meta-value" style="color: #00ffff; letter-spacing: 0.04em;">{{ session_code }}</div>
-                </div>
-                {% endif %}
                 <div class="meta-card">
                     <div class="meta-label">Candidate</div>
                     <div class="meta-value">{{ candidate_name | upper }}</div>
@@ -865,7 +929,7 @@
                 <div class="section-rule"></div>
             </div>
 
-            <div class="eval-text" id="eval-content">
+            <div class="eval-text" id="eval-content" data-raw-summary="{{ summary | default('') | e }}">
                 {% for para in summary.split('\n') if para.strip() %}
                     <p>{{ para }}</p>
                 {% endfor %}
@@ -895,7 +959,65 @@
 
 <script>
     sessionStorage.removeItem('interview_proctor_strikes');
+
+    function formatEvalContent() {
+        var container = document.getElementById('eval-content');
+        if (!container) return;
+        var rawText = container.getAttribute('data-raw-summary');
+        if (!rawText) return;
+
+        var lines = rawText.split('\n');
+        var html = '';
+        var inList = false;
+        var listType = 'ul';
+
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (!line) {
+                if (inList) { html += '</' + listType + '>'; inList = false; }
+                continue;
+            }
+
+            // Bold styling
+            line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            line = line.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+            // Headings
+            if (line.match(/^#{1,4}\s+(.*)/)) {
+                if (inList) { html += '</' + listType + '>'; inList = false; }
+                var headingText = line.replace(/^#{1,4}\s+/, '');
+                html += '<h4 class="eval-heading"><i class="bi bi-caret-right-fill me-1" style="font-size:0.75rem; color:#00ffff;"></i> ' + headingText + '</h4>';
+            } else if (line.match(/^[-*•]\s+(.*)/)) {
+                if (!inList || listType !== 'ul') {
+                    if (inList) html += '</' + listType + '>';
+                    html += '<ul class="eval-list">';
+                    inList = true;
+                    listType = 'ul';
+                }
+                var itemText = line.replace(/^[-*•]\s+/, '');
+                html += '<li>' + itemText + '</li>';
+            } else if (line.match(/^\d+\.\s+(.*)/)) {
+                if (!inList || listType !== 'ol') {
+                    if (inList) html += '</' + listType + '>';
+                    html += '<ol class="eval-list">';
+                    inList = true;
+                    listType = 'ol';
+                }
+                var numText = line.replace(/^\d+\.\s+/, '');
+                html += '<li>' + numText + '</li>';
+            } else {
+                if (inList) { html += '</' + listType + '>'; inList = false; }
+                html += '<p>' + line + '</p>';
+            }
+        }
+        if (inList) { html += '</' + listType + '>'; }
+        if (html.trim()) {
+            container.innerHTML = html;
+        }
+    }
+
     window.addEventListener('load', function() {
+        formatEvalContent();
         setTimeout(function() {
             // Animate score bar
             var bar = document.getElementById('score-bar');

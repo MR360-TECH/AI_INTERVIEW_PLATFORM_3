@@ -425,7 +425,7 @@ def interview_result():
         response = ai_c.models.generate_content(
             model=MODEL_NAME,
             contents=prompt,
-            config=types.GenerateContentConfig(temperature=0.1, max_output_tokens=110)
+            config=types.GenerateContentConfig(temperature=0.1, max_output_tokens=1200)
         )
         evaluation = response.text.strip() if response and hasattr(response, 'text') and response.text else "SCORE: 7\nSUMMARY: The candidate actively completed their assessment questions within their core domain."
 

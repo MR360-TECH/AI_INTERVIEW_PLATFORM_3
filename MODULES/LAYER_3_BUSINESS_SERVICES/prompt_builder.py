@@ -74,7 +74,7 @@ def build_subsequent_question_prompt(practice_mode, practice_topic, lang_target,
                 "The candidate is a Student/Beginner. Keep questions friendly and focus on fundamental concepts. "
                 "Ask practical, interview-style questions suitable for a junior role, rather than overly simplistic dictionary definitions (e.g. do not ask 'What is a computer?') and explore all categories of questions within the domain. "
                 "Do NOT ask highly complex technical questions. If they answer incorrectly or struggle, change the topic and ask different question within the same domain. "
-                "Do not end early unless you have asked at least 5 questions. "
+                "Do not end early unless you have asked at least 5 questions.ask mostly fundamental and basic questions for this level and only advance on recieving quality answers. "
                 "Keep conversational feedback minimal and professional."
             )
         elif difficulty == "senior":
@@ -99,7 +99,7 @@ def build_subsequent_question_prompt(practice_mode, practice_topic, lang_target,
         "Determine the candidate's core domain/role from their first answer. You MUST stay strictly 100% within this domain. Never switch to unrelated fields.\n\n"
         "RULES FOR OUTPUT:\n"
         "1. Output ONLY the raw next question. Keep it concise (under 2 sentences). ZERO preamble, conversational filler, praise, or acknowledgment.\n"
-        "2. If they struggle or answer 'I don't know', DO NOT give them the answer. Change the topic/concept within the domain and output the next question immediately.\n"
+        "2. If they struggle or answer 'I don't know', DO NOT give them the answer. Change the topic/concept/context within the domain and output the next question immediately.\n"
         "3. Explore diverse categories of questions within the domain without repeating topics.\n"
         "4. HUMAN INTERVIEWER CLARIFICATION RULE: If the candidate indicates they do not understand a term or question, briefly clarify (in 1 short sentence), then state the question.\n"
         "5. BEHAVIORAL RULE: You may seamlessly integrate 1-2 behavioral or situational questions (e.g., 'Tell me about yourself', 'Why should we hire you?', or domain conflict scenarios).\n"
@@ -145,26 +145,35 @@ def build_ajax_system_prompt(domain, difficulty, resume_summary, is_practice, su
 
 def build_evaluation_prompt(practice_mode, practice_topic, lang_target, difficulty, domain_val, conversation_text):
     if practice_mode == "viva":
-        grading_instruction = f"Academic Viva Voce exam on {practice_topic}. Grade strictly on theoretical accuracy and academic definitions."
+        grading_instruction = f"Academic Viva Voce exam on {practice_topic}. Grade strictly on theoretical accuracy, equation mastery, and academic definitions."
     elif practice_mode == "lang":
-        grading_instruction = f"Language practice in {lang_target or 'English'}. Grade on grammar, vocabulary, and conversational fluency."
+        grading_instruction = f"Language practice in {lang_target or 'English'}. Grade on grammar, vocabulary, pronunciation cues, and conversational fluency."
     elif practice_mode == "drill":
-        grading_instruction = f"Concept Drill on {practice_topic}. Grade on conceptual understanding and logical reasoning."
+        grading_instruction = f"Concept Drill on {practice_topic}. Grade on conceptual understanding, depth of knowledge, and logical reasoning."
     else:
         if difficulty == "student":
-            grading_instruction = "Candidate level: Student/Beginner. Grade encouragingly on fundamentals and potential."
+            grading_instruction = "Candidate level: Student/Beginner. Grade encouragingly on fundamentals, problem-solving potential, and core understanding."
         elif difficulty == "senior":
-            grading_instruction = "Candidate level: Senior/Expert. Grade strictly on deep technical proficiency, design, and architecture."
+            grading_instruction = "Candidate level: Senior/Expert. Grade strictly on deep technical proficiency, system architecture, performance, and best practices."
         else:
-            grading_instruction = "Candidate level: Mid-Level. Grade balanced on standard industry expectations."
+            grading_instruction = "Candidate level: Mid-Level. Grade balanced on standard industry expectations and practical domain skills."
 
     prompt = (
-        f"Evaluate this {domain_val} interview assessment.\n"
-        f"{grading_instruction}\n"
-        "Format EXACTLY as follows:\n"
-        "SCORE: [number 1-10]\n"
+        f"Evaluate this {domain_val} interview assessment thoroughly based on the candidate's transcript.\n"
+        f"{grading_instruction}\n\n"
+        "Format your output EXACTLY as follows:\n"
+        "SCORE: [number from 1.0 to 10.0]\n"
         "SUMMARY:\n"
-        "[2 concise professional sentences evaluating candidate performance, technical strengths, and placement recommendation.]\n\n"
+        "### Executive Performance Assessment\n"
+        "[2-3 detailed sentences assessing overall competence, response clarity, and domain readiness.]\n\n"
+        "### Key Technical Strengths\n"
+        "- [Specific technical concept or question where the candidate showed strength]\n"
+        "- [Another technical highlight or communication strength demonstrated]\n\n"
+        "### Areas for Improvement & Growth\n"
+        "- [Specific knowledge gap, missed nuance, or area where the answer was lacking or incorrect]\n"
+        "- [Recommended concept, framework, or practice to study for advancement]\n\n"
+        "### Placement & Next Steps Recommendation\n"
+        "[Actionable conclusion on candidate suitability, role readiness, and recommended learning trajectory.]\n\n"
         f"Transcript:\n{conversation_text}"
     )
     return prompt
