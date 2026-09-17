@@ -720,17 +720,24 @@
 
     <!-- Evaluation Report Panel -->
     <div class="panel anim anim-3">
-        <div class="panel-title"><span class="title-icon"><i class="bi bi-clipboard-data-fill"></i></span> Placement Evaluation Report</div>
+        <div class="panel-title d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="title-icon"><i class="bi bi-clipboard-data-fill"></i></span> Placement Evaluation Report
+            </div>
+            <span class="badge copyable-id-badge" onclick="copySessionId('{{ result.session_code }}', this);" style="cursor: pointer; background: rgba(0, 255, 255, 0.12); color: #00ffff; border: 1.5px solid rgba(0, 255, 255, 0.35); font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.85rem; padding: 6px 14px; border-radius: 8px; transition: all 0.2s ease;" title="Click to copy Session ID: {{ result.session_code }}">
+                <i class="bi bi-fingerprint me-1"></i>SESSION ID: {{ result.session_code }} <i class="bi bi-copy ms-1"></i>
+            </span>
+        </div>
 
         {% if result.is_terminated or (result.status and "Terminated" in result.status) %}
         <div class="p-3 mb-4" style="background: rgba(239, 68, 68, 0.12); border: 1.5px solid rgba(239, 68, 68, 0.4); border-radius: 14px; color: #fca5a5;">
             <div class="d-flex align-items-center gap-2 mb-1" style="color: #ef4444; font-weight: 800; font-family: 'Outfit', sans-serif;">
-                <i class="bi bi-shield-slash-fill fs-5" style="color: #f87171;"></i> PROCTORING SECURITY DISQUALIFICATION ALERT
+                <i class="bi bi-shield-slash-fill fs-5" style="color: #f87171;"></i> PROCTORING CODE OF CONDUCT BREACH &mdash; SESSION TERMINATED
             </div>
             <div style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">
-                This assessment session was <strong>automatically terminated</strong> by the platform anti-cheating system.
+                This assessment session was <strong>automatically terminated due to excessive warning strikes</strong> recorded by the platform anti-cheating proctoring system.
                 <br>
-                <span style="color: #fca5a5; font-weight: 600;"><i class="bi bi-info-circle me-1"></i> Violation Reason:</span> {{ result.termination_reason or "Repeated window focus loss / tab switching detected during active assessment." }}
+                <span style="color: #fca5a5; font-weight: 600;"><i class="bi bi-info-circle me-1"></i> Strike Violation:</span> {{ result.termination_reason or "Repeated window focus loss / tab switching detected during active assessment." }}
             </div>
         </div>
         {% endif %}
@@ -889,6 +896,52 @@
         c.appendChild(s);
     }
 })();
+</script>
+<script>
+function copySessionId(text, triggerElem) {
+    if (!text) return;
+    function showFeedback() {
+        if (!triggerElem) return;
+        var origHtml = triggerElem.getAttribute('data-orig-html');
+        if (!origHtml) {
+            origHtml = triggerElem.innerHTML;
+            triggerElem.setAttribute('data-orig-html', origHtml);
+        }
+        triggerElem.innerHTML = '<i class="bi bi-check2 text-success me-1"></i> COPIED!';
+        triggerElem.style.borderColor = '#10b981';
+        triggerElem.style.color = '#34d399';
+        setTimeout(function() {
+            triggerElem.innerHTML = triggerElem.getAttribute('data-orig-html');
+            triggerElem.style.borderColor = '';
+            triggerElem.style.color = '';
+        }, 1600);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showFeedback).catch(function() {
+            fallbackCopy(text, showFeedback);
+        });
+    } else {
+        fallbackCopy(text, showFeedback);
+    }
+}
+
+function fallbackCopy(text, callback) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        if (callback) callback();
+    } catch (err) {
+        console.error('Fallback copy failed', err);
+    }
+    document.body.removeChild(textArea);
+}
 </script>
 </body>
 </html>

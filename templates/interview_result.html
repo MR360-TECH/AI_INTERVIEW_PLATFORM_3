@@ -725,6 +725,9 @@
         <div class="letterhead">
             <div class="lh-badge">
                 <i class="bi bi-cpu-fill"></i> AI Evaluation System
+                {% if session_code %}
+                &bull; <span onclick="copySessionId('{{ session_code }}', this);" style="cursor: pointer;" title="Click to copy Session ID">SESSION ID: <strong>{{ session_code }}</strong> <i class="bi bi-copy ms-1" style="font-size:0.75rem;"></i></span>
+                {% endif %}
             </div>
             <h1 class="lh-title">
                 Performance Assessment Report
@@ -734,6 +737,14 @@
             </p>
 
             <div class="meta-grid">
+                {% if session_code %}
+                <div class="meta-card" onclick="copySessionId('{{ session_code }}', this);" style="cursor: pointer;" title="Click to copy Session ID">
+                    <div class="meta-label d-flex align-items-center justify-content-between">
+                        Session ID <i class="bi bi-copy" style="font-size: 0.72rem; color: #00ffff;"></i>
+                    </div>
+                    <div class="meta-value" style="color: #00ffff; letter-spacing: 0.04em;">{{ session_code }}</div>
+                </div>
+                {% endif %}
                 <div class="meta-card">
                     <div class="meta-label">Candidate</div>
                     <div class="meta-value">{{ candidate_name | upper }}</div>
@@ -780,12 +791,14 @@
 
             <div class="score-info">
                 {% if is_terminated %}
-                <div class="competency-badge" style="background: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; border: 1.5px solid rgba(239, 68, 68, 0.4) !important;">
-                    <i class="bi bi-shield-slash-fill me-1"></i> DISQUALIFIED (CODE OF CONDUCT BREACH)
+                <div class="competency-badge" style="background: rgba(239, 68, 68, 0.18) !important; color: #f87171 !important; border: 1.5px solid rgba(239, 68, 68, 0.45) !important;">
+                    <i class="bi bi-shield-slash-fill me-1"></i> DISQUALIFIED (PROCTORING STRIKE BREACH)
                 </div>
-                <div class="p-3 mt-2 mb-2" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; color: #fca5a5; font-size: 0.9rem;">
-                    <strong><i class="bi bi-exclamation-octagon-fill me-1"></i> AUTOMATED TERMINATION NOTICE:</strong><br>
-                    {{ termination_reason or "Repeated window focus loss / tab switching detected during active assessment." }}
+                <div class="p-3 mt-2 mb-2" style="background: rgba(239, 68, 68, 0.12); border: 1.5px solid rgba(239, 68, 68, 0.4); border-radius: 14px; color: #fca5a5; font-size: 0.92rem; line-height: 1.6;">
+                    <strong style="color: #ef4444;"><i class="bi bi-exclamation-octagon-fill me-1"></i> AUTOMATED TERMINATION NOTICE:</strong><br>
+                    This assessment session was automatically terminated due to excessive warning strikes triggered by the automated proctoring security system for a breach of the Candidate Code of Conduct.
+                    <br><br>
+                    <span style="color: #ffffff; font-weight: 700;"><i class="bi bi-shield-slash me-1" style="color: #f87171;"></i> Strike Violation:</span> {{ termination_reason or "Repeated window focus loss / tab switching detected during active assessment." }}
                 </div>
                 {% else %}
                 <div class="competency-badge">
@@ -895,6 +908,49 @@
             }
         }, 100);
     });
+
+    function copySessionId(text, triggerElem) {
+        if (!text) return;
+        function showFeedback() {
+            if (!triggerElem) return;
+            var origHtml = triggerElem.getAttribute('data-orig-html');
+            if (!origHtml) {
+                origHtml = triggerElem.innerHTML;
+                triggerElem.setAttribute('data-orig-html', origHtml);
+            }
+            triggerElem.innerHTML = '<i class="bi bi-check2 text-success"></i> Copied!';
+            triggerElem.style.borderColor = '#10b981';
+            setTimeout(function() {
+                triggerElem.innerHTML = triggerElem.getAttribute('data-orig-html');
+                triggerElem.style.borderColor = '';
+            }, 1600);
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showFeedback).catch(function() {
+                fallbackCopy(text, showFeedback);
+            });
+        } else {
+            fallbackCopy(text, showFeedback);
+        }
+    }
+
+    function fallbackCopy(text, callback) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            if (callback) callback();
+        } catch (err) {
+            console.error('Fallback copy failed', err);
+        }
+        document.body.removeChild(textArea);
+    }
 </script>
 
 <script>

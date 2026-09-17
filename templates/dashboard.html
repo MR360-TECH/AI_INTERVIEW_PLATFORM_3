@@ -1163,9 +1163,15 @@
                     <div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <span class="card-pill pill-blue"><i class="bi bi-shield-check"></i> Formal Evaluation</span>
-                            <span style="font-size:0.7rem;font-weight:700;color:var(--emerald);" class="d-inline-flex align-items-center gap-1">
+                            {% if is_locked %}
+                            <span style="font-size:0.75rem;font-weight:800;color:#ef4444;" class="d-inline-flex align-items-center gap-1">
+                                <i class="bi bi-lock-fill"></i> Limit Reached
+                            </span>
+                            {% else %}
+                            <span style="font-size:0.75rem;font-weight:700;color:var(--emerald);" class="d-inline-flex align-items-center gap-1">
                                 <i class="bi bi-circle-fill" style="font-size:0.45rem;"></i> AI Examiner Ready
                             </span>
+                            {% endif %}
                         </div>
                         <h2 class="card-heading heading-blue">AI Recruitment Assessment</h2>
                         <p class="card-body-text">
@@ -1566,94 +1572,191 @@
   </div>
 </div>
 
-<!-- ══ HOW IT WORKS / HELP & FAQ MODAL ══ -->
+<!-- ══ HOW IT WORKS / CANDIDATE GUIDE & FAQ MODAL ══ -->
 <div class="modal fade" id="howItWorksModal" tabindex="-1" aria-labelledby="howItWorksLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content" style="border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--surface-elevated);">
-      <div class="modal-header border-0 p-4 pb-2 d-flex align-items-center justify-content-between">
-        <h5 class="modal-title fw-bold" id="howItWorksLabel" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:1.15rem;">
-          <i class="bi bi-question-circle-fill me-2" style="color:var(--primary);"></i>Help &amp; Frequently Asked Questions
-        </h5>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content" style="border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--surface-elevated);box-shadow:0 25px 70px rgba(0,0,0,0.9);">
+      
+      <!-- Modal Header -->
+      <div class="modal-header border-0 p-4 pb-3 d-flex align-items-center justify-content-between" style="border-bottom:1px solid var(--border) !important;">
+        <div class="d-flex align-items-center gap-3">
+          <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg, #00ffff, #0284c7);display:flex;align-items:center;justify-content:center;color:#020510;font-size:1.4rem;font-weight:900;box-shadow:0 0 20px rgba(0,255,255,0.4);">
+            <i class="bi bi-book-half"></i>
+          </div>
+          <div>
+            <h5 class="modal-title fw-bold mb-0" id="howItWorksLabel" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:1.25rem;">
+              Candidate Studio Guide &amp; Platform Manual
+            </h5>
+            <div style="font-size:0.78rem;color:var(--text-desc);margin-top:2px;">Complete step-by-step onboarding, examination workflow, code of conduct, and FAQ</div>
+          </div>
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;"></button>
       </div>
-      <div class="modal-body p-4 pt-2" style="max-height:72vh;overflow-y:auto;">
-        
-        <!-- Quick System Highlights -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-bottom:20px;">
-          <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.06em;font-family:'Outfit',sans-serif;margin-bottom:4px;">
-              <i class="bi bi-shield-check me-1"></i>Formal Assessment
+
+      <!-- Modal Body with Scrollable Area -->
+      <div class="modal-body p-4 pt-3" style="max-height:76vh;overflow-y:auto;">
+
+        <!-- ══ SECTION 1: PLATFORM PILLARS HIGHLIGHT ══ -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:14px;margin-bottom:28px;">
+          <div style="background:var(--surface-alt);border:1.5px solid rgba(56, 189, 248, 0.3);border-radius:var(--radius-md);padding:16px 18px;position:relative;overflow:hidden;">
+            <div style="font-size:0.75rem;font-weight:900;text-transform:uppercase;color:#38bdf8;letter-spacing:0.08em;font-family:'Outfit',sans-serif;margin-bottom:6px;">
+              <i class="bi bi-shield-check me-1"></i> 1. Formal Placement Studio
             </div>
-            <div style="font-size:0.8rem;color:var(--text-desc);line-height:1.5;">Adaptive AI evaluation tailored to candidate domain &amp; experience level.</div>
+            <div style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;">Adaptive AI multi-turn technical assessments tailored to your domain &amp; verified by recruiters.</div>
           </div>
-          <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--emerald-hover);letter-spacing:0.06em;font-family:'Outfit',sans-serif;margin-bottom:4px;">
-              <i class="bi bi-mortarboard-fill me-1"></i>Practice Labs
+          <div style="background:var(--surface-alt);border:1.5px solid rgba(16, 185, 129, 0.3);border-radius:var(--radius-md);padding:16px 18px;position:relative;overflow:hidden;">
+            <div style="font-size:0.75rem;font-weight:900;text-transform:uppercase;color:#34d399;letter-spacing:0.08em;font-family:'Outfit',sans-serif;margin-bottom:6px;">
+              <i class="bi bi-mortarboard-fill me-1"></i> 2. Unlimited Practice Labs
             </div>
-            <div style="font-size:0.8rem;color:var(--text-desc);line-height:1.5;">Private, ungraded labs: Academic Viva, FluentFlow, Debate AI, &amp; Healthy Convo.</div>
+            <div style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;">Private, ungraded sandboxes: Academic Viva, Topic Drills, &amp; Multilingual Fluency training.</div>
           </div>
-          <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:#f59e0b;letter-spacing:0.06em;font-family:'Outfit',sans-serif;margin-bottom:4px;">
-              <i class="bi bi-file-earmark-pdf-fill me-1"></i>Official PDF Reports
+          <div style="background:var(--surface-alt);border:1.5px solid rgba(245, 158, 11, 0.3);border-radius:var(--radius-md);padding:16px 18px;position:relative;overflow:hidden;">
+            <div style="font-size:0.75rem;font-weight:900;text-transform:uppercase;color:#f59e0b;letter-spacing:0.08em;font-family:'Outfit',sans-serif;margin-bottom:6px;">
+              <i class="bi bi-file-earmark-person-fill me-1"></i> 3. Resume Intelligence
             </div>
-            <div style="font-size:0.8rem;color:var(--text-desc);line-height:1.5;">Letterhead-style evaluation summaries with detailed domain feedback.</div>
+            <div style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;">AI extracts your projects, technical skills, and experience to personalize all question scenarios.</div>
+          </div>
+          <div style="background:var(--surface-alt);border:1.5px solid rgba(168, 85, 247, 0.3);border-radius:var(--radius-md);padding:16px 18px;position:relative;overflow:hidden;">
+            <div style="font-size:0.75rem;font-weight:900;text-transform:uppercase;color:#c084fc;letter-spacing:0.08em;font-family:'Outfit',sans-serif;margin-bottom:6px;">
+              <i class="bi bi-buildings-fill me-1"></i> 4. Top Company Hub
+            </div>
+            <div style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;">Curated preparation guides &amp; placement papers for Google, Microsoft, Amazon, TCS, Infosys, and more.</div>
           </div>
         </div>
 
+        <!-- ══ SECTION 2: STEP-BY-STEP USER JOURNEY & WORKFLOW ══ -->
         <div class="mb-4">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <span style="background:var(--primary);border-radius:8px;padding:6px 9px;display:inline-flex;align-items:center;justify-content:center;"><i class="bi bi-briefcase-fill text-white"></i></span>
-            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:0.98rem;">1. Formal Recruitment Assessment Mode</h6>
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span style="background:linear-gradient(135deg, #00ffff, #0284c7);border-radius:8px;padding:6px 10px;color:#020510;font-weight:900;"><i class="bi bi-diagram-3-fill"></i></span>
+            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:1.05rem;">
+              Candidate Journey: Step-by-Step Workflow
+            </h6>
           </div>
-          <p style="color:var(--text-desc);margin:0 0 10px 0;font-size:0.88rem;line-height:1.7;padding-left:38px;">
-            Designed for formal placement evaluation. The AI examiner adaptively asks structured technical, domain, and logic questions.
-          </p>
-          <ul style="color:var(--text-desc);margin:0;font-size:0.85rem;line-height:1.75;padding-left:54px;">
-            <li><strong>Domain Selection:</strong> Software Engineering, Data Science, System Design, Academic Subjects, HR Fundamentals, etc.</li>
-            <li><strong>AI Voice &amp; Code Input:</strong> Use the interactive mic (or press <kbd>Insert</kbd>) to speak your answers or write code in the embedded Monaco editor.</li>
-            <li><strong>Scoring &amp; Feedback:</strong> Evaluated on technical correctness, clarity of reasoning, and domain vocabulary.</li>
-          </ul>
-        </div>
-        <hr style="border-color:var(--border);margin:16px 0;">
 
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-bottom:10px;">
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-family:'Outfit',sans-serif;font-weight:900;color:#00ffff;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                Step 01 &bull; Profile &amp; Resume
+              </div>
+              <div style="font-size:0.92rem;font-weight:800;color:#ffffff;margin-bottom:6px;">Upload &amp; Personalize</div>
+              <p style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;margin:0;">
+                Complete your education details and upload your CV (PDF/DOC). The AI extracts your key skills to customize interview questions specifically for you.
+              </p>
+            </div>
+
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-family:'Outfit',sans-serif;font-weight:900;color:#38bdf8;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                Step 02 &bull; Launch Studio
+              </div>
+              <div style="font-size:0.92rem;font-weight:800;color:#ffffff;margin-bottom:6px;">Select Domain &amp; Launch</div>
+              <p style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;margin:0;">
+                Click <strong>Launch Assessment Studio</strong>. Specify your role or target domain (e.g., Software Engineering, Data Science, Cloud Architecture).
+              </p>
+            </div>
+
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-family:'Outfit',sans-serif;font-weight:900;color:#34d399;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                Step 03 &bull; Multi-Modal Input
+              </div>
+              <div style="font-size:0.92rem;font-weight:800;color:#ffffff;margin-bottom:6px;">Voice, Code &amp; Text</div>
+              <p style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;margin:0;">
+                Speak your responses using live microphone dictation (<kbd>Insert</kbd> key), write technical code in the editor, or attach architecture diagrams.
+              </p>
+            </div>
+
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-family:'Outfit',sans-serif;font-weight:900;color:#f59e0b;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                Step 04 &bull; Autosave &amp; Exit
+              </div>
+              <div style="font-size:0.92rem;font-weight:800;color:#ffffff;margin-bottom:6px;">Continuous Sync</div>
+              <p style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;margin:0;">
+                Every answered turn is automatically saved. If disconnected, you can safely return and click <strong>Resume Assessment Studio</strong> anytime.
+              </p>
+            </div>
+
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-family:'Outfit',sans-serif;font-weight:900;color:#c084fc;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">
+                Step 05 &bull; AI Scorecard
+              </div>
+              <div style="font-size:0.92rem;font-weight:800;color:#ffffff;margin-bottom:6px;">Rubric Analysis &amp; Report</div>
+              <p style="font-size:0.83rem;color:var(--text-desc);line-height:1.55;margin:0;">
+                Receive a score out of 10.0, placement hiring recommendation (Selected / Needs Work), key strengths analysis, and targeted growth feedback.
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr style="border-color:var(--border);margin:24px 0;">
+
+        <!-- ══ SECTION 3: CODE OF CONDUCT & EXAMINATION RULES ══ -->
         <div class="mb-4">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <span style="background:var(--emerald-hover);border-radius:8px;padding:6px 9px;display:inline-flex;align-items:center;justify-content:center;"><i class="bi bi-mortarboard-fill text-white"></i></span>
-            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:0.98rem;">2. Skill Development &amp; Practice Labs</h6>
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span style="background:rgba(239, 68, 68, 0.2);border:1px solid #ef4444;border-radius:8px;padding:6px 10px;color:#f87171;font-weight:900;"><i class="bi bi-shield-exclamation"></i></span>
+            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:1.05rem;">
+              Assessment Integrity &amp; Candidate Code of Conduct
+            </h6>
           </div>
-          <p style="color:var(--text-desc);margin:0 0 10px 0;font-size:0.88rem;line-height:1.7;padding-left:38px;">
-            Zero evaluation penalty space to practice spoken communication, exam preparation, and multi-language fluency.
-          </p>
-          <ul style="color:var(--text-desc);margin:0;font-size:0.85rem;line-height:1.75;padding-left:54px;">
-            <li><strong>Academic Viva:</strong> Oral exam drills for engineering, science, and college viva preparation.</li>
-            <li><strong>FluentFlow:</strong> Practice conversational fluency in English, French, Spanish, German, Japanese, and Hindi.</li>
-            <li><strong>Debate AI:</strong> Engage in sharp reasoning exchanges on user-selected topics.</li>
-            <li><strong>Healthy Convo:</strong> Low-pressure friendly chat to boost confidence and public speaking skills.</li>
-          </ul>
-        </div>
-        <hr style="border-color:var(--border);margin:16px 0;">
 
-        <!-- FAQ Accordion -->
+          <div style="background:rgba(239, 68, 68, 0.08);border:1px solid rgba(239, 68, 68, 0.3);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:16px;">
+            <div style="font-weight:800;color:#fca5a5;font-size:0.92rem;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <i class="bi bi-camera-video-fill"></i> Automated Window Focus &amp; Proctoring Rule (2 Strikes)
+            </div>
+            <p style="font-size:0.84rem;color:#cbd5e1;line-height:1.6;margin:0;">
+              Formal recruitment assessments enforce automated browser focus tracking. 
+              <strong>Strike 1</strong> triggers a high-visibility modal warning upon switching tabs. 
+              Switching tabs or leaving the screen a <strong>second time</strong> results in immediate examination termination and an official disqualification record.
+            </p>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px;">
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;">
+              <div style="font-size:0.82rem;font-weight:800;color:#34d399;margin-bottom:6px;"><i class="bi bi-check-circle-fill me-1"></i> Recommended Best Practices</div>
+              <ul style="font-size:0.8rem;color:var(--text-desc);margin:0;padding-left:20px;line-height:1.6;">
+                <li>Ensure a quiet environment with stable internet connectivity.</li>
+                <li>Allow browser microphone permissions before starting.</li>
+                <li>Keep assessment tab in full view throughout the session.</li>
+                <li>Review the question countdown timer bar displayed at top-right.</li>
+              </ul>
+            </div>
+
+            <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;">
+              <div style="font-size:0.82rem;font-weight:800;color:#f87171;margin-bottom:6px;"><i class="bi bi-x-circle-fill me-1"></i> Prohibited Actions</div>
+              <ul style="font-size:0.8rem;color:var(--text-desc);margin:0;padding-left:20px;line-height:1.6;">
+                <li>Navigating away to external browser tabs or search engines.</li>
+                <li>Minimizing the browser window during an active question.</li>
+                <li>Submitting blank answers or empty code blocks.</li>
+                <li>Using multi-window extensions during formal evaluations.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr style="border-color:var(--border);margin:24px 0;">
+
+        <!-- ══ SECTION 4: FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION) ══ -->
         <div class="mb-2">
           <div class="d-flex align-items-center gap-2 mb-3">
-            <span style="background:#8b5cf6;border-radius:8px;padding:6px 9px;display:inline-flex;align-items:center;justify-content:center;"><i class="bi bi-patch-question-fill text-white"></i></span>
-            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:0.98rem;">3. Frequently Asked Questions (FAQ)</h6>
+            <span style="background:linear-gradient(135deg, #a855f7, #ec4899);border-radius:8px;padding:6px 10px;color:#ffffff;font-weight:900;"><i class="bi bi-patch-question-fill"></i></span>
+            <h6 class="mb-0 fw-bold" style="color:var(--text-main);font-family:'Outfit',sans-serif;font-size:1.05rem;">
+              Frequently Asked Questions (FAQ)
+            </h6>
           </div>
 
           <div class="accordion" id="faqAccordion">
+
+            <!-- FAQ 1 -->
             <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
               <h2 class="accordion-header" id="faqHeadingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
-                  <i class="bi bi-question-circle me-2 text-primary"></i> Can I pause and resume my assessment later?
+                  <i class="bi bi-pause-circle me-2 text-primary"></i> Can I pause my assessment and resume it later?
                 </button>
               </h2>
               <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
                 <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
-                  Yes! Your recruitment assessment progress is automatically saved question by question. If you navigate away or click <strong>Exit Assessment</strong>, you can return to your dashboard anytime and click <strong>Resume Assessment</strong>.
+                  Yes! Your assessment progress is continuously saved question-by-question. If you close your browser, lose power, or navigate away, you can return to your dashboard and click <strong>Resume Assessment Studio</strong> to continue from the exact question you left off.
                 </div>
               </div>
             </div>
 
+            <!-- FAQ 2 -->
             <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
               <h2 class="accordion-header" id="faqHeadingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
@@ -1662,61 +1765,111 @@
               </h2>
               <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
                 <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
-                  Click the microphone button (or press the <kbd>Insert</kbd> key) during an interview session to dictate your answer naturally. Your spoken words are transcribed directly into the answer box in real-time.
+                  Click the microphone button (or press the <kbd>Insert</kbd> key on your keyboard) during an assessment session to dictate your answers naturally. Spoken audio is transcribed into text in real-time. For optimal performance, use modern Google Chrome, Microsoft Edge, or Safari with microphone permissions granted.
                 </div>
               </div>
             </div>
 
+            <!-- FAQ 3 -->
             <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
               <h2 class="accordion-header" id="faqHeadingThree">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
-                  <i class="bi bi-file-earmark-person me-2 text-primary"></i> How is my resume used by the AI?
+                  <i class="bi bi-code-square me-2 text-primary"></i> How do I write and submit programming code?
                 </button>
               </h2>
               <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
                 <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
-                  When you upload your CV in PDF, DOC, or DOCX format, the system extracts your listed skills, project experience, and technical tools. The AI examiner then customizes evaluation questions specifically tailored to your background.
+                  When a question requests code, click the <strong>Code Answer</strong> tab to open the built-in syntax-highlighted code editor. You can write your solution in Python, Java, C++, JavaScript, or SQL alongside your explanatory text notes.
                 </div>
               </div>
             </div>
 
+            <!-- FAQ 4 -->
             <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
               <h2 class="accordion-header" id="faqHeadingFour">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
-                  <i class="bi bi-arrow-clockwise me-2 text-primary"></i> How do I reset an assessment?
+                  <i class="bi bi-arrow-clockwise me-2 text-primary"></i> What is the difference between Resuming and Starting a Fresh Session?
                 </button>
               </h2>
               <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
                 <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
-                  If you wish to discard your active assessment session and start fresh from Question 1, click <strong>Reset Assessment</strong> on the main assessment card. A confirmation dialog will verify your request before resetting.
+                  <strong>Resume Assessment:</strong> Picks up directly where you left off without discarding previous answers.<br>
+                  <strong>Start Fresh Session:</strong> Discards active in-progress state and resets you back to Question 1. Note: Resetting an in-progress session does not consume your completed evaluation attempts.
                 </div>
               </div>
             </div>
 
-            <!-- Proctoring FAQ Item -->
+            <!-- FAQ 5 -->
             <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
               <h2 class="accordion-header" id="faqHeadingFive">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
-                  <i class="bi bi-shield-lock me-2" style="color: #00ffff;"></i> What is the Automated Proctoring &amp; Anti-Cheating Policy?
+                  <i class="bi bi-journal-code me-2 text-primary"></i> What are Practice Labs and do they affect my placement score?
                 </button>
               </h2>
               <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive" data-bs-parent="#faqAccordion">
                 <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
-                  During formal placement assessments, our automated proctoring system continuously monitors your browser window focus. Switching browser tabs, minimizing the window, or navigating away triggers a <strong>Security Warning Strike</strong>. Leaving the examination window again <strong>after receiving a warning strike</strong> results in <strong>immediate, automatic session termination</strong> and an official Code of Conduct disqualification record. Practice sessions are not subject to this policy.
+                  Practice Labs (Academic Viva, Topic Drills, and Multilingual Speaking) are <strong>100% free, private, and unlimited</strong>. They do NOT affect your official placement assessment scores, have zero time penalties, and are completely exempt from proctoring focus-loss rules.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
+              <h2 class="accordion-header" id="faqHeadingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseSix" aria-expanded="false" aria-controls="faqCollapseSix" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
+                  <i class="bi bi-award me-2 text-primary"></i> How is my final interview score (0-10) evaluated?
+                </button>
+              </h2>
+              <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
+                  The Gemini AI model analyzes your complete transcript across technical accuracy, problem-solving depth, communication clarity, and code structure. Scores satisfying placement criteria receive a <strong>Selected (PASS)</strong> hiring recommendation.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 7 -->
+            <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
+              <h2 class="accordion-header" id="faqHeadingSeven">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseSeven" aria-expanded="false" aria-controls="faqCollapseSeven" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
+                  <i class="bi bi-buildings me-2 text-primary"></i> Where can I find company-specific placement preparation?
+                </button>
+              </h2>
+              <div id="faqCollapseSeven" class="accordion-collapse collapse" aria-labelledby="faqHeadingSeven" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
+                  Click <strong>Company Hub</strong> in the navigation sidebar to access curated question banks, aptitude patterns, and technical practice links for Google, Microsoft, Amazon, Meta, TCS, Infosys, Wipro, and Accenture.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 8 -->
+            <div class="accordion-item" style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;">
+              <h2 class="accordion-header" id="faqHeadingEight">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseEight" aria-expanded="false" aria-controls="faqCollapseEight" style="background:var(--surface-alt);color:var(--text-main);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;box-shadow:none;">
+                  <i class="bi bi-file-earmark-arrow-up me-2 text-primary"></i> Can I upload architecture diagrams or solution attachments?
+                </button>
+              </h2>
+              <div id="faqCollapseEight" class="accordion-collapse collapse" aria-labelledby="faqHeadingEight" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;color:var(--text-desc);line-height:1.6;">
+                  Yes! During any question, use the attachment file button to upload system architecture diagrams, handwritten math proofs, or data flowcharts (PNG, JPG, PDF up to 10MB). The AI visual analyzer interprets your diagram alongside your written response.
                 </div>
               </div>
             </div>
 
           </div>
         </div>
+
       </div>
-      <div class="modal-footer border-0 p-4 pt-0 d-flex justify-content-between align-items-center">
-        <span style="font-size:0.75rem;color:var(--text-light);"><i class="bi bi-shield-check"></i> Enterprise AI Platform Help System</span>
-        <button type="button" class="btn btn-primary-grad rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Got it, Close &rarr;</button>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer border-0 p-4 pt-0 d-flex justify-content-between align-items-center" style="border-top:1px solid var(--border) !important;">
+        <span style="font-size:0.75rem;color:var(--text-light);"><i class="bi bi-shield-check"></i> Candidate Onboarding &amp; Help System</span>
+        <button type="button" class="btn btn-primary-grad rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Got it, Let's Start &rarr;</button>
       </div>
+
     </div>
   </div>
 </div>
+
 
 <!-- ══ RESUME UPLOAD / UPDATE MODAL ══ -->
 <div class="modal fade" id="resumeUploadModal" tabindex="-1" aria-labelledby="resumeUploadModalLabel" aria-hidden="true">
@@ -2033,6 +2186,51 @@ function handleFileDrop(event) {
     }
 }
 </script>
+
+<!-- ══ ATTEMPT LIMIT REACHED MODAL ══ -->
+<div class="modal fade" id="attemptLimitReachedModal" tabindex="-1" aria-labelledby="attemptLimitReachedModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px; border:1.5px solid #ef4444; background:#08122a; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px);">
+      <div class="modal-header border-0 p-4 pb-2">
+        <h5 class="modal-title fw-bold" id="attemptLimitReachedModalLabel" style="color:#f87171; font-family:'Outfit',sans-serif; letter-spacing:0.02em;">
+          <i class="bi bi-lock-fill me-2"></i>Assessment Limit Reached
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4 pt-2">
+        <div class="d-flex align-items-start gap-3 mb-3">
+          <div style="background:rgba(239, 68, 68, 0.15); border-radius:14px; width:52px; height:52px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1.5px solid #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);">
+            <i class="bi bi-shield-x fs-3" style="color:#f87171;"></i>
+          </div>
+          <div>
+            <p class="fw-bold mb-1" style="color:#ffffff; font-family:'Outfit',sans-serif; font-size:1.15rem;">
+              Assessment Session Limit Reached
+            </p>
+            <p style="color:#cbd5e1; font-size:0.88rem; margin:0; line-height:1.6;">
+              You have completed all scheduled standard evaluation sessions authorized for your account in this placement round.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3 mb-3" style="background:#0b1329; border:1.5px solid #334155; border-radius:14px;">
+          <div class="fw-bold mb-2" style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:#38bdf8; font-family:'Outfit', sans-serif;">
+            <i class="bi bi-info-circle me-1"></i> Next Steps &amp; Practice:
+          </div>
+          <ul class="mb-0 ps-3" style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+            <li>Contact your recruitment coordinator or placement administrator to request an assessment slot extension.</li>
+            <li>In the meantime, you can sharpen your skills with unlimited sessions in <strong>Practice Mode (Viva, Drills, Language Speaking)</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer border-0 px-4 pb-4 pt-0 d-flex gap-2">
+        <button type="button" class="btn rounded-pill px-4 fw-semibold flex-fill" data-bs-dismiss="modal" style="background:rgba(255,255,255,0.08); color:#cbd5e1; border:1px solid #475569;">Close</button>
+        <a href="/practice-setup" class="btn rounded-pill px-4 fw-bold flex-fill" style="background:linear-gradient(135deg, #00ffff, #0284c7) !important; color:#020510 !important; border:none; font-family:'Outfit',sans-serif; font-weight: 800; box-shadow: 0 4px 18px rgba(0, 255, 255, 0.4); text-decoration: none; text-align: center; padding: 8px 16px;">
+          <i class="bi bi-mortarboard-fill me-1"></i> Try Practice Mode
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 sessionStorage.removeItem('interview_proctor_strikes');

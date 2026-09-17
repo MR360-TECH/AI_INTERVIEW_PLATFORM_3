@@ -253,6 +253,9 @@
             </div>
         </div>
         <div class="admin-header-actions">
+            <a href="/admin/guide" class="header-icon-btn" style="border-color: #38bdf8 !important; color: #38bdf8 !important; background: rgba(56, 189, 248, 0.08) !important; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.88rem; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2) !important;" title="Platform Information &amp; System Manual">
+                <i class="bi bi-info-circle-fill me-1"></i> Info
+            </a>
             <a href="/admin" class="header-icon-btn" style="border-color: #00ffff !important; color: #00ffff !important; background: rgba(0, 255, 255, 0.08) !important; font-family: 'Outfit', sans-serif; font-weight: 800; box-shadow: 0 0 16px rgba(0, 255, 255, 0.25) !important;">
                 <i class="bi bi-arrow-left me-1"></i> BACK
             </a>
@@ -281,12 +284,17 @@
                     <tr>
                         <th>Candidate</th>
                         <th>Education / Course</th>
+                        <th>Assessment Tokens</th>
                         <th>Registration Date &amp; Time</th>
                         <th style="text-align: right;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for user in users %}
+                    {% set attempts_used = user_attempt_counts.get(user.id, 0) %}
+                    {% set extra_granted = user.extra_allowed_interviews or 0 %}
+                    {% set allowed_total = (settings.default_allowed_interviews or 2) + extra_granted %}
+                    {% set remaining_tokens = allowed_total - attempts_used %}
                     <tr onclick="window.location='/admin/user/{{ user.id }}'">
                         <td>
                             <div class="candidate-cell">
@@ -309,15 +317,32 @@
                             <div style="font-size: 0.84rem; color: #00ffff; font-weight: 700; margin-top: 2px;">{{ user.course|upper or '' }}{% if user.semester %} · {{ user.semester }}{% endif %}</div>
                         </td>
                         <td>
+                            {% if settings.enable_attempt_limits %}
+                                {% if remaining_tokens <= 0 %}
+                                    <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1.5px solid rgba(239, 68, 68, 0.4); border-radius: 8px; font-weight: 800; font-size: 0.78rem; padding: 5px 10px; display: inline-flex; align-items: center; gap: 5px;">
+                                        <i class="bi bi-lock-fill"></i> LOCKED (0 Left)
+                                    </span>
+                                {% else %}
+                                    <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 8px; font-weight: 800; font-size: 0.78rem; padding: 5px 10px; display: inline-flex; align-items: center; gap: 5px;">
+                                        <i class="bi bi-check-circle-fill"></i> {{ remaining_tokens }} Token{{ 's' if remaining_tokens > 1 else '' }} Available
+                                    </span>
+                                {% endif %}
+                                <div style="font-size: 0.76rem; color: #94a3b8; font-weight: 600; margin-top: 4px;">
+                                    Used {{ attempts_used }} of {{ allowed_total }} slots
+                                </div>
+                            {% else %}
+                                <span class="badge" style="background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); border-radius: 8px; font-weight: 700; font-size: 0.78rem; padding: 4px 10px;">
+                                    Unlimited
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
                             <div style="font-family: 'Outfit', sans-serif; font-weight: 800; color: #ffffff; font-size: 0.95rem;">{{ user.registered_at.strftime('%d %b %Y')|upper if user.registered_at else '—' }}</div>
                             <div style="font-size: 0.84rem; color: #cbd5e1; font-weight: 600; margin-top: 2px;">{{ user.registered_at.strftime('%I:%M %p')|upper if user.registered_at else '—' }}</div>
                         </td>
                         <td style="text-align: right;" onclick="event.stopPropagation();" class="text-nowrap">
-                            {% set attempts_used = user_attempt_counts.get(user.id, 0) %}
-                            {% set extra_granted = user.extra_allowed_interviews or 0 %}
-                            {% set allowed_total = (settings.default_allowed_interviews or 2) + extra_granted %}
-                            {% if settings.enable_attempt_limits and attempts_used >= allowed_total %}
-                            <button type="button" class="btn-unlock-attempt me-1" onclick="triggerUnlockCandidate({{ user.id }}, '{{ user.full_name | escape }}')">
+                            {% if settings.enable_attempt_limits and remaining_tokens <= 0 %}
+                            <button type="button" class="btn-unlock-attempt me-1" onclick="triggerUnlockCandidate({{ user.id }}, '{{ user.full_name | escape }}')" title="Grant +1 Assessment Token">
                                 <i class="bi bi-unlock-fill me-1"></i> Unlock
                             </button>
                             {% endif %}

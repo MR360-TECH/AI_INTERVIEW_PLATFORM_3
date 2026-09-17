@@ -593,6 +593,65 @@ html.dark-theme .db-bg { display: block; }
         </div>
     </div>
 
+    <!-- Assessment Token Status & Access Management -->
+    <div class="info-section" style="border-color: rgba(0, 255, 255, 0.3) !important;">
+        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+            <div class="section-title mb-0" style="color: #00ffff;"><i class="bi bi-shield-lock-fill"></i> Assessment Token &amp; Quota Status</div>
+            {% if settings.enable_attempt_limits and remaining_tokens <= 0 %}
+            <button type="button" class="btn-unlock-attempt" onclick="triggerUnlockCandidate({{ user.id }}, '{{ user.full_name | escape }}')" style="background: linear-gradient(135deg, #00ffff, #0284c7) !important; color: #020510 !important; font-weight: 800; border: none; padding: 8px 20px; border-radius: 10px; font-family: 'Outfit', sans-serif; box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);">
+                <i class="bi bi-unlock-fill me-1"></i> Authorize &amp; Unlock +1 Token
+            </button>
+            {% endif %}
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-3 col-sm-6">
+                <div style="background: rgba(10, 15, 29, 0.8); border: 1.5px solid rgba(0, 255, 255, 0.15); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Account Status</div>
+                    {% if settings.enable_attempt_limits %}
+                        {% if remaining_tokens <= 0 %}
+                        <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1.5px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 0.82rem; padding: 4px 10px; border-radius: 6px;">
+                            <i class="bi bi-lock-fill me-1"></i> LOCKED (0 Left)
+                        </span>
+                        {% else %}
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1.5px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 0.82rem; padding: 4px 10px; border-radius: 6px;">
+                            <i class="bi bi-check-circle-fill me-1"></i> ACTIVE ({{ remaining_tokens }} Left)
+                        </span>
+                        {% endif %}
+                    {% else %}
+                        <span class="badge" style="background: rgba(148, 163, 184, 0.2); color: #cbd5e1; font-weight: 700; font-size: 0.82rem; padding: 4px 10px; border-radius: 6px;">
+                            Unlimited Access
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div style="background: rgba(10, 15, 29, 0.8); border: 1.5px solid rgba(0, 255, 255, 0.15); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Tokens Remaining</div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 900; color: {% if remaining_tokens > 0 %}#00ffff{% else %}#ef4444{% endif %};">
+                        {{ remaining_tokens if settings.enable_attempt_limits else '∞' }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div style="background: rgba(10, 15, 29, 0.8); border: 1.5px solid rgba(0, 255, 255, 0.15); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Attempts Used / Allowed</div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 800; color: #ffffff;">
+                        {{ attempts_used }} <span style="font-size: 0.85rem; color: #94a3b8;">/ {{ allowed_total }} Total</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div style="background: rgba(10, 15, 29, 0.8); border: 1.5px solid rgba(0, 255, 255, 0.15); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Extra Granted by Admin</div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 800; color: #38bdf8;">
+                        +{{ user.extra_allowed_interviews or 0 }} Slot(s)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Assessment History -->
     <div class="info-section">
         <div class="section-title"><i class="bi bi-clipboard2-data-fill"></i> Assessment History</div>
@@ -601,6 +660,7 @@ html.dark-theme .db-bg { display: block; }
             <table class="history-table">
                 <thead>
                     <tr>
+                        <th>Session ID</th>
                         <th>Score</th>
                         <th>Recommendation</th>
                         <th>Date &amp; Time</th>
@@ -610,6 +670,11 @@ html.dark-theme .db-bg { display: block; }
                 <tbody>
                     {% for i in interviews %}
                     <tr onclick="window.location='/admin/interview/{{ i.id }}'" style="cursor: pointer;">
+                        <td>
+                            <span class="session-code-badge" onclick="event.stopPropagation(); copySessionId('{{ i.session_code }}', this);" style="cursor: pointer; background: rgba(0, 255, 255, 0.1); color: #00ffff; border: 1px solid rgba(0, 255, 255, 0.35); border-radius: 6px; padding: 3px 8px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.76rem; letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px;" title="Click to copy Session ID: {{ i.session_code }}">
+                                #{{ i.session_code }} <i class="bi bi-copy" style="font-size: 0.7rem;"></i>
+                            </span>
+                        </td>
                         <td>
                             <span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;">{{ i.score }}</span>
                             <span style="font-size:0.8rem;color:var(--text-2);">/10</span>
@@ -703,7 +768,100 @@ html.dark-theme .db-bg { display: block; }
 </div>
 {% endif %}
 
+<!-- ══ CUSTOM THEME UNLOCK CONFIRMATION MODAL ══ -->
+<div class="modal fade" id="customUnlockModal" tabindex="-1" aria-labelledby="customUnlockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px; border:1.5px solid #334155; background:#08122a; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px);">
+      <div class="modal-header border-0 p-4 pb-2">
+        <h5 class="modal-title fw-bold" id="customUnlockModalLabel" style="color:#00ffff; font-family:'Outfit',sans-serif; letter-spacing:0.02em;">
+          <i class="bi bi-unlock-fill me-2"></i>Authorize Attempt Extension
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4 pt-2">
+        <div class="d-flex align-items-start gap-3 mb-3">
+          <div style="background:#0b1329; border-radius:14px; width:50px; height:50px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1.5px solid #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);">
+            <i class="bi bi-person-check-fill fs-4" style="color:#00ffff;"></i>
+          </div>
+          <div>
+            <p class="fw-bold mb-1" style="color:#ffffff; font-family:'Outfit',sans-serif; font-size:1.15rem;">
+              Unlock session access for <span id="modalTargetCandidate" style="color:#00ffff; text-transform:uppercase;">{{ user.full_name }}</span>?
+            </p>
+            <p style="color:#cbd5e1; font-size:0.88rem; margin:0; line-height:1.6;">
+              Executing this authorization will grant this candidate 1 extra assessment slot.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3 mb-3" style="background:#0b1329; border:1.5px solid #334155; border-radius:14px;">
+          <div class="fw-bold mb-2" style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:#38bdf8; font-family:'Outfit', sans-serif;">
+            <i class="bi bi-shield-check me-1"></i> System Authorization Scope:
+          </div>
+          <ul class="mb-0 ps-3" style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+            <li>Grants +1 additional evaluation attempt token.</li>
+            <li>Restores standard AI assessment studio access for candidate.</li>
+            <li>Keeps all prior history and evaluation scorecards completely intact.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer border-0 px-4 pb-4 pt-0 d-flex gap-2">
+        <button type="button" class="btn rounded-pill px-4 fw-semibold flex-fill" data-bs-dismiss="modal" style="background:rgba(255,255,255,0.08); color:#cbd5e1; border:1px solid #475569;">Cancel</button>
+        <button type="button" class="btn rounded-pill px-4 fw-bold flex-fill" id="confirmUnlockModalBtn" style="background:linear-gradient(135deg, #00ffff, #0284c7) !important; color:#020510 !important; border:none; font-family:'Outfit',sans-serif; font-weight: 800; box-shadow: 0 4px 18px rgba(0, 255, 255, 0.4);">
+          <i class="bi bi-unlock-fill me-1"></i> Confirm &amp; Unlock Slot
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var pendingUnlockUserId = {{ user.id if user else 'null' }};
+
+function triggerUnlockCandidate(userId, candidateName) {
+    pendingUnlockUserId = userId;
+    var nameSpan = document.getElementById('modalTargetCandidate');
+    if (nameSpan) nameSpan.textContent = candidateName || 'Candidate';
+    
+    var modalElem = document.getElementById('customUnlockModal');
+    if (modalElem && typeof bootstrap !== 'undefined') {
+        var bsModal = bootstrap.Modal.getOrCreateInstance(modalElem);
+        bsModal.show();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var confirmBtn = document.getElementById('confirmUnlockModalBtn');
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            if (!pendingUnlockUserId) return;
+            
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Authorizing...';
+
+            fetch('/admin/user/' + pendingUnlockUserId + '/unlock-attempt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not unlock candidate attempt.'));
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = '<i class="bi bi-unlock-fill me-1"></i> Confirm &amp; Unlock Slot';
+                }
+            })
+            .catch(function(err) {
+                alert('Connection Error: ' + err);
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="bi bi-unlock-fill me-1"></i> Confirm &amp; Unlock Slot';
+            });
+        });
+    }
+});
+</script>
 <script>
 (function(){
     var c=document.getElementById('dbParticles');
@@ -716,6 +874,52 @@ html.dark-theme .db-bg { display: block; }
         c.appendChild(s);
     }
 })();
+</script>
+<script>
+function copySessionId(text, triggerElem) {
+    if (!text) return;
+    function showFeedback() {
+        if (!triggerElem) return;
+        var origHtml = triggerElem.getAttribute('data-orig-html');
+        if (!origHtml) {
+            origHtml = triggerElem.innerHTML;
+            triggerElem.setAttribute('data-orig-html', origHtml);
+        }
+        triggerElem.innerHTML = '<i class="bi bi-check2 text-success me-1"></i> COPIED!';
+        triggerElem.style.borderColor = '#10b981';
+        triggerElem.style.color = '#34d399';
+        setTimeout(function() {
+            triggerElem.innerHTML = triggerElem.getAttribute('data-orig-html');
+            triggerElem.style.borderColor = '';
+            triggerElem.style.color = '';
+        }, 1600);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showFeedback).catch(function() {
+            fallbackCopy(text, showFeedback);
+        });
+    } else {
+        fallbackCopy(text, showFeedback);
+    }
+}
+
+function fallbackCopy(text, callback) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        if (callback) callback();
+    } catch (err) {
+        console.error('Fallback copy failed', err);
+    }
+    document.body.removeChild(textArea);
+}
 </script>
 </body>
 </html>

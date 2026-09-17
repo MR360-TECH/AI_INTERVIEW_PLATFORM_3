@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+<head>
+    <title>Admin System Guide &amp; Operations Manual — AI Recruitment Platform</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        (function() {
+            document.documentElement.classList.add('dark-theme');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        })();
+    </script>
+    <style>
+        :root {
+            --surface: #08122a;
+            --surface-card: #0b1329;
+            --surface-hover: #101c3d;
+            --bg: #020510;
+            --border: #334155;
+            --border-glow: rgba(0, 255, 255, 0.35);
+            --brand-cyan: #00ffff;
+            --brand-blue: #38bdf8;
+            --brand-emerald: #10b981;
+            --brand-amber: #f59e0b;
+            --brand-rose: #ef4444;
+            --brand-purple: #a855f7;
+            --text-1: #ffffff;
+            --text-2: #cbd5e1;
+            --text-3: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: var(--text-1);
+            background: var(--bg) !important;
+            background-image: none !important;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        /* ── Cyber Background Grid & Particles ── */
+        .db-bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .db-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .db-particles { position: absolute; inset: 0; }
+        .db-star {
+            position: absolute;
+            background: #00ffff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: dbTwinkle ease-in-out infinite;
+        }
+        @keyframes dbTwinkle {
+            0%, 100% { opacity: 0; transform: scale(0.6); }
+            50% { opacity: 0.8; transform: scale(1.4); }
+        }
+        .db-topbar-glow {
+            position: absolute; top: 0; left: 10%; right: 10%; height: 180px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 255, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 36px 24px 90px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
+        .guide-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+            border-bottom: 1.5px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .guide-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .guide-brand-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #00ffff 0%, #0284c7 100%);
+            color: #020510;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 0 22px rgba(0, 255, 255, 0.45);
+            flex-shrink: 0;
+        }
+
+        .guide-brand-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-brand-text p {
+            color: var(--text-2);
+            font-size: 0.92rem;
+            margin-top: 4px;
+        }
+
+        .guide-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.88rem;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            background: rgba(11, 19, 41, 0.85);
+            color: #ffffff;
+            backdrop-filter: blur(12px);
+        }
+        .header-btn:hover {
+            border-color: var(--brand-cyan);
+            color: var(--brand-cyan);
+            box-shadow: 0 0 16px rgba(0, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        .header-btn.primary {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--brand-cyan);
+            color: var(--brand-cyan);
+            box-shadow: 0 0 14px rgba(0, 255, 255, 0.25);
+        }
+        .header-btn.primary:hover {
+            background: var(--brand-cyan);
+            color: #020510;
+            box-shadow: 0 0 24px rgba(0, 255, 255, 0.6);
+        }
+
+        /* ── Sticky Navigation Bar (Jump Links) ── */
+        .jump-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 8px 4px 16px;
+            margin-bottom: 28px;
+            scrollbar-width: thin;
+        }
+        .jump-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 30px;
+            color: var(--text-2);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.84rem;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        .jump-pill:hover {
+            border-color: var(--brand-cyan);
+            color: #ffffff;
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* ── Section Cards ── */
+        .guide-section {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+            transition: border-color 0.2s ease;
+        }
+        .guide-section:hover {
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .section-tag.cyan    { background: rgba(0, 255, 255, 0.12); color: var(--brand-cyan); border: 1px solid rgba(0, 255, 255, 0.35); }
+        .section-tag.blue    { background: rgba(56, 189, 248, 0.12); color: var(--brand-blue); border: 1px solid rgba(56, 189, 248, 0.35); }
+        .section-tag.emerald { background: rgba(16, 185, 129, 0.12); color: var(--brand-emerald); border: 1px solid rgba(16, 185, 129, 0.35); }
+        .section-tag.amber   { background: rgba(245, 158, 11, 0.12); color: var(--brand-amber); border: 1px solid rgba(245, 158, 11, 0.35); }
+        .section-tag.rose    { background: rgba(239, 68, 68, 0.12); color: var(--brand-rose); border: 1px solid rgba(239, 68, 68, 0.35); }
+        .section-tag.purple  { background: rgba(168, 85, 247, 0.12); color: var(--brand-purple); border: 1px solid rgba(168, 85, 247, 0.35); }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-lead {
+            color: var(--text-2);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin-bottom: 24px;
+        }
+
+        /* ── Grid inside sections ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .feature-card {
+            background: var(--surface-card);
+            border: 1.5px solid #1e293b;
+            border-radius: 14px;
+            padding: 20px 22px;
+            transition: all 0.2s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(0, 255, 255, 0.35);
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+        }
+
+        .feature-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text-3);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ── Callout Box ── */
+        .callout {
+            background: rgba(11, 19, 41, 0.9);
+            border-left: 4px solid var(--brand-cyan);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        .callout.amber { border-left-color: var(--brand-amber); }
+        .callout.emerald { border-left-color: var(--brand-emerald); }
+        .callout.rose { border-left-color: var(--brand-rose); }
+
+        .callout-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: #ffffff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .callout p {
+            font-size: 0.86rem;
+            color: var(--text-2);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ── Code snippet / Formula badge ── */
+        .formula-box {
+            font-family: 'JetBrains Mono', monospace;
+            background: #020617;
+            border: 1.5px solid #1e293b;
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        /* ── Step Progress Pipeline ── */
+        .step-pipeline {
+            display: flex;
+            gap: 14px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .step-item {
+            flex: 1;
+            min-width: 200px;
+            background: var(--surface-card);
+            border: 1.5px solid #1e293b;
+            border-radius: 14px;
+            padding: 16px 18px;
+            position: relative;
+        }
+        .step-num {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.78rem;
+            color: var(--brand-cyan);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .step-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 0.82rem;
+            color: var(--text-3);
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* ── Settings Table ── */
+        .guide-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .guide-table th {
+            background: #0b1329;
+            color: var(--brand-cyan);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 12px 16px;
+            border-bottom: 1.5px solid var(--border);
+        }
+        .guide-table td {
+            background: #08122a;
+            color: var(--text-2);
+            font-size: 0.88rem;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: top;
+        }
+        .guide-table tr:last-child td { border-bottom: none; }
+        .setting-name { font-weight: 700; color: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            .guide-container { padding: 20px 14px 60px; }
+            .guide-section { padding: 24px 18px; }
+            .section-title { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="db-bg-canvas">
+    <div class="db-grid"></div>
+    <div class="db-particles" id="dbParticles"></div>
+    <div class="db-topbar-glow"></div>
+</div>
+
+<div class="guide-container">
+
+    <!-- ══ HEADER ══ -->
+    <div class="guide-header">
+        <div class="guide-brand">
+            <div class="guide-brand-icon">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+            <div class="guide-brand-text">
+                <h1>Platform Operations &amp; System Manual</h1>
+                <p>Comprehensive guide to admin controls, AI evaluation parameters, token quotas, and security protocols</p>
+            </div>
+        </div>
+        <div class="guide-header-actions">
+            <a href="/admin" class="header-btn primary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+            <a href="/admin/users" class="header-btn">
+                <i class="bi bi-people-fill"></i> Registered Candidates
+            </a>
+            <a href="/admin/settings" class="header-btn">
+                <i class="bi bi-gear-fill"></i> Assessment Settings
+            </a>
+            <a href="/logout" class="header-btn" style="color: #f87171; border-color: rgba(239, 68, 68, 0.35);">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- ══ QUICK JUMP PILLS ══ -->
+    <div class="jump-nav">
+        <a href="#section-overview" class="jump-pill"><i class="bi bi-speedometer2 text-info"></i> 1. Dashboard Overview</a>
+        <a href="#section-tokens" class="jump-pill"><i class="bi bi-key-fill text-warning"></i> 2. Token Quota &amp; Unlock</a>
+        <a href="#section-proctoring" class="jump-pill"><i class="bi bi-shield-exclamation text-danger"></i> 3. 2-Strike Proctoring</a>
+        <a href="#section-settings" class="jump-pill"><i class="bi bi-sliders text-success"></i> 4. Settings Configuration</a>
+        <a href="#section-evaluation" class="jump-pill"><i class="bi bi-mortarboard-fill text-primary"></i> 5. AI Scoring Engine</a>
+        <a href="#section-users" class="jump-pill"><i class="bi bi-person-lines-fill text-info"></i> 6. Candidate Management</a>
+        <a href="#section-practice" class="jump-pill"><i class="bi bi-journal-code text-warning"></i> 7. Practice Mode Rules</a>
+    </div>
+
+    <!-- ══ SECTION 1: DASHBOARD OVERVIEW ══ -->
+    <section class="guide-section" id="section-overview">
+        <span class="section-tag cyan"><i class="bi bi-speedometer2"></i> Module 01</span>
+        <h2 class="section-title">
+            <i class="bi bi-graph-up-arrow text-info"></i> Recruitment Operations &amp; Live Metrics
+        </h2>
+        <p class="section-lead">
+            The primary admin console (<code style="color:#00ffff;">/admin</code>) delivers high-velocity visibility into all candidate placement assessments across the entire institution or enterprise organization.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><i class="bi bi-collection-fill text-info"></i> Total Assessments</h4>
+                <p>Cumulative count of all completed formal recruitment examinations logged across all candidate accounts.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-calendar-event text-primary"></i> Monthly &amp; Daily Filters</h4>
+                <p>Real-time timeline segmentation allowing recruitment coordinators to track examination volume per batch or drive.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-check-circle-fill text-success"></i> Selected Placements</h4>
+                <p>Total candidates who exceeded the configurable Pass Score threshold and achieved hiring recommendation status.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-x-circle-fill text-danger"></i> Rejected / Needs Work</h4>
+                <p>Candidates who did not meet the benchmark criteria, flagged for skill development recommendations.</p>
+            </div>
+        </div>
+
+        <div class="callout">
+            <div class="callout-title"><i class="bi bi-funnel-fill text-info"></i> Interactive Real-Time Search</div>
+            <p>The dashboard search input dynamically filters candidate names, email addresses, and roles in-memory with zero page latency.</p>
+        </div>
+    </section>
+
+    <!-- ══ SECTION 2: TOKEN QUOTA & UNLOCK WORKFLOW ══ -->
+    <section class="guide-section" id="section-tokens">
+        <span class="section-tag amber"><i class="bi bi-key-fill"></i> Module 02</span>
+        <h2 class="section-title">
+            <i class="bi bi-shield-lock-fill text-warning"></i> Assessment Token Quota &amp; Unlock System
+        </h2>
+        <p class="section-lead">
+            To prevent candidate quota spamming while maintaining fair access, the platform incorporates a robust token-governed attempt limit engine.
+        </p>
+
+        <div class="step-pipeline">
+            <div class="step-item">
+                <div class="step-num">Phase 1</div>
+                <div class="step-title">Default Quota</div>
+                <p class="step-desc">New candidates are allocated default attempt tokens (default: 2 sessions) configurable in Admin Settings.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">Phase 2</div>
+                <div class="step-title">Quota Depletion</div>
+                <p class="step-desc">Each completed formal assessment consumes 1 token. When remaining tokens reach 0, candidate dashboard locks.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">Phase 3</div>
+                <div class="step-title">Admin Unlock (+1)</div>
+                <p class="step-desc">Admin clicks <strong>Authorize &amp; Unlock</strong> on the candidate row to grant exactly +1 fresh assessment token.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">Phase 4</div>
+                <div class="step-title">Dynamic Re-Lock</div>
+                <p class="step-desc">The Unlock button disappears immediately and only reappears once the candidate exhausts their newly granted token.</p>
+            </div>
+        </div>
+
+        <div class="formula-box">
+            <i class="bi bi-calculator text-warning"></i>
+            <span><strong>Smart Token Formula:</strong> allowed_total = default_allowed + extra_allowed &nbsp;|&nbsp; remaining_tokens = max(0, allowed_total - attempts_used)</span>
+        </div>
+
+        <div class="callout emerald">
+            <div class="callout-title"><i class="bi bi-envelope-check-fill text-success"></i> Automated Email Dispatch</div>
+            <p>Upon unlocking a candidate's session, the backend automatically triggers an HTML email notification to the candidate informing them that their studio session has been authorized.</p>
+        </div>
+    </section>
+
+    <!-- ══ SECTION 3: 2-STRIKE AUTOMATED PROCTORING ══ -->
+    <section class="guide-section" id="section-proctoring">
+        <span class="section-tag rose"><i class="bi bi-shield-exclamation"></i> Module 03</span>
+        <h2 class="section-title">
+            <i class="bi bi-camera-video-fill text-danger"></i> 2-Strike Automated Proctoring Protocol
+        </h2>
+        <p class="section-lead">
+            Standard placement assessments enforce automated tab-switch and focus-loss tracking via browser visibility APIs to ensure academic and recruitment integrity.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card" style="border-color: rgba(245, 158, 11, 0.4);">
+                <h4 style="color: #f59e0b;"><i class="bi bi-exclamation-triangle-fill"></i> Strike 1: Modal Warning</h4>
+                <p>When a candidate navigates away or minimizes the exam tab, a full-screen warning modal locks their screen. The candidate must explicitly click <em>"I Understand &amp; Resume Assessment"</em> to acknowledge.</p>
+            </div>
+            <div class="feature-card" style="border-color: rgba(239, 68, 68, 0.4);">
+                <h4 style="color: #ef4444;"><i class="bi bi-x-octagon-fill"></i> Strike 2: Session Termination</h4>
+                <p>A second focus-loss event triggers immediate session termination, recording an official <strong>Terminated (Breach)</strong> status with 0/10 score and code-of-conduct infraction logs.</p>
+            </div>
+            <div class="feature-card" style="border-color: rgba(16, 185, 129, 0.4);">
+                <h4 style="color: #34d399;"><i class="bi bi-shield-check"></i> Quota Token Protection</h4>
+                <p>To prevent malicious locks, terminated sessions are automatically filtered by <code style="color:#00ffff;">real_attempt_filter()</code> so they do NOT burn candidate quota tokens.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SECTION 4: PLATFORM SETTINGS ══ -->
+    <section class="guide-section" id="section-settings">
+        <span class="section-tag emerald"><i class="bi bi-sliders"></i> Module 04</span>
+        <h2 class="section-title">
+            <i class="bi bi-gear-wide-connected text-success"></i> Platform Configuration Parameters (<a href="/admin/settings" style="color:#00ffff; text-decoration:none;">/admin/settings</a>)
+        </h2>
+        <p class="section-lead">
+            Recruitment administrators can fine-tune every variable of the AI interview engine with zero server restarts required.
+        </p>
+
+        <table class="guide-table">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Parameter</th>
+                    <th style="width: 15%;">Default</th>
+                    <th>Operational Purpose &amp; Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="setting-name">min_questions</td>
+                    <td><span class="badge bg-secondary">3</span></td>
+                    <td>Minimum interview depth before AI model is permitted to conclude conversation with <code style="color:#00ffff;">[END_INTERVIEW]</code>.</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">max_questions</td>
+                    <td><span class="badge bg-secondary">8</span></td>
+                    <td>Hard ceiling on total questions asked. Upon reaching this number, the candidate is automatically directed to evaluation.</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">pass_score</td>
+                    <td><span class="badge bg-success">3.00 / 10</span></td>
+                    <td>Hiring benchmark cutoff. Scores &ge; pass_score receive <strong>Selected (PASS)</strong>; lower scores receive <strong>Rejected (FAIL)</strong>.</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">question_timer_seconds</td>
+                    <td><span class="badge bg-secondary">90s</span></td>
+                    <td>Per-question response countdown clock displayed on candidate assessment screen (adjustable from 20s to 180s).</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">default_difficulty</td>
+                    <td><span class="badge bg-info text-dark">student</span></td>
+                    <td>Adjusts AI question complexity prompt tuning: <code>student</code> (fundamentals), <code>mid-level</code> (system design), <code>senior</code> (architecture).</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">enable_attempt_limits</td>
+                    <td><span class="badge bg-warning text-dark">Enabled</span></td>
+                    <td>Global master toggle. When disabled, attempt quotas are bypassed and all candidates enjoy <strong>Unlimited Sessions</strong>.</td>
+                </tr>
+                <tr>
+                    <td class="setting-name">default_allowed_interviews</td>
+                    <td><span class="badge bg-secondary">2</span></td>
+                    <td>Initial token allotment assigned to every newly registered candidate profile upon account creation.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ══ SECTION 5: AI SCORING ENGINE ══ -->
+    <section class="guide-section" id="section-evaluation">
+        <span class="section-tag blue"><i class="bi bi-mortarboard-fill"></i> Module 05</span>
+        <h2 class="section-title">
+            <i class="bi bi-cpu-fill text-info"></i> AI Qualitative Scoring &amp; Scorecard Generation
+        </h2>
+        <p class="section-lead">
+            Upon interview conclusion, the Gemini generative model conducts deep multi-turn rubric evaluation across the entire conversational and coding transcript.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><i class="bi bi-star-fill text-warning"></i> Quantitative Score (0 - 10)</h4>
+                <p>Synthesized rating based on technical depth, problem-solving accuracy, clarity, and communication effectiveness.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-lightning-charge-fill text-info"></i> Strengths Analysis</h4>
+                <p>Identifies candidate's strongest domain competencies, algorithmic approaches, and structured explanation skills.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-arrow-up-right-circle-fill text-success"></i> Growth Opportunities</h4>
+                <p>Actionable feedback detailing specific technical gaps, missed edge cases, and architectural considerations.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-file-earmark-code-fill text-purple"></i> Transcript Audit</h4>
+                <p>Full record of questions, candidate text answers, code submissions, and file attachments preserved for admin audit.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SECTION 6: CANDIDATE MANAGEMENT ══ -->
+    <section class="guide-section" id="section-users">
+        <span class="section-tag purple"><i class="bi bi-person-lines-fill"></i> Module 06</span>
+        <h2 class="section-title">
+            <i class="bi bi-people-fill text-purple"></i> Candidate Database &amp; Audit Tools (<a href="/admin/users" style="color:#00ffff; text-decoration:none;">/admin/users</a>)
+        </h2>
+        <p class="section-lead">
+            Full candidate registry with individual profiles, resume file inspectors, registration timestamps, and administrative controls.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><i class="bi bi-person-badge-fill text-info"></i> Profile Inspector</h4>
+                <p>Access full academic history, semester, GitHub, LinkedIn, technical skills, and experience metrics via <code style="color:#00ffff;">/admin/user/&lt;id&gt;</code>.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-file-earmark-pdf-fill text-danger"></i> Original Resume Access</h4>
+                <p>Direct download and inline preview of uploaded candidate PDF/Word resume documents.</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="bi bi-trash3-fill text-danger"></i> Cascade Account Purge</h4>
+                <p>Administrative deletion removes candidate records, interview scorecards, and active progress files in a single atomic transaction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SECTION 7: PRACTICE VS FORMAL MODES ══ -->
+    <section class="guide-section" id="section-practice">
+        <span class="section-tag amber"><i class="bi bi-journal-code"></i> Module 07</span>
+        <h2 class="section-title">
+            <i class="bi bi-book-half text-warning"></i> Practice Modes vs. Formal Recruitment Assessment
+        </h2>
+        <p class="section-lead">
+            Clear architectural separation exists between candidate learning sandboxes and audited recruitment evaluations.
+        </p>
+
+        <table class="guide-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Feature Comparison</th>
+                    <th style="width: 35%;">Formal Recruitment Assessment</th>
+                    <th style="width: 35%;">Practice Modes (Viva, Drill, Lang)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="setting-name">Token Quota Consumption</td>
+                    <td><span class="badge bg-danger">Consumes 1 Token</span></td>
+                    <td><span class="badge bg-success">Free &amp; Unlimited (0 Tokens)</span></td>
+                </tr>
+                <tr>
+                    <td class="setting-name">Proctoring &amp; Anti-Cheating</td>
+                    <td><span class="badge bg-danger">Active (2 Strikes)</span></td>
+                    <td><span class="badge bg-secondary">Disabled (Open Notes)</span></td>
+                </tr>
+                <tr>
+                    <td class="setting-name">Verdict Badge</td>
+                    <td><strong>PASS / FAIL / Selected / Rejected</strong></td>
+                    <td><strong>WELL DONE / ALMOST (Practice)</strong></td>
+                </tr>
+                <tr>
+                    <td class="setting-name">Admin Dashboard Logging</td>
+                    <td>Logged in Admin Reports</td>
+                    <td>Candidate Workspace Only</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <div style="text-align: center; padding: 24px 0 10px; color: var(--text-3); font-size: 0.85rem;">
+        <p style="margin-bottom: 6px;">AI Interview Platform &bull; Recruitment Management Operations System</p>
+        <p style="font-size: 0.78rem; opacity: 0.7;">&copy; 2026 AI Assessment Studio. All architectural systems operational.</p>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* Ambient Star Spawner */
+(function() {
+    var container = document.getElementById('dbParticles');
+    if (!container) return;
+    for (var i = 0; i < 40; i++) {
+        var s = document.createElement('div');
+        s.className = 'db-star';
+        var size = Math.random() * 2 + 1;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        s.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(s);
+    }
+})();
+</script>
+</body>
+</html>

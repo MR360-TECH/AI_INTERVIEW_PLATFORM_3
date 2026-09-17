@@ -956,37 +956,6 @@
     </div>
     {% endif %}
 
-    <!-- Proctoring Security Warning Modal (Strike 1) -->
-    <div class="modal fade" id="proctorWarningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="proctorWarningModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius:20px; border: 1.5px solid rgba(239, 68, 68, 0.4); background: #0c1222; box-shadow: 0 0 40px rgba(239, 68, 68, 0.25);">
-          <div class="modal-header border-0 p-4 pb-2">
-            <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="proctorWarningModalLabel" style="color: #ef4444; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">
-              <i class="bi bi-shield-exclamation-fill fs-3" style="color: #f87171;"></i>
-              SECURITY WARNING (STRIKE 1 / 2)
-            </h5>
-          </div>
-          <div class="modal-body p-4 pt-2" style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-            <div class="p-3 mb-3" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; color: #fca5a5;">
-              <strong><i class="bi bi-exclamation-triangle-fill me-1"></i> Unauthorized Window Focus Loss Detected!</strong><br>
-              You navigated away from the live assessment screen.
-            </div>
-            <p class="mb-2">In accordance with our <strong>Candidate Integrity &amp; Anti-Cheating Policy</strong>, candidates must remain on the assessment screen throughout the examination.</p>
-            <p class="mb-0 text-warning" style="font-size:0.88rem;">
-              <i class="bi bi-info-circle me-1"></i> <strong>FINAL WARNING:</strong> Navigating away or switching tabs a <u>second time</u> will result in <strong>immediate session termination</strong> and an official Code of Conduct violation record.
-            </p>
-          </div>
-          <div class="modal-footer border-0 px-4 pb-4 pt-0">
-            <button type="button" class="btn w-100 fw-bold py-2.5" id="btnAcknowledgeProctorWarning" data-bs-dismiss="modal" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; border-radius: 12px; font-family: 'Outfit', sans-serif; letter-spacing: 0.02em;">
-              <i class="bi bi-shield-check me-2"></i>I Understand &amp; Resume Assessment
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/speech.js') }}"></script>
     <script>
         const answerBox       = document.getElementById('answerBox');
         const emptyWarning    = document.getElementById('emptyWarning');

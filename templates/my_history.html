@@ -440,7 +440,12 @@
                 <i class="bi bi-briefcase-fill"></i>
             </div>
             <div>
-                <p class="attempt-domain">{{ a.domain or 'General' }}</p>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <p class="attempt-domain mb-0">{{ a.domain or 'General' }}</p>
+                    <span class="session-code-badge" onclick="event.stopPropagation(); copySessionId('{{ a.session_code }}', this);" style="cursor: pointer; background: rgba(0, 255, 255, 0.1); color: #00ffff; border: 1px solid rgba(0, 255, 255, 0.35); border-radius: 6px; padding: 2px 7px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px;" title="Click to copy Session ID: {{ a.session_code }}">
+                        #{{ a.session_code }} <i class="bi bi-copy" style="font-size: 0.65rem;"></i>
+                    </span>
+                </div>
                 <div class="attempt-date">
                     <i class="bi bi-calendar3 me-1"></i>
                     {{ a.interview_datetime.strftime('%d %b %Y, %I:%M %p') }}
@@ -576,6 +581,51 @@
     }
 })();
 </script>
+<script>
+function copySessionId(text, triggerElem) {
+    if (!text) return;
+    function showFeedback() {
+        if (!triggerElem) return;
+        var origHtml = triggerElem.getAttribute('data-orig-html');
+        if (!origHtml) {
+            origHtml = triggerElem.innerHTML;
+            triggerElem.setAttribute('data-orig-html', origHtml);
+        }
+        triggerElem.innerHTML = '<i class="bi bi-check2 text-success me-1"></i> COPIED!';
+        triggerElem.style.borderColor = '#10b981';
+        triggerElem.style.color = '#34d399';
+        setTimeout(function() {
+            triggerElem.innerHTML = triggerElem.getAttribute('data-orig-html');
+            triggerElem.style.borderColor = '';
+            triggerElem.style.color = '';
+        }, 1600);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showFeedback).catch(function() {
+            fallbackCopy(text, showFeedback);
+        });
+    } else {
+        fallbackCopy(text, showFeedback);
+    }
+}
 
+function fallbackCopy(text, callback) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        if (callback) callback();
+    } catch (err) {
+        console.error('Fallback copy failed', err);
+    }
+    document.body.removeChild(textArea);
+}
+</script>
 </body>
 </html>

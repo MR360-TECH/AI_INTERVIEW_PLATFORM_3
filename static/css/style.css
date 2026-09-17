@@ -668,14 +668,8 @@ html.dark-theme .hero-card {
     box-shadow: 0 8px 28px rgba(0,0,0,0.5);
 }
 .stat-card::after {
-    content: '';
-    position: absolute;
-    top: -30%; right: -10%;
-    width: 60%; height: 80%;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-    transform: rotate(-20deg);
-    pointer-events: none;
+    display: none !important;
+    content: none !important;
 }
 .stat-card:hover {
     transform: translateY(-4px);

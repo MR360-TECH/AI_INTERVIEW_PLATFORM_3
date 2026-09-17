@@ -241,11 +241,19 @@
         /* Alert */
         .auth-alert {
             display: flex; align-items: center; gap: 10px;
-            padding: 12px 16px; border-radius: 10px;
-            font-size: 0.87rem; margin-bottom: 20px;
+            padding: 13px 18px; border-radius: 12px;
+            font-size: 0.88rem; font-weight: 600; margin-bottom: 22px;
+            line-height: 1.5;
         }
         .auth-alert.danger {
-            background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1.5px solid rgba(239, 68, 68, 0.38);
+            color: #f87171;
+        }
+        .auth-alert.danger i {
+            color: #f87171;
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
         /* Scrollbar */
